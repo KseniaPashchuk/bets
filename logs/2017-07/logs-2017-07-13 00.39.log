@@ -1,0 +1,1 @@
+[ERROR] 2017-07-13 00:36:45.778 [main] UserDAOImpl - Can't create user: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry 'дфдф' for key 'idx_uemail'

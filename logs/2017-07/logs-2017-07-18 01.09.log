@@ -1,0 +1,1 @@
+[ERROR] 2017-07-18 01:04:32.285 [http-nio-8080-exec-1] ShowProfileCommand - com.epam.bets.exception.ReceiverException: No such registered user: 

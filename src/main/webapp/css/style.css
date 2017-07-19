@@ -1,0 +1,894 @@
+
+html {
+    font-family: 'Fira Mono', monospace;
+    font-size: 15px;
+}
+
+header .colored-block {
+    height: 130px;
+    float: left;
+}
+
+section {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+a {
+    color: #ffa71b;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+header a {
+    font-size: 21px;
+}
+
+body {
+    background: #000000;
+    color: #a09999;
+}
+
+img {
+    height: auto;
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+}
+
+footer {
+
+    padding-bottom: 50px;
+    display: block;
+}
+
+footer ul li {
+    list-style: none;
+    margin: 0 0 1px;
+    padding: 0;
+}
+
+footer a {
+    color: #8a8888;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+.bets-col, .help-col, .comp-col, .connect-col {
+    float: left;
+    margin: 0 50px;
+}
+
+footer ul {
+    margin: 0;
+    padding: 0;
+}
+
+.pay-systems a {
+    background: url(../images/payment-sprite.png) no-repeat;
+    display: block;
+    height: 31px;
+    margin: 0 auto;
+}
+
+.pay-systems .webmoney {
+    background-position: 14px -128px;
+    width: 120px;
+}
+
+.pay-systems .webmoney:hover {
+    background-position: 14px -165px;
+}
+
+.pay-systems .scrill {
+    background-position: 0 1px;
+    width: 80px;
+}
+
+.pay-systems .scrill:hover {
+    background-position: 0 -34px;
+}
+
+.pay-systems .mastercard {
+    background-position: 0 -269px;
+    width: 50px;
+}
+
+.pay-systems .mastercard:hover {
+    background-position: 0 -305px;
+}
+
+.pay-systems .visa {
+    background-position: 1px -200px;
+    width: 85px;
+}
+
+.pay-systems .visa:hover {
+    background-position: -2px -233px;
+}
+
+.colored-block {
+    background: #0e0e0e;
+    position: relative;
+}
+
+.logo-img {
+    padding-top: 30px;
+}
+
+.row {
+    max-width: 1010px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 1%;
+    position: relative;
+}
+
+.header-wrap {
+    margin: 4% auto 1%;
+
+}
+
+.pic {
+    width: 100%;
+    min-width: 100px;
+}
+
+.logo-wrap {
+    text-align: center;
+    margin-right: 20px;
+}
+
+.lang-wrap {
+    text-align: center;
+    margin-right: 20px;
+    width: 5.9%;
+    transition: .5s ease all;
+    min-width: 40px;
+}
+
+.lang-wrap:hover {
+    background: #faa41c;
+}
+
+.lang-wrap:hover a {
+    color: #6f6f6f;
+    text-decoration: none;
+}
+
+.lang-wrap a {
+    color: #ffa71b;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.lang-wrap .lang {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.authorization {
+    border: 2px solid #ffa71b;
+    color: #ffa71b;
+    margin: 44px auto;
+    padding: 10px 0;
+    text-align: center;
+    text-transform: uppercase;
+    width: 83%;
+}
+
+.btn-enter, .btn-registration {
+    text-decoration: none;
+}
+
+.user-action {
+    text-align: center;
+    min-width: 145px;
+    padding: 0;
+}
+
+.user-action a {
+    font-size: 16px;
+}
+
+.pay-title {
+    background: #232220;
+    color: #8c8a8a;
+    margin: 0;
+    padding: 32px 55px;
+    text-align: center;
+}
+
+.pay-systems {
+    margin: 0;
+}
+
+.pay-systems li {
+    list-style: none;
+    margin: 0 3%;
+    padding: 28px 0;
+    display: inline-block;
+}
+
+.payment-wrap .pay-title {
+    float: left;
+}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.article-wrap h1 {
+    color: #f7a124;
+    margin: 3%;
+}
+
+.title {
+    color: #f7a124;
+}
+
+.article-wrap {
+    color: #8c8a8a;
+    line-height: 24px;
+    min-height: 425px;
+    padding: 1% 3%;
+}
+
+.col-title {
+    color: #ffa71b;
+    display: block;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.menu-wrap {
+    margin-right: 20px;
+    text-align: center;
+}
+
+.main-menu {
+    padding: 0 0 0 20px;
+    margin: 52px auto;
+}
+
+.main-menu .item-main {
+    float: left;
+    list-style-type: none;
+    position: relative;
+    margin: 0 2px 0 0;
+
+}
+
+.main-menu .item-main .main-link {
+    margin: 0 14px 0 0;
+    padding: 3px;
+    color: #845905;
+}
+
+.main-menu .item-main .main-link:hover {
+    text-decoration: none;
+    color: #ffa71b;
+}
+
+.footer-coloms {
+    margin: 20px 0;
+}
+
+.copyright {
+    padding: 7px 0;
+    text-align: center;
+    margin-bottom: 0px;
+    font-size: 11px;
+}
+
+.copyright p {
+    margin-bottom: 0px;
+}
+
+.info-text {
+    margin: 0;
+    height: 100%;
+}
+
+.info-wrap {
+    width: 100%;
+    height: 100%;
+}
+
+.pic-wrap {
+    min-width: 315px;
+    height: 100%;
+    padding-left: 0;
+}
+
+.info {
+    margin-bottom: 1%;
+    height: initial;
+}
+
+@media screen and (min-width: 1000px) {
+    .info {
+        height: 368px;
+    }
+}
+
+/*.authorization-wrap{
+	background: rgba(0, 0, 0, 0.7);
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	}*/
+
+.popup-close {
+    color: #f7a124;
+    cursor: pointer;
+    font-size: 21px;
+    padding: 10px 18px;
+    position: absolute;
+    right: 0;
+    top: 0px;
+}
+
+.popup-wrap {
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 3000px;
+}
+
+.popup-holder {
+    background: #2a2a2a;
+    color: #8a8888;
+    font-size: 18px;
+    line-height: 20px;
+    min-height: 140px;
+    overflow: hidden;
+    padding: 30px;
+    position: absolute;
+}
+
+.left-side-of-registration, .right-side-of-registration {
+    float: left;
+    margin-top: 10px;
+    position: relative;
+    width: 305px;
+}
+
+.right-side-of-registration {
+    margin-left: 36px;
+}
+
+.popup-holder .error-label, .popup-holder .error {
+    font-size: 13px;
+    line-height: 15px;
+    color: red !important;
+    margin: 0 0 5px;
+}
+
+.popup-holder .shell-for-input {
+    text-align: left;
+}
+
+.shell-for-input {
+    margin-top: 20px;
+    position: relative;
+}
+
+.shell-for-input label {
+    font-weight: normal;
+    display: flex;
+}
+
+.forget-link {
+    display: block;
+    font-size: 14px;
+    margin-top: 15px;
+    text-align: left;
+}
+
+.authorization-wrap a {
+    color: #ffa71b;
+    text-decoration: none;
+}
+
+.authorization-wrap a:hover {
+    text-decoration: underline;
+}
+
+input[type="button"], .btn-action, .sign-in-btn, .sign-up-btn {
+    background: transparent none repeat scroll 0 0;
+    border: 2px solid #ffa71b;
+    border-radius: 2px;
+    color: #ffa71b;
+    cursor: pointer;
+    display: block;
+    font-size: 20px;
+    margin: 27px auto 0;
+    text-align: center;
+    transition: all 0.5s ease 0s;
+    padding: 12px 30px;
+}
+
+input[type="button"]:hover, .sign-in-btn:hover, .sign-up-btn:hover, .btn-action:hover {
+    background: #ffa71b none repeat scroll 0 0;
+    color: #2a2a2a;
+}
+
+input[type="text"], input[type="search"], .popup-holder input[type="password"] {
+    background: #565656;
+    color: #fff;
+    border: 2px solid transparent;
+    height: 41px;
+    padding-left: 12px;
+    width: 100%;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+input:focus, .btn-action:focus {
+    outline: none;
+}
+
+input[type="text"]:focus, input[type="search"]:focus, .popup-holder input[type="password"]:focus {
+    border: 2px solid #ffa71b;
+}
+
+input[type="search"] {
+    height: 30px;
+}
+
+.popup-holder input.error[type="text"], .popup-holder input.error[type="password"], .popup-holder input.error[type="email"] {
+    border: 2px solid maroon;
+}
+
+.necessarily {
+    font-size: 12px;
+    color: #fff;
+}
+
+.head-enter-registration {
+    font-size: 20px;
+    color: #e2961d;
+    margin-top: 9px;
+}
+
+.authorization-wrap .buttons {
+    cursor: pointer;
+    font-size: 23px;
+    margin: 0;
+}
+
+.enter-wrap {
+    left: 50%;
+    top: 80px;
+    text-align: center;
+    margin-left: -172px;
+}
+
+.register-wrap {
+    left: 50%;
+    top: 80px;
+    text-align: center;
+    margin-left: -353px;
+}
+
+.hidden {
+    display: none;
+}
+
+.left-side-of-registration, .right-side-of-registration {
+    float: left;
+    margin-top: 10px;
+    position: relative;
+    width: 305px;
+}
+
+.right-side-of-registration {
+    margin-left: 36px;
+}
+
+.enter {
+    width: 300px;
+}
+
+.confirmation {
+    color: #c1c1c1;
+    font-size: 15px;
+    height: 40px;
+    line-height: 25px;
+    margin: 20px 0 0 0;
+    position: relative;
+}
+
+.confirmation label {
+    font-weight: normal;
+    display: inline;
+}
+
+.common-select select {
+    background: transparent;
+    border: none;
+    color: #8a8888;
+    cursor: pointer;
+    font-size: 16px;
+    height: 41px;
+    line-height: 41px;
+    padding-left: 12px;
+}
+
+.fake-width-currency {
+    width: 322px;
+}
+
+option {
+    font-weight: normal;
+    display: block;
+    white-space: pre;
+    min-height: 1.2em;
+    padding: 0px 2px 1px;
+}
+
+.common-select {
+    background: url(../images/arrow-down.png) no-repeat right #565656;
+    overflow: hidden;
+    outline: hidden;
+}
+
+.common-select select:focus {
+    outline: none;
+}
+
+.connect-us {
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+    float: left;
+}
+
+.connect-col {
+    width: 250px;
+}
+
+@media (max-width: 480px) {
+    .user-actions {
+        margin: 15px auto;
+        width: 194px;
+    }
+}
+
+.navbar-toggle {
+    border-color: #ffa71b;
+}
+
+.navbar-toggle .icon-bar {
+    background-color: #ffa71b;
+}
+
+.age-limit {
+    width: 45px;
+    height: 45px;
+}
+
+.last-news-title {
+    color: #ffa71b;
+    font-size: 21px;
+    margin: 5px 0 0 400px;
+}
+
+.last-news {
+    padding-top: 15px;
+}
+
+.logout-form [type="button"] {
+    float: left;
+    margin: 10px;
+    padding: 5px 15px;
+}
+
+#logout-check {
+    left: 50%;
+    top: 80px;
+    text-align: center;
+    margin-left: -226px;
+}
+
+.logout-close a:hover {
+    text-decoration: none;
+}
+
+.logout-form h3 {
+    color: #f7a124;
+    margin: 3%;
+    font-weight: normal;
+    color: white;
+}
+
+/*-------NEWS-----------------------------------------------------------------------*/
+
+.news-wrap, .faq-wrap {
+    padding: 20px 50px;
+}
+
+.news-post {
+    height: 110px;
+    padding: 12px 10px;
+    background: #232220;
+}
+
+.post-pic-wrap {
+
+    height: 100%
+}
+
+.post-title {
+    font-size: 21px;
+}
+
+.select-news {
+    padding: 30px 190px;
+}
+
+.select-news-title {
+    color: #ffa71b;
+    font-size: 21px;
+    float: left;
+    margin: 7px 20px 0 0;
+}
+
+.news input[type="button"], .btn-action {
+    font-size: 14px;
+    transition: all 0.5s ease 0s;
+    padding: 5px 15px;
+    margin: 5px 0 0 0;
+}
+
+.select-news-date {
+    width: 200px;
+    float: left;
+    margin-right: 20px;
+}
+
+/*-----------------FAQ------------------------------------------------------------------*/
+.faq-item {
+    height: 110px;
+    padding: 12px 10px;
+}
+
+.faq-item-title {
+    color: #ffa71b;
+    font-size: 21px;
+    margin: 5px 0 0 20px;
+}
+
+.faq-item-answer {
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+.post .post-title {
+    color: #ffa71b;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.post {
+    padding: 20px 90px;
+}
+
+.post-info {
+    margin-bottom: 30px;
+}
+
+/*-----------------PROFILE-------------------------------------------------------------*/
+.user-profile {
+    height: 500px;
+}
+
+.user-menu-wrap, .user-info-wrap, .user-menu, .user-info, .add-money-wrap, .add-money {
+    height: 100%;
+}
+
+.user-menu-wrap {
+    padding: 0;
+}
+
+.user-info-wrap {
+    padding-left: 20px;
+    padding-right: 0;
+}
+
+.user-info {
+    padding-top: 20px;
+}
+
+.user-avatar {
+    padding: 20px;
+}
+
+.avatar-pic {
+    margin: 10px 30px;
+    border-radius: 50px;
+    width: 200px;
+}
+
+.btn-action {
+    margin: 20px auto 0;
+}
+
+.user-meta {
+    padding: 50px 20px 0;
+}
+
+.meta-label {
+    color: #ffa71b;
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+.meta-value {
+    font-size: 17px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.label-row {
+    float: left;
+    margin-right: 25px;
+}
+
+.change-meta {
+    margin-top: 16%;
+}
+
+.user-menu {
+    padding: 30px 10px;
+}
+
+.user-menu-item {
+    margin: 0 10px 13px 10px;
+    font-size: 20px;
+}
+
+.user-menu a {
+    color: #845905;
+}
+
+.user-menu a:hover {
+    color: #ffa71b;
+    text-decoration: none;
+}
+
+.refill-cash {
+    padding: 45px 65px;
+
+}
+
+.refill-cash input, .refill-cash .common-select {
+    width: 296px;
+    height: 36px;
+}
+
+.refill-cash .btn-action {
+    margin-top: 40px;
+}
+
+.refill-cash .meta-label {
+    margin-bottom: 26px;
+}
+
+.refill-cash .meta-value {
+    margin-bottom: 15px;
+}
+
+.games-menu-wrap {
+    padding: 0;
+    height: 100%;
+}
+
+.games-table-wrap {
+    padding-right: 0;
+}
+
+.league-title {
+    background: #ffa71b;
+    height: 40px;
+    color: black;
+    padding: 10px 0 0 30px;
+    font-size: 20px;
+    margin-bottom: 18px;
+}
+
+th {
+    font-weight: normal;
+}
+
+.games-menu {
+    padding: 20px;
+}
+
+.games-menu ul {
+    padding-left: 0;
+}
+
+.games-menu ul li {
+    position: relative;
+    list-style-type: none;
+    margin-bottom: 10px;
+    color: #fff;
+    padding: 8px 17px;
+}
+
+.games-menu ul li:hover {
+    background-color: #232323;
+    cursor: pointer;
+}
+
+.games-menu a {
+    font-size: 20px;
+}
+
+.games-menu a span {
+    font-size: 13px;
+    margin-left: -6px;
+}
+
+.games-menu a:hover {
+    text-decoration: none;
+}
+
+.matches-title {
+    padding-bottom: 10px;
+}
+
+.games-wrap select {
+    background: #565656;
+    color: #fff;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    z-index: 2;
+    color: #252424;
+    cursor: default;
+    background-color: #ffa71b;
+    border-color: #ffa71b;
+    outline: none;
+}
+
+.pagination > li > a, .pagination > li > span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #f7f7ff;
+    text-decoration: none;
+    background: #565656;
+    border: 1px solid #2f2f2f;
+    outline: none;
+}
+
+.pagination > .disabled > span, .pagination > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination > .disabled > a, .pagination > .disabled > a:hover, .pagination > .disabled > a:focus {
+    color: #f7f7ff;
+    outline: none;
+    background-color: #565656;
+    border-color: #2f2f2f;
+}
+
