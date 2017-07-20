@@ -29,20 +29,20 @@ public class ShowNewsCommand implements AbstractCommand {
     public PageNavigator execute(HttpServletRequest request) {
         PageNavigator navigator = new PageNavigator(NEXT_PAGE, PageType.FORWARD);
         List<News> newsList;
-        try {
-            newsList = receiver.showAllNews(request.getParameter(PARAM_NAME_DATE));
-            if (newsList != null && !newsList.isEmpty()) {
-                request.setAttribute(PARAM_NAME_NEWS_LIST, newsList);
-            } else {
-                request.setAttribute(NO_NEWS_ERROR, NO_NEWS_MESSAGE);
-                navigator.setPageUrl(ERROR_PAGE);
-            }
+//        try {
+//            newsList = receiver.showAllNews(request.getParameter(PARAM_NAME_DATE));
+//            if (newsList != null && !newsList.isEmpty()) {
+//                request.setAttribute(PARAM_NAME_NEWS_LIST, newsList);
+//            } else {
+//                request.setAttribute(NO_NEWS_ERROR, NO_NEWS_MESSAGE);
+//                navigator.setPageUrl(ERROR_PAGE);
+//            }
 
-        } catch (ReceiverException e) {
-            LOGGER.log(Level.ERROR, e);
-            request.setAttribute(NO_NEWS_ERROR, NO_NEWS_MESSAGE);
-            navigator.setPageUrl(ERROR_PAGE);
-        }
+//        } catch (ReceiverException e) {
+//            LOGGER.log(Level.ERROR, e);
+//            request.setAttribute(NO_NEWS_ERROR, NO_NEWS_MESSAGE);
+//            navigator.setPageUrl(ERROR_PAGE);
+//        }
         return navigator;
     }
 }

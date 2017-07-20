@@ -33,7 +33,7 @@ public class SignUpCommand implements AbstractCommand {
 
     @Override
     public PageNavigator execute(HttpServletRequest request) {
-        PageNavigator navigator = new PageNavigator(NEXT_PAGE, PageType.REDIRECT);
+        PageNavigator navigator;
         String login = request.getParameter(PARAM_NAME_LOGIN);
         String password = request.getParameter(PARAM_NAME_PASSWORD);
         try {
@@ -50,24 +50,21 @@ public class SignUpCommand implements AbstractCommand {
                         HttpSession session = request.getSession(true);
                         session.setAttribute(PARAM_NAME_LOGIN, user.getLogin());
                         session.setAttribute(PARAM_NAME_ROLE, user.getRole());
+                        navigator = new PageNavigator(NEXT_PAGE, PageType.REDIRECT);
                     } else {
                         request.setAttribute(EXISTING_USER_ERROR, EXISTING_USER_MESSAGE);
-                        navigator.setType(PageType.FORWARD);
-                        navigator.setPageUrl(ERROR_PAGE);
+                        navigator = new PageNavigator(ERROR_PAGE, PageType.FORWARD);
                     }
                 } else {
                     request.setAttribute(INVALID_PASSWORD_ERROR, INVALID_PASSWORD_MESSAGE);
-                    navigator.setType(PageType.FORWARD);
-                    navigator.setPageUrl(ERROR_PAGE);
+                    navigator = new PageNavigator(ERROR_PAGE, PageType.FORWARD);
                 }
             } else {
                 request.setAttribute(INVALID_LOGIN_ERROR, INVALID_LOGIN_MESSAGE);
-                navigator.setType(PageType.FORWARD);
-                navigator.setPageUrl(ERROR_PAGE);
+                navigator = new PageNavigator(ERROR_PAGE, PageType.FORWARD);
             }
         } catch (ReceiverException e) {
-            navigator.setType(PageType.FORWARD);
-            navigator.setPageUrl(ERROR_PAGE);
+            navigator = new PageNavigator(ERROR_PAGE, PageType.FORWARD);
         }
         return navigator;
     }

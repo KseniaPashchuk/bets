@@ -28,7 +28,7 @@ public class ShowProfileCommand implements AbstractCommand {
 
     @Override
     public PageNavigator execute(HttpServletRequest request) {
-        PageNavigator navigator = new PageNavigator(NEXT_PAGE, PageType.FORWARD);
+        PageNavigator navigator;
         HttpSession session = request.getSession();
         User user;
         try {
@@ -40,13 +40,14 @@ public class ShowProfileCommand implements AbstractCommand {
                 request.setAttribute(PARAM_NAME_CREDIT_CARD, user.getCreditCard());
                 request.setAttribute(PARAM_NAME_BIRTH_DATE, user.getBirthDate());
                 request.setAttribute(PARAM_NAME_AVATAR_URL, user.getAvatarUrl());
+                navigator = new PageNavigator(NEXT_PAGE, PageType.FORWARD);
             }
             else{
-                navigator.setPageUrl(ERROR_PAGE);
+                navigator = new PageNavigator(ERROR_PAGE, PageType.FORWARD);
             }
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e);
-            navigator.setPageUrl(ERROR_PAGE);
+            navigator = new PageNavigator(ERROR_PAGE, PageType.FORWARD);
         }
         return navigator;
     }

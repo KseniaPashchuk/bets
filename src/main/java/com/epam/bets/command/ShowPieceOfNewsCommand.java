@@ -22,19 +22,20 @@ public class ShowPieceOfNewsCommand implements AbstractCommand{
 
     @Override
     public PageNavigator execute(HttpServletRequest request) {
-        PageNavigator navigator = new PageNavigator(NEXT_PAGE, PageType.FORWARD);
+        PageNavigator navigator;
         News news;
         try {
             news = receiver.showPieceOfNews(request.getParameter(PARAM_NAME_TITLE));
             if (news != null) {
                 request.setAttribute(PARAM_NAME_NEWS, news);
+                navigator = new PageNavigator(NEXT_PAGE, PageType.FORWARD);
             } else {
-                navigator.setPageUrl(ERROR_PAGE);
+                navigator = new PageNavigator(ERROR_PAGE, PageType.FORWARD);
             }
 
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e);
-            navigator.setPageUrl(ERROR_PAGE);
+            navigator = new PageNavigator(ERROR_PAGE, PageType.FORWARD);
         }
         return navigator;
     }

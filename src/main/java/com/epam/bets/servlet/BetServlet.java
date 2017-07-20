@@ -46,16 +46,18 @@ public class BetServlet extends HttpServlet {
             throws ServletException, IOException {
         String commandName = request.getParameter("command");
         AbstractCommand command = new CommandFactory().initCommand(commandName);
-        PageNavigator navigator = command.execute(request);
-        switch (navigator.getType()) {
-            case FORWARD: {
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(navigator.getPageUrl());
-                dispatcher.forward(request, response);
-                break;
-            }
-            case REDIRECT: {
-                response.sendRedirect(navigator.getPageUrl());
-                break;
+        if (command != null) {
+            PageNavigator navigator = command.execute(request);
+            switch (navigator.getType()) {
+                case FORWARD: {
+                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(navigator.getPageUrl());
+                    dispatcher.forward(request, response);
+                    break;
+                }
+                case REDIRECT: {
+                    response.sendRedirect(navigator.getPageUrl());
+                    break;
+                }
             }
         }
     }

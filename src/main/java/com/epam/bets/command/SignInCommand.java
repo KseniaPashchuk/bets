@@ -29,7 +29,7 @@ public class SignInCommand implements AbstractCommand {
 
     @Override
     public PageNavigator execute(HttpServletRequest request) {//TODO
-        PageNavigator navigator = new PageNavigator(NEXT_PAGE, PageType.FORWARD);
+        PageNavigator navigator;
         String login = request.getParameter(PARAM_NAME_LOGIN);
         String password = request.getParameter(PARAM_NAME_PASSWORD);
         try {
@@ -40,17 +40,18 @@ public class SignInCommand implements AbstractCommand {
                     HttpSession session = request.getSession(true);
                     session.setAttribute(PARAM_NAME_LOGIN, user.getLogin());
                     session.setAttribute(PARAM_NAME_ROLE, user.getRole());
-                }else{
+                    navigator = new PageNavigator(NEXT_PAGE, PageType.FORWARD);
+                } else {
                     request.setAttribute(INVALID_PARAMS_ERROR, INVALID_PARAMS_MESSAGE);
-                    navigator.setPageUrl(ERROR_PAGE);
+                    navigator= new PageNavigator(ERROR_PAGE, PageType.FORWARD);
                 }
             } else {
                 request.setAttribute(INVALID_PARAMS_ERROR, INVALID_PARAMS_MESSAGE);
-                navigator.setPageUrl(ERROR_PAGE);
+                navigator= new PageNavigator(ERROR_PAGE, PageType.FORWARD);
             }
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e);
-            navigator.setPageUrl(ERROR_PAGE);
+            navigator= new PageNavigator(ERROR_PAGE, PageType.FORWARD);
         }
         return navigator;
     }
