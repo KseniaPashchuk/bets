@@ -10,12 +10,12 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 import static com.epam.bets.JspConstant.MAIN_PAGE;
-import static com.epam.bets.JspConstant.NEWS_PAGE;
+import static com.epam.bets.JspConstant.PIECE_OF_NEWS_PAGE;
 
 public class ShowPieceOfNewsCommand implements AbstractCommand{
     private static final String PARAM_NAME_TITLE = "newsTitle";
     private static final String PARAM_NAME_NEWS = "news";
-    private static final String NEXT_PAGE = NEWS_PAGE;
+    private static final String NEXT_PAGE = PIECE_OF_NEWS_PAGE;
     private static final String ERROR_PAGE = MAIN_PAGE;
     private static final Logger LOGGER = LogManager.getLogger(SignInCommand.class);
     private NewsReceiverImpl receiver = new NewsReceiverImpl();

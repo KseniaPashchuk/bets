@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.epam.bets.JspConstant.SERVER_ERROR_PAGE;
+
 /**
  *
  */
@@ -24,7 +26,7 @@ import java.io.IOException;
         // при его привышении данные начнут записываться на диск во временную директорию
         // устанавливаем один мегабайт
         maxFileSize = 1024 * 1024 * 10,
-        maxRequestSize = 1024 * 1024 * 50)
+        maxRequestSize = 1024 * 1024 * 50)//TODO add error page and runtime page
 public class BetServlet extends HttpServlet {
 
     private static final Logger LOGGER = LogManager.getLogger(BetServlet.class);
@@ -46,8 +48,8 @@ public class BetServlet extends HttpServlet {
             throws ServletException, IOException {
         String commandName = request.getParameter("command");
         AbstractCommand command = new CommandFactory().initCommand(commandName);
-        if (command != null) {
-            PageNavigator navigator = command.execute(request);
+        PageNavigator navigator = command.execute(request);
+        if (navigator != null) {
             switch (navigator.getType()) {
                 case FORWARD: {
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(navigator.getPageUrl());
@@ -58,7 +60,12 @@ public class BetServlet extends HttpServlet {
                     response.sendRedirect(navigator.getPageUrl());
                     break;
                 }
+                default: {
+                    response.sendRedirect(SERVER_ERROR_PAGE);
+                }
             }
+        } else {
+            response.sendRedirect(SERVER_ERROR_PAGE);
         }
     }
 }

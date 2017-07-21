@@ -11,6 +11,7 @@ public class JspConstant {
     public static final String FAQ_PAGE = "/pages/faq.jsp";
     public static final String RULES_PAGE = "";
     public static final String CONDITIONS_PAGE = "";
+    public static final String SERVER_ERROR_PAGE = "";
 
     private JspConstant() {//TODO
     }

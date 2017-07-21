@@ -21,6 +21,8 @@ public class SignUpCommand implements AbstractCommand {
     private static final String PARAM_NAME_ROLE = "role";
     private static final String PARAM_NAME_FIRST_NAME = "name";
     private static final String PARAM_NAME_LAST_NAME = "surname";
+    private static final String PARAM_NAME_BIRTH_DATE = "birth_date";
+    private static final String PARAM_NAME_CREDIT_CARD = "credit_card";
     private static final String NEXT_PAGE = MAIN_PAGE;
     private static final String ERROR_PAGE = REGISTRATION_PAGE;
     private static final String EXISTING_USER_ERROR = "alreadyExists";
@@ -44,8 +46,11 @@ public class SignUpCommand implements AbstractCommand {
                     user.setPassword(password);
                     user.setFirstName(request.getParameter(PARAM_NAME_FIRST_NAME));
                     user.setLastName(request.getParameter(PARAM_NAME_LAST_NAME));
-                    user.setBirthDate(LocalDate.of(2014, Month.JANUARY, 1));//TODO
-                    user.setCreditCard("1111111111111111");
+                    user.setBirthDate(LocalDate.of(2014, Month.JANUARY, 1));
+//                    String str = requegst.etParameter(PARAM_NAME_BIRTH_DATE);
+//                    System.out.println(str);
+                    //user.setBirthDate(LocalDate.of(PARAM_NAME_BIRTH_DATE));// /TODO
+                    user.setCreditCard(request.getParameter(PARAM_NAME_CREDIT_CARD));
                     if (receiver.signUp(user)) {
                         HttpSession session = request.getSession(true);
                         session.setAttribute(PARAM_NAME_LOGIN, user.getLogin());

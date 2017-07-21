@@ -4,7 +4,8 @@ public enum CommandType {
     SIGNIN(new SignInCommand()),
     SIGNUP(new SignUpCommand()),
     LOGOUT(new LogOutCommand()),
-    SHOW_PROFILE(new ShowProfileCommand());
+    SHOW_PROFILE(new ShowProfileCommand()),
+    SHOW_PIECE_OF_NEWS(new ShowPieceOfNewsCommand());
     private AbstractCommand command;
 
     CommandType(AbstractCommand command) {

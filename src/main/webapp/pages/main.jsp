@@ -3,7 +3,7 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" >
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/bets-style.css">
     <script type="text/javascript" src="../js/index.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,500&amp;subset=cyrillic" rel="stylesheet">
 </head>
@@ -11,16 +11,16 @@
 <div class="full-container">
     <header class="header-wrap row clearfix">
         <div class="logo-wrap colored-block col-lg-3">
-            <a href="index.html"><img class ="logo-img" src="../images/logo-1.png" alt="bets"></a>
+            <a href="${pageContext.servletContext.contextPath}/pages/main.jsp"><img class ="logo-img" src="../images/logo-1.png" alt="bets"></a>
         </div>
         <div class="menu-wrap colored-block ">
             <ul class="main-menu clearfix">
-                <li class="item-main"><a href="${pageContext.request.contextPath}/controller?command=show_news" class="main-link">Новости</a>
+                <li class="item-main"><a href="${pageContext.servletContext.contextPath}/pages/news.jsp" class="main-link">Новости</a>
                 </li>
                 <li class="item-main"><a href="#" class="main-link">Игры</a>
                 </li>
                 <li class="item-main">
-                    <a href="pages/faq.html" class="main-link">FAQ</a>
+                    <a href="pages${pageContext.servletContext.contextPath}/pages/faq.jsp" class="main-link">FAQ</a>
                 </li>
                 <li class="item-main">
                     <a href="${pageContext.request.contextPath}/controller?command=show_profile" class="main-link">Профиль</a>

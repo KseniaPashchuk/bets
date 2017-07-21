@@ -6,8 +6,15 @@
 <head>
     <title> Tag Example</title>
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/bets-style.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap-datetimepicker.css">
+
+    <script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/moment.js"></script>
+    <script type="text/javascript" src="../js/bootstrap-datetimepicker.js"></script>
     <script type="text/javascript" src="../js/index.js"></script>
+    <script type="text/javascript" src="../js/registration.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,500&amp;subset=cyrillic" rel="stylesheet">
 </head>
 <body>
@@ -18,8 +25,8 @@
             <span>/</span>
             <a class="btn-registration" href="javascript:showRegisterPopup()" style="color: #ffa71b">Регистрация</a>
         </div>
-        <form class="enter" id="login_form"  onsubmit="validateEnter(this.form)" method="POST" action="controller">
-            <input type="hidden" name="command" value="signin" />
+        <form class="enter" id="login_form" onsubmit="validateEnter(this.form)" method="POST" action="controller">
+            <input type="hidden" name="command" value="signin"/>
             <div class="head-enter-registration">Вход в систему</div>
             <label class="hidden error-label" id="login-error">Неправильный логин или пароль!</label>
             <div class="shell-for-input">
@@ -45,8 +52,8 @@
             <span>/</span>
             <a class="btn-registration" href="javascript:showRegisterPopup()" style="color: white">Регистрация</a>
         </div>
-        <form class="registration" id="reg_form"  onsubmit ="validateEnter(this.form)" method="POST" action="controller">
-            <input type="hidden" name="command" value="signup" />
+        <form class="registration" id="reg_form" onsubmit="validateEnter(this.form)" method="POST" action="controller">
+            <input type="hidden" name="command" value="signup"/>
             <div class="about-registration">
                 <div class="head-enter-registration">Регистрация пользователя</div>
                 <div class="necessarily">Все поля формы обязательны для заполнения!</div>
@@ -56,44 +63,60 @@
             </div>
             <div class="shell-registration clearfix">
                 <div class="left-side-of-registration">
-                    <div class="shell-for-input  add-hint">
-                        <label for="reg_login">
-                            <input class='e-mail-reg required' type="text" id="reg_login" name="login"
-                                   placeholder="E-mail" value="" autocomplete="off">
-                        </label>
-
+                    <div class="shell-for-input">
+                        <div class="shell-for-input  add-hint">
+                            <label for="reg_email">
+                                <input class='e-mail-reg required' type="text" id="reg_email" name="login" autocomplete="false">
+                                <div class="input-label"  id="reg_email_label">email@example.com<span style="color: red">*</span></div>
+                            </label>
+                        </div>
                     </div>
                     <div class="shell-for-input">
                         <label for="reg_password">
-                            <input type="password" id="reg_password" class="required" name="password"
-                                   placeholder="Пароль" value="" autocomplete="off">
+                            <input type="password" id="reg_password" class="required" name="password" autocomplete="false">
+                            <div class="input-label" id="reg_password_label">password<span
+                                    style="color: red">*</span></div>
                         </label>
-
                     </div>
+
                     <div class="shell-for-input">
                         <label for="conf_password">
-                            <input type="password" id="conf_password" name="conf_password" class="required"
-                                   placeholder="Подтверждение пароля" value="" autocomplete="off">
+                            <input type="password" id="conf_password" name="conf_password" class="required" autocomplete="false">
+                            <div class="input-label"  id="conf_password_label">confirm
+                                password<span style="color: red">*</span></div>
                         </label>
 
                     </div>
                     <div class="shell-for-input">
                         <label for="reg_name">
-                            <input type="text" id="reg_name" class="required" name="name" placeholder="Имя" value=""
-                                   autocomplete="off">
+                            <input type="text" id="reg_name" class="required" name="name" autocomplete="false">
+                            <div class="input-label" id="reg_name_label">name<span
+                                    style="color: red">*</span></div>
                         </label>
-
+                    </div>
+                    <div class="shell-for-input">
+                        <label for="reg_surname">
+                            <input type="text" id="reg_surname" class="required" name="surname" autocomplete="false">
+                            <div class="input-label"  id="reg_surname_label">surname<span
+                                    style="color: red">*</span></div>
+                        </label>
                     </div>
                 </div>
                 <div class="right-side-of-registration">
                     <div class="shell-for-input">
-                        <label for="reg_surname">
-                            <input type="text" id="reg_surname" class="required" name="surname"
-                                   placeholder="Фамилия" value="" autocomplete="off">
+                        <label for="reg_credit_card">
+                            <input type="text" id="reg_credit_card" class="required" name="credit_card" autocomplete="false">
+                            <div class="input-label"  for="reg_credit_card" id="reg_credit_card_label">Credit card
+                                number<span style="color: red">*</span></div>
                         </label>
                     </div>
-                    <div class="choice-data clearfix" id="reg-birth-day">
-
+                    <div class="shell-for-input clearfix">
+                        <div class="select-birth-date input-group date" id='select-birth-date'>
+                            <input type="text" class="form-control" name="birth_date"/>
+                            <span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+                        </div>
                     </div>
                     <div class="common-select shell-for-input clearfix">
                         <select class="fake-width-currency" id="regSelectCurrency">

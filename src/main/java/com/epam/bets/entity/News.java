@@ -7,6 +7,7 @@ public class News extends Entity{
     private String title;
     private String text;
     private LocalDate date;
+    private String pictureUrl;
 
     public News() {
     }
@@ -43,4 +44,11 @@ public class News extends Entity{
         this.date = date;
     }
 
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
+    }
 }
