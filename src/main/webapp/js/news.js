@@ -31,6 +31,7 @@ $(function () {
     function display(data) {
 
         $('#news-wrap').empty();
+        $('#pagination').empty();
         $('#pagination').pagination({
             dataSource: data,
             pageSize: 10,
@@ -49,12 +50,11 @@ $(function () {
                         '<div class="post-title"><a href="#">' + item.title + '</a></div>' +
                         '<div class="post-meta">' +
                         '<span class = "fa fa-clock-o"> <i class = "icon-time"></i>' +
-                        '<time class="entry-date published">'+  date.toLocaleString('de-DE').toDateString() +'</time></span>' +
+                        '<time class="entry-date published">'+  date.toLocaleString('de-DE') +'</time></span>' +
                         '</div>' +//TODO
                         '</div>' +
                         '</div>';
                 });
-                // date.toLocaleString('de-DE').slice(0,10)
                 dataContainer.html(html);
             }
         })

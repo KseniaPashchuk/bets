@@ -18,15 +18,15 @@
         </div>
         <div class="menu-wrap colored-block ">
             <ul class="main-menu clearfix">
-                <li class="item-main"><a href="news.html" class="main-link">Новости</a>
+                <li class="item-main"><a href="${pageContext.servletContext.contextPath}/pages/news.jsp" class="main-link">Новости</a>
                 </li>
                 <li class="item-main"><a href="games.html" class="main-link">Игры</a>
                 </li>
                 <li class="item-main">
-                    <a href="faq.html" class="main-link">FAQ</a>
+                    <a href="${pageContext.servletContext.contextPath}/controller?command=show_faq" class="main-link">FAQ</a>
                 </li>
                 <li class="item-main">
-                    <a href="profile.html" class="main-link">Профиль</a>
+                    <a href="${pageContext.servletContext.contextPath}/controller?command=show_profile" class="main-link">Профиль</a>
                 </li>
             </ul>
         </div>

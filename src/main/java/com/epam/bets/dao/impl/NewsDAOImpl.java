@@ -41,8 +41,8 @@ public class NewsDAOImpl extends NewsDAO {
     @Override
     public List<News> findAll() throws DaoException {
         List<News> newsList;
-        try (PreparedStatement statementUser = connection.prepareStatement(SELECT_ALL_NEWS)) {
-            ResultSet resultSet = statementUser.executeQuery();
+        try (PreparedStatement statementNews = connection.prepareStatement(SELECT_ALL_NEWS)) {
+            ResultSet resultSet = statementNews.executeQuery();
             newsList = buildNewsList(resultSet);
         } catch (SQLException e) {
             throw new DaoException("Can't find all news", e);
@@ -53,9 +53,9 @@ public class NewsDAOImpl extends NewsDAO {
     @Override
     public News findEntityById(int id) throws DaoException {
         News news = null;
-        try (PreparedStatement statementUser = connection.prepareStatement(SELECT_NEWS_BY_ID)) {
-            statementUser.setInt(1, id);
-            ResultSet resultSet = statementUser.executeQuery();
+        try (PreparedStatement statementNews = connection.prepareStatement(SELECT_NEWS_BY_ID)) {
+            statementNews.setInt(1, id);
+            ResultSet resultSet = statementNews.executeQuery();
             if (resultSet.next()) {
                 news = buildNews(resultSet);
             }
@@ -68,9 +68,9 @@ public class NewsDAOImpl extends NewsDAO {
     @Override
     public News findNewsByTitle(String title) throws DaoException {
         News news = null;
-        try (PreparedStatement statementUser = connection.prepareStatement(SELECT_NEWS_BY_TITLE)) {
-            statementUser.setString(1, title);
-            ResultSet resultSet = statementUser.executeQuery();
+        try (PreparedStatement statementNews = connection.prepareStatement(SELECT_NEWS_BY_TITLE)) {
+            statementNews.setString(1, title);
+            ResultSet resultSet = statementNews.executeQuery();
             if (resultSet.next()) {
                 news = buildNews(resultSet);
             }
@@ -83,9 +83,9 @@ public class NewsDAOImpl extends NewsDAO {
     @Override
     public List<News> findNewsByDate(LocalDate date) throws DaoException {
         List<News> newsList;
-        try (PreparedStatement statementUser = connection.prepareStatement(SELECT_NEWS_BY_DATE)) {
-            statementUser.setDate(1, java.sql.Date.valueOf(date));
-            ResultSet resultSet = statementUser.executeQuery();
+        try (PreparedStatement statementNews = connection.prepareStatement(SELECT_NEWS_BY_DATE)) {
+            statementNews.setDate(1, java.sql.Date.valueOf(date));
+            ResultSet resultSet = statementNews.executeQuery();
             newsList = buildNewsList(resultSet);
         } catch (SQLException e) {
             throw new DaoException("Can't find news by given date", e);
@@ -95,9 +95,9 @@ public class NewsDAOImpl extends NewsDAO {
 
     @Override
     public boolean delete(int id) throws DaoException {
-        try (PreparedStatement statementUser = connection.prepareStatement(DELETE_NEWS_BY_ID)) {
-            statementUser.setInt(1, id);
-            statementUser.executeUpdate();
+        try (PreparedStatement statementNews = connection.prepareStatement(DELETE_NEWS_BY_ID)) {
+            statementNews.setInt(1, id);
+            statementNews.executeUpdate();
             return true;
         } catch (SQLException e) {
             throw new DaoException("Can't delete news", e);
@@ -106,11 +106,11 @@ public class NewsDAOImpl extends NewsDAO {
 
     @Override
     public boolean create(News entity) throws DaoException {
-        try (PreparedStatement statementUser = connection.prepareStatement(CREATE_NEWS)) {
-            statementUser.setString(1, entity.getTitle());
-            statementUser.setDate(2, java.sql.Date.valueOf(entity.getDate()));
-            statementUser.setString(3, entity.getText());
-            statementUser.executeUpdate();
+        try (PreparedStatement statementNews = connection.prepareStatement(CREATE_NEWS)) {
+            statementNews.setString(1, entity.getTitle());
+            statementNews.setDate(2, java.sql.Date.valueOf(entity.getDate()));
+            statementNews.setString(3, entity.getText());
+            statementNews.executeUpdate();
             return true;
         } catch (SQLException e) {
             if(e.getErrorCode() == EXISTING_ENTITY_ERROR_CODE){
@@ -122,12 +122,12 @@ public class NewsDAOImpl extends NewsDAO {
 
     @Override
     public boolean update(News news, int id) throws DaoException {
-        try (PreparedStatement statementUser = connection.prepareStatement(UPDATE_NEWS)) {
-            statementUser.setString(1, news.getTitle());
-            statementUser.setDate(2, java.sql.Date.valueOf(news.getDate()));
-            statementUser.setString(3, news.getText());
-            statementUser.setInt(4, id);
-            statementUser.executeUpdate();
+        try (PreparedStatement statementNews = connection.prepareStatement(UPDATE_NEWS)) {
+            statementNews.setString(1, news.getTitle());
+            statementNews.setDate(2, java.sql.Date.valueOf(news.getDate()));
+            statementNews.setString(3, news.getText());
+            statementNews.setInt(4, id);
+            statementNews.executeUpdate();
             return true;
         } catch (SQLException e) {
             throw new DaoException("Can't update news", e);

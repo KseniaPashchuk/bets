@@ -1,5 +1,3 @@
-[INFO ] 2017-07-21 23:14:24.048 [RMI TCP Connection(3)-127.0.0.1] ContextListener - ConnectionPool was initialized
-[INFO ] 2017-07-21 23:15:48.055 [RMI TCP Connection(3)-127.0.0.1] ContextListener - ConnectionPool was initialized
-[INFO ] 2017-07-21 23:18:26.729 [RMI TCP Connection(3)-127.0.0.1] ContextListener - ConnectionPool was initialized
-[INFO ] 2017-07-21 23:19:54.056 [RMI TCP Connection(3)-127.0.0.1] ContextListener - ConnectionPool was initialized
-[INFO ] 2017-07-21 23:24:37.117 [RMI TCP Connection(3)-127.0.0.1] ContextListener - ConnectionPool was initialized
+[INFO ] 2017-07-22 23:38:23.966 [RMI TCP Connection(3)-127.0.0.1] ContextListener - ConnectionPool was initialized
+[ERROR] 2017-07-22 23:38:56.321 [http-nio-8080-exec-7] CommandFactory - Can't define command: java.lang.IllegalArgumentException: No enum constant com.epam.bets.command.CommandType.SHOW_FAQ
+[INFO ] 2017-07-22 23:41:20.915 [RMI TCP Connection(3)-127.0.0.1] ContextListener - ConnectionPool was initialized
