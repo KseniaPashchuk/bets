@@ -10,20 +10,24 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static com.epam.bets.JspConstant.INDEX_PAGE;
-import static com.epam.bets.JspConstant.PROFILE_PAGE;
+import java.time.format.DateTimeFormatter;
 
-public class ShowProfileCommand implements AbstractCommand {
+import static com.epam.bets.constant.PageConstant.INDEX_PAGE;
+import static com.epam.bets.constant.PageConstant.PROFILE_PAGE;
 
+public class ShowUserProfileCommand implements AbstractCommand{
+
+    private static final String PARAM_NAME_ID = "userId";
     private static final String PARAM_NAME_LOGIN = "login";
     private static final String PARAM_NAME_FIRST_NAME = "name";
     private static final String PARAM_NAME_LAST_NAME = "surname";
-    private static final String PARAM_NAME_CREDIT_CARD = "credit_card";
-    private static final String PARAM_NAME_BIRTH_DATE = "birth_date";
-    private static final String PARAM_NAME_AVATAR_URL = "avatar_url";
+    private static final String PARAM_NAME_CREDIT_CARDS = "creditCardList";
+    private static final String PARAM_NAME_BIRTH_DATE = "birthDate";
+    private static final String PARAM_NAME_AVATAR_URL = "avatarUrl";
+    private static final String PARAM_NAME_BALANCE = "balance";
     private static final String NEXT_PAGE = PROFILE_PAGE;
     private static final String ERROR_PAGE = INDEX_PAGE;
-    private static final Logger LOGGER = LogManager.getLogger(ShowProfileCommand.class);
+    private static final Logger LOGGER = LogManager.getLogger(ShowUserProfileCommand.class);
     private UserReceiverImpl receiver = new UserReceiverImpl();
 
     @Override
@@ -32,21 +36,23 @@ public class ShowProfileCommand implements AbstractCommand {
         HttpSession session = request.getSession();
         User user;
         try {
-            user = receiver.showProfileInfo((String) session.getAttribute(PARAM_NAME_LOGIN));
+            user = receiver.showProfileInfo((int) session.getAttribute(PARAM_NAME_ID));
             if (user != null) {
                 request.setAttribute(PARAM_NAME_LOGIN, user.getLogin());
                 request.setAttribute(PARAM_NAME_FIRST_NAME, user.getFirstName());
                 request.setAttribute(PARAM_NAME_LAST_NAME, user.getLastName());
-                request.setAttribute(PARAM_NAME_CREDIT_CARD, user.getCreditCard());
-                request.setAttribute(PARAM_NAME_BIRTH_DATE, user.getBirthDate());
+                request.setAttribute(PARAM_NAME_CREDIT_CARDS, user.getCreditCards());
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                request.setAttribute(PARAM_NAME_BIRTH_DATE, user.getBirthDate().format(formatter));
                 request.setAttribute(PARAM_NAME_AVATAR_URL, user.getAvatarUrl());
+                request.setAttribute(PARAM_NAME_BALANCE, user.getBalance());
                 navigator = new PageNavigator(NEXT_PAGE, PageType.FORWARD);
             }
             else{
                 navigator = new PageNavigator(ERROR_PAGE, PageType.FORWARD);
             }
         } catch (ReceiverException e) {
-            LOGGER.log(Level.ERROR, e);
+            LOGGER.log(Level.ERROR, e, e);
             navigator = new PageNavigator(ERROR_PAGE, PageType.FORWARD);
         }
         return navigator;

@@ -12,18 +12,18 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static com.epam.bets.JspConstant.MAIN_PAGE;
-import static com.epam.bets.JspConstant.NEWS_PAGE;
+import static com.epam.bets.constant.ErrorConstant.NO_NEWS_ERROR;
+import static com.epam.bets.constant.ErrorConstant.NO_NEWS_MESSAGE;
+import static com.epam.bets.constant.PageConstant.MAIN_PAGE;
+import static com.epam.bets.constant.PageConstant.NEWS_PAGE;
 
 
-public class ShowNewsCommand{
+public class ShowNewsCommand implements AjaxCommand<News>{
 
     private static final String PARAM_NAME_DATE = "date";
-    private static final String PARAM_NAME_NEWS_LIST = "newsList";
     private static final String NEXT_PAGE = NEWS_PAGE;
     private static final String ERROR_PAGE = MAIN_PAGE;
-    private static final String NO_NEWS_ERROR = "noNews";
-    private static final String NO_NEWS_MESSAGE = "no_news";
+
     private static final Logger LOGGER = LogManager.getLogger(SignInCommand.class);
     private NewsReceiverImpl receiver = new NewsReceiverImpl();
 
@@ -35,15 +35,8 @@ public class ShowNewsCommand{
             String dateString = request.getParameter(PARAM_NAME_DATE);
             LocalDate date = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             newsList = receiver.showAllNews(date);
-//            if (newsList != null && !newsList.isEmpty()) {
-//                request.setAttribute(PARAM_NAME_NEWS_LIST, newsList);
-//            } else {
-//                request.setAttribute(NO_NEWS_ERROR, NO_NEWS_MESSAGE);
-//                navigator.setPageUrl(ERROR_PAGE);
-//            }
-
         } catch (ReceiverException e) {
-            LOGGER.log(Level.ERROR, e);
+            LOGGER.log(Level.ERROR, e, e);
             request.setAttribute(NO_NEWS_ERROR, NO_NEWS_MESSAGE);
             navigator.setPageUrl(ERROR_PAGE);
         }

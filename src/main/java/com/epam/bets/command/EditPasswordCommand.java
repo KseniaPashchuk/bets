@@ -15,16 +15,15 @@ import javax.servlet.http.HttpSession;
 import static com.epam.bets.constant.ErrorConstant.INVALID_PARAMS_ERROR;
 import static com.epam.bets.constant.ErrorConstant.INVALID_PARAMS_MESSAGE;
 import static com.epam.bets.constant.PageConstant.MAIN_PAGE;
-import static com.epam.bets.constant.PageConstant.REGISTRATION_PAGE;
 
-public class SignInCommand implements AbstractCommand {
 
-    private static final String PARAM_NAME_ID = "userId";
+public class EditPasswordCommand implements AbstractCommand {
+
     private static final String PARAM_NAME_LOGIN = "login";
-    private static final String PARAM_NAME_PASSWORD = "password";
-    private static final String PARAM_NAME_ROLE = "role";
+    private static final String PARAM_NAME_OLD_PASSWORD = "oldPassword";
+    private static final String PARAM_NAME_NEW_PASSWORD = "newPassword";
     private static final String NEXT_PAGE = MAIN_PAGE;
-    private static final String ERROR_PAGE = REGISTRATION_PAGE;
+    private static final String ERROR_PAGE = MAIN_PAGE;
 
     private static final Logger LOGGER = LogManager.getLogger(SignInCommand.class);
     private UserReceiverImpl receiver = new UserReceiverImpl();
@@ -32,17 +31,13 @@ public class SignInCommand implements AbstractCommand {
     @Override
     public PageNavigator execute(HttpServletRequest request) {//TODO
         PageNavigator navigator;
-        String login = request.getParameter(PARAM_NAME_LOGIN);
-        String password = request.getParameter(PARAM_NAME_PASSWORD);
+        String login = (String) request.getSession().getAttribute(PARAM_NAME_LOGIN);
+        String oldPassword = request.getParameter(PARAM_NAME_OLD_PASSWORD);
+        String newPassword = request.getParameter(PARAM_NAME_NEW_PASSWORD);
         try {
-            if (new LoginValidator().validate(login) &&
-                    new PasswordValidator().validate(password)) {
-                User user = receiver.signIn(login, password);
-                if (user != null) {
-                    HttpSession session = request.getSession(true);
-                    session.setAttribute(PARAM_NAME_ID, user.getId());
-                    session.setAttribute(PARAM_NAME_LOGIN, user.getLogin());
-                    session.setAttribute(PARAM_NAME_ROLE, user.getRole());
+            if (new PasswordValidator().validate(oldPassword) &&
+                    new PasswordValidator().validate(newPassword)) {
+                if (receiver.editPassword(login, oldPassword, newPassword)) {
                     navigator = new PageNavigator(NEXT_PAGE, PageType.REDIRECT);
                 } else {
                     request.setAttribute(INVALID_PARAMS_ERROR, INVALID_PARAMS_MESSAGE);

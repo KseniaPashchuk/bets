@@ -3,145 +3,122 @@ html {
     font-family: 'Fira Mono', monospace;
     font-size: 15px;
 }
-
 header .colored-block {
     height: 130px;
     float: left;
 }
-
-section {
+section{
     margin-bottom: 10px;
     position: relative;
 }
+
 
 a {
     color: #ffa71b;
     text-decoration: none;
 }
-
-a:hover {
+a:hover{
     text-decoration: underline;
 }
-
-header a {
+header a{
     font-size: 21px;
 }
-
-body {
+body{
     background: #000000;
     color: #a09999;
 }
-
 img {
     height: auto;
     max-height: 100%;
     max-width: 100%;
     width: auto;
 }
-
 footer {
 
     padding-bottom: 50px;
     display: block;
 }
-
 footer ul li {
     list-style: none;
     margin: 0 0 1px;
     padding: 0;
 }
-
-footer a {
+footer a{
     color: #8a8888;
     text-decoration: none;
     font-size: 15px;
 }
-
-footer a:hover {
+footer a:hover{
     text-decoration: underline;
 }
-
-.bets-col, .help-col, .comp-col, .connect-col {
+.bets-col,.help-col,.comp-col, .connect-col{
     float: left;
     margin: 0 50px;
 }
-
 footer ul {
     margin: 0;
     padding: 0;
 }
-
-.pay-systems a {
+.pay-systems a{
     background: url(../images/payment-sprite.png) no-repeat;
     display: block;
     height: 31px;
     margin: 0 auto;
 }
 
-.pay-systems .webmoney {
+.pay-systems .webmoney{
     background-position: 14px -128px;
     width: 120px;
 }
-
-.pay-systems .webmoney:hover {
+.pay-systems .webmoney:hover{
     background-position: 14px -165px;
 }
-
-.pay-systems .scrill {
+.pay-systems .scrill{
     background-position: 0 1px;
     width: 80px;
 }
-
-.pay-systems .scrill:hover {
+.pay-systems .scrill:hover{
     background-position: 0 -34px;
 }
-
-.pay-systems .mastercard {
+.pay-systems .mastercard{
     background-position: 0 -269px;
     width: 50px;
 }
-
-.pay-systems .mastercard:hover {
+.pay-systems .mastercard:hover{
     background-position: 0 -305px;
 }
-
-.pay-systems .visa {
+.pay-systems .visa{
     background-position: 1px -200px;
     width: 85px;
 }
-
-.pay-systems .visa:hover {
+.pay-systems .visa:hover{
     background-position: -2px -233px;
 }
-
 .colored-block {
     background: #0e0e0e;
     position: relative;
 }
-
-.logo-img {
+.logo-img{
     padding-top: 30px;
 }
-
-.row {
+.row{
     max-width: 1010px;
     margin-left: auto;
     margin-right: auto;
     padding: 10px 1%;
     position: relative;
 }
-
-.header-wrap {
+.header-wrap{
     margin: 4% auto 1%;
 
 }
-
-.pic {
-    width: 100%;
+.pic{
+    width:100%;
     min-width: 100px;
 }
 
-.logo-wrap {
+
+.logo-wrap{
     text-align: center;
     margin-right: 20px;
 }
@@ -153,16 +130,13 @@ footer ul {
     transition: .5s ease all;
     min-width: 40px;
 }
-
-.lang-wrap:hover {
+.lang-wrap:hover{
     background: #faa41c;
 }
-
 .lang-wrap:hover a {
     color: #6f6f6f;
     text-decoration: none;
 }
-
 .lang-wrap a {
     color: #ffa71b;
     text-decoration: none;
@@ -178,7 +152,6 @@ footer ul {
     padding: 0;
     width: 100%;
 }
-
 .authorization {
     border: 2px solid #ffa71b;
     color: #ffa71b;
@@ -188,66 +161,55 @@ footer ul {
     text-transform: uppercase;
     width: 83%;
 }
-
-.btn-enter, .btn-registration {
+.btn-enter,.btn-registration{
     text-decoration: none;
 }
 
-.user-action {
+.user-action{
     text-align: center;
     min-width: 145px;
     padding: 0;
 }
-
-.user-action a {
+.user-action a{
     font-size: 16px;
 }
-
-.pay-title {
+.pay-title{
     background: #232220;
     color: #8c8a8a;
     margin: 0;
     padding: 32px 55px;
     text-align: center;
 }
-
-.pay-systems {
+.pay-systems{
     margin: 0;
 }
-
-.pay-systems li {
+.pay-systems li{
     list-style: none;
     margin: 0 3%;
     padding: 28px 0;
     display: inline-block;
 }
-
-.payment-wrap .pay-title {
+.payment-wrap .pay-title{
     float: left;
 }
-
 .clearfix:after {
     content: "";
     display: table;
     clear: both;
 }
-
-.article-wrap h1 {
+.article-wrap h1{
     color: #f7a124;
     margin: 3%;
 }
-
-.title {
+.title{
     color: #f7a124;
 }
-
-.article-wrap {
+.article-wrap{
     color: #8c8a8a;
     line-height: 24px;
     min-height: 425px;
     padding: 1% 3%;
 }
-
 .col-title {
     color: #ffa71b;
     display: block;
@@ -255,16 +217,14 @@ footer ul {
     margin-bottom: 5px;
 }
 
-.menu-wrap {
+.menu-wrap{
     margin-right: 20px;
     text-align: center;
 }
-
-.main-menu {
+.main-menu{
     padding: 0 0 0 20px;
     margin: 52px auto;
 }
-
 .main-menu .item-main {
     float: left;
     list-style-type: none;
@@ -272,67 +232,53 @@ footer ul {
     margin: 0 2px 0 0;
 
 }
-
 .main-menu .item-main .main-link {
     margin: 0 14px 0 0;
     padding: 3px;
     color: #845905;
 }
-
 .main-menu .item-main .main-link:hover {
     text-decoration: none;
     color: #ffa71b;
 }
-
-.footer-coloms {
+.footer-coloms{
     margin: 20px 0;
 }
-
-.copyright {
+.copyright{
     padding: 7px 0;
     text-align: center;
     margin-bottom: 0px;
     font-size: 11px;
 }
-
-.copyright p {
+.copyright p{
     margin-bottom: 0px;
 }
 
-.info-text {
+.info-text{
     margin: 0;
-    height: 100%;
+    height:100%;
 }
-
-.info-wrap {
+.info-wrap{
     width: 100%;
     height: 100%;
 }
 
-.pic-wrap {
+.pic-wrap{
     min-width: 315px;
     height: 100%;
     padding-left: 0;
 }
 
-.info {
+.info{
     margin-bottom: 1%;
     height: initial;
 }
-
-@media screen and (min-width: 1000px) {
-    .info {
+@media screen and (min-width: 1000px){
+    .info{
         height: 368px;
     }
 }
 
-/*.authorization-wrap{
-	background: rgba(0, 0, 0, 0.7);
-	left: 0;
-	position: absolute;
-	top: 0;
-	width: 100%;
-	}*/
 
 .popup-close {
     color: #f7a124;
@@ -343,8 +289,7 @@ footer ul {
     right: 0;
     top: 0px;
 }
-
-.popup-wrap {
+.popup-wrap{
     background: rgba(0, 0, 0, 0.7);
     display: none;
     left: 0;
@@ -353,7 +298,6 @@ footer ul {
     width: 100%;
     height: 3000px;
 }
-
 .popup-holder {
     background: #2a2a2a;
     color: #8a8888;
@@ -371,55 +315,49 @@ footer ul {
     position: relative;
     width: 305px;
 }
-
 .right-side-of-registration {
     margin-left: 36px;
 }
-
-.popup-holder .error-label, .popup-holder .error {
+.popup-holder .error-label, .popup-holder .error{
     font-size: 13px;
     line-height: 15px;
-    color: red !important;
+    color:  red!important;
     margin: 0 0 5px;
 }
-
 .popup-holder .shell-for-input {
     text-align: left;
 }
+
 
 .shell-for-input {
     margin-top: 20px;
     position: relative;
 }
-.shell-for-input label {
+.shell-for-input label{
     font-weight: normal;
     display: flex;
 }
-
 .shell-for-input .input-label {
     font-weight: normal;
-    color: #949494;
+    color: #777777;
     margin-left: -295px;
     margin-top: 12px;
 }
-
 .forget-link {
     display: block;
     font-size: 14px;
     margin-top: 15px;
     text-align: left;
 }
-
 .authorization-wrap a {
     color: #ffa71b;
     text-decoration: none;
 }
-
-.authorization-wrap a:hover {
+.authorization-wrap a:hover{
     text-decoration: underline;
 }
 
-input[type="button"], .btn-action, .sign-in-btn, .sign-up-btn {
+input[type="button"], input[type="submit"], input[type="reset"],.btn-action, .sign-in-btn, .sign-up-btn{
     background: transparent none repeat scroll 0 0;
     border: 2px solid #ffa71b;
     border-radius: 2px;
@@ -433,12 +371,12 @@ input[type="button"], .btn-action, .sign-in-btn, .sign-up-btn {
     padding: 12px 30px;
 }
 
-input[type="button"]:hover, .sign-in-btn:hover, .sign-up-btn:hover, .btn-action:hover {
+input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover, .sign-in-btn:hover, .sign-up-btn:hover, .btn-action:hover{
     background: #ffa71b none repeat scroll 0 0;
     color: #2a2a2a;
 }
 
-input[type="text"], input[type="search"], .popup-holder input[type="password"] {
+input[type="text"], input[type="search"],  input[type="password"] {
     background: #565656;
     color: #fff;
     border: 2px solid transparent;
@@ -448,19 +386,15 @@ input[type="text"], input[type="search"], .popup-holder input[type="password"] {
     font-size: 16px;
     box-sizing: border-box;
 }
-
-input:focus, .btn-action:focus {
+input:focus, .btn-action:focus{
     outline: none;
 }
-
-input[type="text"]:focus, input[type="search"]:focus, .popup-holder input[type="password"]:focus {
+input[type="text"]:focus,input[type="search"]:focus, input[type="password"]:focus{
     border: 2px solid #ffa71b;
 }
-
-input[type="search"] {
+input[type="search"]{
     height: 30px;
 }
-
 .popup-holder input.error[type="text"], .popup-holder input.error[type="password"], .popup-holder input.error[type="email"] {
     border: 2px solid maroon;
 }
@@ -469,13 +403,11 @@ input[type="search"] {
     font-size: 12px;
     color: #fff;
 }
-
 .head-enter-registration {
     font-size: 20px;
     color: #e2961d;
     margin-top: 9px;
 }
-
 .authorization-wrap .buttons {
     cursor: pointer;
     font-size: 23px;
@@ -488,30 +420,25 @@ input[type="search"] {
     text-align: center;
     margin-left: -172px;
 }
-
-.register-wrap {
+.register-wrap{
     left: 50%;
     top: 80px;
     text-align: center;
     margin-left: -353px;
 }
-
 .hidden {
     display: none;
 }
-
 .left-side-of-registration, .right-side-of-registration {
     float: left;
     margin-top: 10px;
     position: relative;
     width: 305px;
 }
-
 .right-side-of-registration {
     margin-left: 36px;
 }
-
-.enter {
+.enter{
     width: 300px;
 }
 
@@ -523,12 +450,10 @@ input[type="search"] {
     margin: 20px 0 0 0;
     position: relative;
 }
-
-.confirmation label {
+.confirmation label{
     font-weight: normal;
     display: inline;
 }
-
 .common-select select {
     background: transparent;
     border: none;
@@ -539,11 +464,9 @@ input[type="search"] {
     line-height: 41px;
     padding-left: 12px;
 }
-
 .fake-width-currency {
     width: 322px;
 }
-
 option {
     font-weight: normal;
     display: block;
@@ -551,125 +474,141 @@ option {
     min-height: 1.2em;
     padding: 0px 2px 1px;
 }
-
 .common-select {
     background: url(../images/arrow-down.png) no-repeat right #565656;
     overflow: hidden;
     outline: hidden;
 }
-
-.common-select select:focus {
+.common-select select:focus{
     outline: none;
 }
-
-.connect-us {
+.connect-us{
     width: 50px;
     height: 50px;
     margin-right: 20px;
     float: left;
 }
-
-.connect-col {
+.connect-col{
     width: 250px;
 }
-
-@media (max-width: 480px) {
+@media (max-width: 480px){
     .user-actions {
         margin: 15px auto;
         width: 194px;
     }
 }
-
-.navbar-toggle {
+.navbar-toggle{
     border-color: #ffa71b;
 }
-
 .navbar-toggle .icon-bar {
-    background-color: #ffa71b;
+    background-color:#ffa71b;
 }
-
-.age-limit {
+.age-limit{
     width: 45px;
     height: 45px;
 }
-
-.last-news-title {
+.last-news-title{
     color: #ffa71b;
     font-size: 21px;
     margin: 5px 0 0 400px;
 }
-
-.last-news {
+.last-news{
     padding-top: 15px;
 }
-
-.logout-form [type="button"] {
+.logout-form [type="button"]{
     float: left;
     margin: 10px;
     padding: 5px 15px;
 }
-
-#logout-check {
+#logout-check{
     left: 50%;
     top: 80px;
     text-align: center;
     margin-left: -226px;
 }
-
-.logout-close a:hover {
-    text-decoration: none;
+.logout-close a:hover{
+    text-decoration:none;
 }
-
-.logout-form h3 {
+.logout-form h3{
     color: #f7a124;
     margin: 3%;
     font-weight: normal;
     color: white;
 }
-
 /*-------NEWS-----------------------------------------------------------------------*/
 
-.news-wrap, .faq-wrap {
+.faq-wrap{
     padding: 20px 50px;
 }
-
-.news-post {
+.news-post{
     height: 110px;
     padding: 12px 10px;
     background: #232220;
 }
-
-.post-pic-wrap {
+.post-pic-wrap{
 
     height: 100%
 }
-
-.post-title {
+.post-title{
     font-size: 21px;
 }
-
-.select-news {
+.select-news{
     padding: 30px 190px;
+    margin-bottom: 20px;
 }
-
-.select-news-title {
+.select-news-title{
     color: #ffa71b;
     font-size: 21px;
     float: left;
-    margin: 7px 20px 0 0;
+    margin: 7px 20px 0  0;
 }
-
-.news input[type="button"], .btn-action {
+.news input[type="button"], .btn-action{
     font-size: 14px;
     transition: all 0.5s ease 0s;
     padding: 5px 15px;
     margin: 5px 0 0 0;
 }
 
-.select-news-date {
-    width: 200px;
+.select-news-date{
+    width:200px;
     float: left;
     margin-right: 20px;
+}
+.post-title input[type="submit"]{
+    margin: 0;
+    border: 0;
+    padding: 0 0 10px 0;
+}
+.post-title input[type="submit"]:hover{
+    color:white;
+    background: transparent none repeat scroll 0 0;
+}
+
+.news-item{
+    margin-right: 20px;
+    margin-bottom: 10px;
+    padding: 10px;
+    max-width: 314px;
+}
+.news-item:last-child {
+    margin-right:0;
+
+}
+
+@media screen and (max-width: 1000px){
+    .news-item{
+        max-width: 500px;
+        margin-left:20px;
+        margin-right:0;
+    }
+    .news-row.row{
+        padding: 0;
+    }
+}
+
+.news-row.row{
+    padding-left: 0;
+    padding-right: 0;
 }
 
 /*-----------------FAQ------------------------------------------------------------------*/
@@ -679,143 +618,188 @@ option {
 .faq-item-title{
     color: #ffa71b;
     font-size: 21px;
-    margin: 5px 0  0 20px;
+    margin: 5px 35px  10px 35px;
+    float: left;
 }
 .faq-item-title:hover{
     text-decoration:underline;
     cursor: pointer;
 }
-
-.faq-item-answer {
-    font-size: 20px;
-    margin-left: 20px;
+.faq-item-answer{
+    font-size:20px;
+    margin-left: 32px;
 }
-
-.post .post-title {
+.post .post-title{
     color: #ffa71b;
     font-size: 30px;
     margin-bottom: 10px;
 }
-
-.post {
+.post{
     padding: 20px 90px;
 }
-
-.post-info {
+.post-info{
     margin-bottom: 30px;
+}
+.input-text {
+    padding: 15px 16px;
+    border: 1px solid #ccc;
+    width: 100%;
+    height: 50px;
+    display: block;
+    border-radius: 4px;
+    font-size: 15px;
+    color: #aaa;
+    margin: 0 0 15px 0;
+}
+.input-text {
+    background: transparent;
+}
+.input-text.text-area {
+    height: 230px;
+    resize: none;
+    overflow: auto;
+}
+.input-text:focus, .create-faq input[type="text"]:focus  {
+    border: 1px solid #fff;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(124, 197, 118, 0.3);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(124, 197, 118, 0.3);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(124, 197, 118, 0.3);
+}
+.create-faq-wrap{
+    padding: 20px 20px 1px 20px;
+    text-align: center;
+}
+.create-faq{
+    width: 70%;
+    margin-left: 16%;
+    margin-bottom: 3%;
+}
+.create-faq-title{
+    font-size: 23px;
+    margin: 20px 0 30px 0px;
+}
+.create-faq-title:hover{
+    color:#fff;
+    cursor: pointer;
+}
+.faq-edit-btn-group{
+    margin-top:5px
+}
+
+.faq-edit-btn-group button{
+    background: transparent;
+    border: 0;
+}
+.btn-edit:hover{
+    color: #3a9226;
+}
+.btn-delete:hover{
+    color: #860505;
 }
 
 /*-----------------PROFILE-------------------------------------------------------------*/
 .user-profile {
-    height: 500px;
-}
+    height:500px;
 
-.user-menu-wrap, .user-info-wrap, .user-menu, .user-info, .add-money-wrap, .add-money {
+}
+.user-menu-wrap, .user-info-wrap, .user-menu, .user-info, .add-money-wrap, .add-money, .edit-info-wrap, .edit-info{
     height: 100%;
 }
-
-.user-menu-wrap {
+.user-menu-wrap{
     padding: 0;
 }
-
-.user-info-wrap {
+.user-info-wrap, .edit-info-wrap{
     padding-left: 20px;
     padding-right: 0;
 }
-
-.user-info {
+.user-info{
     padding-top: 20px;
 }
-
-.user-avatar {
+.user-avatar{
     padding: 20px;
 }
-
-.avatar-pic {
+.avatar-pic{
     margin: 10px 30px;
     border-radius: 50px;
     width: 200px;
 }
-
-.btn-action {
+.btn-action{
     margin: 20px auto 0;
 }
 
-.user-meta {
+.user-meta{
     padding: 50px 20px 0;
 }
 
-.meta-label {
+.meta-label{
     color: #ffa71b;
     font-size: 17px;
     margin-bottom: 10px;
 }
-
-.meta-value {
+.meta-value{
     font-size: 17px;
     margin-bottom: 10px;
     color: #fff;
 }
 
-.label-row {
-    float: left;
-    margin-right: 25px;
+.change-meta{
+    margin-top: 73%;
 }
-
-.change-meta {
-    margin-top: 16%;
-}
-
-.user-menu {
+.user-menu{
     padding: 30px 10px;
 }
-
-.user-menu-item {
+.user-menu-item{
     margin: 0 10px 13px 10px;
     font-size: 20px;
 }
-
-.user-menu a {
-    color: #845905;
+.user-menu a{
+    color:#845905;
 }
-
-.user-menu a:hover {
+.user-menu a:hover{
     color: #ffa71b;
     text-decoration: none;
 }
-
-.refill-cash {
+/*------------ REFILL CASH ------------------------------------------------------------*/
+.user-refill-cash{
+    height: 305px;
+}
+.refill-cash{
     padding: 45px 65px;
 
 }
-
-.refill-cash input, .refill-cash .common-select {
+.refill-cash input, .refill-cash .common-select{
     width: 296px;
     height: 36px;
 }
 
-.refill-cash .btn-action {
+.refill-cash .btn-action{
     margin-top: 40px;
 }
 
-.refill-cash .meta-label {
+.refill-cash .meta-label{
     margin-bottom: 26px;
 }
-
-.refill-cash .meta-value {
+.refill-cash .meta-value{
     margin-bottom: 15px;
 }
-
-.games-menu-wrap {
+.refill-cash input[type="reset"], .refill-cash input[type="submit"] {
+    float: left;
+    margin: 10px;
+    margin-top: 40px;
+    padding: 5px 15px;
+    max-width: 140px;
+}
+/*------------ GAMES ------------------------------------------------------------*/
+.games-menu-wrap{
     padding: 0;
     height: 100%;
 }
 
-.games-table-wrap {
+.games-table-wrap{
     padding-right: 0;
 }
-
-.league-title {
+.league-title{
     background: #ffa71b;
     height: 40px;
     color: black;
@@ -823,19 +807,15 @@ option {
     font-size: 20px;
     margin-bottom: 18px;
 }
-
-th {
+th{
     font-weight: normal;
 }
-
-.games-menu {
+.games-menu{
     padding: 20px;
 }
-
-.games-menu ul {
+.games-menu ul{
     padding-left: 0;
 }
-
 .games-menu ul li {
     position: relative;
     list-style-type: none;
@@ -843,34 +823,29 @@ th {
     color: #fff;
     padding: 8px 17px;
 }
-
 .games-menu ul li:hover {
-    background-color: #232323;
+    background-color:#232323;
     cursor: pointer;
 }
-
-.games-menu a {
+.games-menu a{
     font-size: 20px;
 }
-
 .games-menu a span {
     font-size: 13px;
     margin-left: -6px;
 }
-
-.games-menu a:hover {
+.games-menu a:hover{
     text-decoration: none;
 }
 
-.matches-title {
+.matches-title{
     padding-bottom: 10px;
 }
 
-.games-wrap select {
+.games-wrap select{
     background: #565656;
     color: #fff;
 }
-
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
     z-index: 2;
     color: #252424;
@@ -879,7 +854,6 @@ th {
     border-color: #ffa71b;
     outline: none;
 }
-
 .pagination > li > a, .pagination > li > span {
     position: relative;
     float: left;
@@ -892,14 +866,103 @@ th {
     border: 1px solid #2f2f2f;
     outline: none;
 }
-
 .pagination > .disabled > span, .pagination > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination > .disabled > a, .pagination > .disabled > a:hover, .pagination > .disabled > a:focus {
     color: #f7f7ff;
     outline: none;
     background-color: #565656;
     border-color: #2f2f2f;
 }
-
-.news-pagination{
-    margin: 10px 0;
+.edit-info-wrap input{
+    width: 350px;
 }
+.edit-info-wrap input[type="submit"]{
+    width: auto;
+    margin-top: 47px;
+}
+.edit-label{
+    margin-right: 30px;
+    margin-top: 12px;
+    color: #fff;
+    width: 170px;
+}
+.edit-input-label{
+    font-weight: normal;
+    color: #949494;
+    margin-left: -330px;
+    margin-top: 12px;
+}
+.edit-info{
+    padding: 20px 50px;
+}
+.user-edit-profile{
+    height: 700px;
+}
+
+.change-meta a:hover{
+    text-decoration: none;
+    color: #2a2a2a;
+}
+
+.edit-info .input-group{
+    width: 350px;
+
+}
+.credit-card .form-control, .credit-card .input-group-addon {
+    border-radius: 0;
+    background: #565656;
+    border:0;
+}
+.edit-info .add-credit-card{
+    margin: 7px 0 0 4px;
+    height: 28px;
+    width: 30px;
+    background: #0e0e0e;
+    border: 2px solid;
+    color: #927b56;
+}
+.edit-info .add-credit-card:hover{
+    color: #ffa71b;
+}
+.edit-info .add-credit-card:focus{
+    outline: none;
+}
+
+.edit-info input[type="reset"], .edit-info input[type="submit"] {
+    float: left;
+    margin: 10px;
+    margin-top: 40px;
+    padding: 5px 15px;
+    max-width: 140px;
+}
+.edit-info input[type="button"]{
+    border: 0;
+    width: 66px;
+    margin: 0;
+    font-size: 14px;
+    padding: 6px;
+}
+.edit-info input[type="button"]:hover{
+    background: #565656;
+    color: #ffa71b;
+    text-decoration: underline;
+}
+
+.edit-info .col-lg-3, .edit-info .col-lg-7, .edit-info .col-lg-2{
+    padding: 0;
+}
+.credit-card{
+    margin-bottom: 10px;
+}
+
+.edit-info-wrap{
+    height:700px;
+}
+
+
+/*.authorization-wrap{
+	background: rgba(0, 0, 0, 0.7);
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	}*/

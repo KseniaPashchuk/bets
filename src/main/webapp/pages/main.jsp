@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Title</title>
@@ -23,7 +24,7 @@
                     <a href="${pageContext.servletContext.contextPath}/controller?command=show_faq" class="main-link">FAQ</a>
                 </li>
                 <li class="item-main">
-                    <a href="${pageContext.request.contextPath}/controller?command=show_profile" class="main-link">Профиль</a>
+                    <a href="${pageContext.servletContext.contextPath}/controller?command=show_user_profile" class="main-link">Профиль</a>
                 </li>
             </ul>
         </div>
@@ -39,11 +40,10 @@
     </header>
 
     <section class = "content clearfix">
-
         <div class = "info-wrap clearfix">
             <div class="info row">
                 <div class = "pic-wrap col-lg-7">
-                    <img class ="pic" src="images/5.jpg" alt="football">
+                    <img class ="pic" src="../images/5.jpg" alt="football">
                 </div>
                 <div class="info-text colored-block col-lg-5">
                     <article class="article-wrap">
@@ -133,18 +133,18 @@
             <div class="connect-col">
                 <ul>
                     <li>
-                        <a href="javascript://"><img src="images/twitter.png" class="connect-us"></a>
+                        <a href="javascript://"><img src="../images/twitter.png" class="connect-us"></a>
                     </li>
                     <li>
-                        <a href="javascript://"> <img src="images/youtube.png" class="connect-us"></a>
+                        <a href="javascript://"> <img src="../images/youtube.png" class="connect-us"></a>
                     </li>
                     <li>
-                        <a href="javascript://"> <img src="images/facebook.png" class="connect-us"></a>
+                        <a href="javascript://"> <img src="../images/facebook.png" class="connect-us"></a>
                     </li>
                 </ul>
             </div>
             <div class="age-limit-col">
-                <a href="javascript://"><img src="images/ft_18.png" class="age-limit" ></a>
+                <a href="javascript://"><img src="../images/ft_18.png" class="age-limit" ></a>
             </div>
         </section>
         <section class="copyright colored-block">
@@ -154,10 +154,10 @@
     </footer>
     <div class="popup-wrap" id="logout-popup">
         <div class="popup-holder" id="logout-check" style="display: none">
-            <form class="logout-form clearfix" id="logout" method="GET" action="controller">
+            <form action="${pageContext.servletContext.contextPath}/controller" method="GET" class="logout-form clearfix" id="logout">
                 <h3>Вы действительно хотите выйти?</h3>
                 <div class="btn-group">
-                    <input type="hidden" name="command" value="logout" />
+                    <input type="hidden" name="command" value="log_out" />
                     <input class="button-logout" id="btn-logout" type="submit" value='Выйти'>
                     <input class="button-logout" type="button" value='Отмена' onclick="closeLogoutPopup()">
                 </div>

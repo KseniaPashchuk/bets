@@ -9,12 +9,13 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static com.epam.bets.JspConstant.MAIN_PAGE;
-import static com.epam.bets.JspConstant.PIECE_OF_NEWS_PAGE;
+import static com.epam.bets.constant.PageConstant.MAIN_PAGE;
+import static com.epam.bets.constant.PageConstant.PIECE_OF_NEWS_PAGE;
 
 public class ShowPieceOfNewsCommand implements AbstractCommand{
-    private static final String PARAM_NAME_TITLE = "newsTitle";
-    private static final String PARAM_NAME_NEWS = "news";
+    private static final String PARAM_NAME_TITLE = "title";
+    private static final String PARAM_NAME_DATE = "date";
+    private static final String PARAM_NAME_TEXT = "text";
     private static final String NEXT_PAGE = PIECE_OF_NEWS_PAGE;
     private static final String ERROR_PAGE = MAIN_PAGE;
     private static final Logger LOGGER = LogManager.getLogger(SignInCommand.class);
@@ -27,14 +28,16 @@ public class ShowPieceOfNewsCommand implements AbstractCommand{
         try {
             news = receiver.showPieceOfNews(request.getParameter(PARAM_NAME_TITLE));
             if (news != null) {
-                request.setAttribute(PARAM_NAME_NEWS, news);
+                request.setAttribute(PARAM_NAME_TITLE, news.getTitle());
+                request.setAttribute(PARAM_NAME_DATE, news.getDate());
+                request.setAttribute(PARAM_NAME_TEXT, news.getText());
                 navigator = new PageNavigator(NEXT_PAGE, PageType.FORWARD);
             } else {
                 navigator = new PageNavigator(ERROR_PAGE, PageType.FORWARD);
             }
 
         } catch (ReceiverException e) {
-            LOGGER.log(Level.ERROR, e);
+            LOGGER.log(Level.ERROR, e, e);
             navigator = new PageNavigator(ERROR_PAGE, PageType.FORWARD);
         }
         return navigator;

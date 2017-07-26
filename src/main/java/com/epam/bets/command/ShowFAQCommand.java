@@ -10,8 +10,10 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static com.epam.bets.JspConstant.FAQ_PAGE;
-import static com.epam.bets.JspConstant.MAIN_PAGE;
+import static com.epam.bets.constant.ErrorConstant.NO_FAQ_ERROR;
+import static com.epam.bets.constant.ErrorConstant.NO_FAQ_MESSAGE;
+import static com.epam.bets.constant.PageConstant.FAQ_PAGE;
+import static com.epam.bets.constant.PageConstant.MAIN_PAGE;
 
 
 public class ShowFAQCommand implements AbstractCommand {
@@ -20,8 +22,7 @@ public class ShowFAQCommand implements AbstractCommand {
     private static final String NEXT_PAGE = FAQ_PAGE;
     private static final String ERROR_PAGE = MAIN_PAGE;
     private static final String PARAM_NAME_FAQ_LIST = "faqList";
-    private static final String NO_FAQ_ERROR = "noFAQ";
-    private static final String NO_FAQ_MESSAGE = "no_faq";
+
     private FAQReceiverImpl receiver = new FAQReceiverImpl();
 
     @Override
@@ -39,7 +40,7 @@ public class ShowFAQCommand implements AbstractCommand {
             }
 
         } catch (ReceiverException e) {
-            LOGGER.log(Level.ERROR, e);
+            LOGGER.log(Level.ERROR, e, e);
             request.setAttribute(NO_FAQ_ERROR, NO_FAQ_MESSAGE);
             navigator = new PageNavigator(ERROR_PAGE, PageType.FORWARD);
         }

@@ -16,7 +16,6 @@ import java.util.List;
 
 public class NewsDAOImpl extends NewsDAO {
 
-    private static final Logger LOGGER = LogManager.getLogger(NewsDAOImpl.class);
     private static final String SELECT_ALL_NEWS =
             "SELECT news_id, title, news_date, text FROM news";
     private static final String SELECT_NEWS_BY_ID =
@@ -105,28 +104,28 @@ public class NewsDAOImpl extends NewsDAO {
     }
 
     @Override
-    public boolean create(News entity) throws DaoException {
+    public int create(News entity) throws DaoException {
         try (PreparedStatement statementNews = connection.prepareStatement(CREATE_NEWS)) {
             statementNews.setString(1, entity.getTitle());
             statementNews.setDate(2, java.sql.Date.valueOf(entity.getDate()));
             statementNews.setString(3, entity.getText());
             statementNews.executeUpdate();
-            return true;
+            return 1;
         } catch (SQLException e) {
             if(e.getErrorCode() == EXISTING_ENTITY_ERROR_CODE){
-                return false;
+                return 0;
             }
             throw new DaoException("Can't create news", e);
         }
     }
 
     @Override
-    public boolean update(News news, int id) throws DaoException {
+    public boolean update(News news) throws DaoException {
         try (PreparedStatement statementNews = connection.prepareStatement(UPDATE_NEWS)) {
             statementNews.setString(1, news.getTitle());
             statementNews.setDate(2, java.sql.Date.valueOf(news.getDate()));
             statementNews.setString(3, news.getText());
-            statementNews.setInt(4, id);
+            statementNews.setInt(4, news.getId());
             statementNews.executeUpdate();
             return true;
         } catch (SQLException e) {

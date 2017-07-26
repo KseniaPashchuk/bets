@@ -1,6 +1,8 @@
 package com.epam.bets.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+
 
 public class User extends Entity {
     private int id;
@@ -8,13 +10,15 @@ public class User extends Entity {
     private String lastName;
     private String login;
     private String password;
-    private String creditCard;
+    private BigDecimal balance;
+    private CreditCards creditCards;
     private UserRole role;
     private LocalDate birthDate;
     private String avatarUrl;
     private final String defaultAvatar = "defaultUser.png";
 
     public User() {
+        balance = new BigDecimal("0");
         role = UserRole.USER;
         avatarUrl = defaultAvatar;
     }
@@ -59,12 +63,21 @@ public class User extends Entity {
         this.password = password;
     }
 
-    public String getCreditCard() {
-        return creditCard;
+    public BigDecimal getBalance() {
+        return balance;
     }
 
-    public void setCreditCard(String creditCard) {
-        this.creditCard = creditCard;
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+    public CreditCards getCreditCards() {
+        return creditCards;
+    }
+
+    public void setCreditCards(CreditCards creditCards) {
+        this.creditCards = creditCards;
+        this.creditCards.setUserId(this.id);
     }
 
     public UserRole getRole() {

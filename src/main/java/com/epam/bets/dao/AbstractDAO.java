@@ -31,9 +31,9 @@ public abstract class AbstractDAO<T extends Entity> implements AutoCloseable {
 
     public abstract boolean delete(int id) throws DaoException;
 
-    public abstract boolean create(T entity) throws DaoException;
+    public abstract int create(T entity) throws DaoException;
 
-    public abstract boolean update(T entity, int id) throws DaoException;
+    public abstract boolean update(T entity) throws DaoException;
 
     public void close() {//TODO AKS
         try {
@@ -42,7 +42,7 @@ public abstract class AbstractDAO<T extends Entity> implements AutoCloseable {
                 connection = null;
             }
         } catch (SQLException e) {
-            LOGGER.log(Level.ERROR, "Can't close connection " + e);
+            LOGGER.log(Level.ERROR, "Can't close connection " + e, e);
         }
     }
 

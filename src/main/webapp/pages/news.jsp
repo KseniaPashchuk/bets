@@ -16,7 +16,7 @@
     <script type="text/javascript" src="../js/moment.js"></script>
     <script type="text/javascript" src="../js/bootstrap-datetimepicker.js"></script>
     <script type="text/javascript" src="../js/index.js"></script>
-    <script type="text/javascript" src="../js/news.js"></script>
+    <script type="text/javascript" src="../js/newsHelper.js"></script>
 
 </head>
 <body>
@@ -142,7 +142,7 @@
                 <h3>Вы действительно хотите выйти?</h3>
                 <div class="btn-group">
                     <input type="hidden" name="command" value="logout"/>
-                    <input class="button-logout" id="btn-logout" type="button" value='Выйти'>
+                    <input class="button-logout" id="btn-logout" type="submit" value='Выйти'>
                     <input class="button-logout" type="button" value='Отмена' onclick="closeLogoutPopup()">
                 </div>
             </form>

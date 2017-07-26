@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.epam.bets.JspConstant.SERVER_ERROR_PAGE;
+import static com.epam.bets.constant.PageConstant.SERVER_ERROR_PAGE;
 
 /**
  *

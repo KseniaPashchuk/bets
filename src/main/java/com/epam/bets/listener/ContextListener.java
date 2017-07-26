@@ -14,7 +14,8 @@ public class ContextListener implements ServletContextListener {
     private static final Logger LOGGER = LogManager.getLogger(ContextListener.class);
     public void contextInitialized(ServletContextEvent ev) {
         ConnectionPool.getInstance();
-        LOGGER.log(Level.INFO, "ConnectionPool was initialized");
+        ev.getServletContext().log("ConnectionPool was initialized");
+
     }
 
     public void contextDestroyed(ServletContextEvent ev) {

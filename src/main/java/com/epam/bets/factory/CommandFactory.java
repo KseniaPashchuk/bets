@@ -2,7 +2,6 @@ package com.epam.bets.factory;
 
 import com.epam.bets.command.AbstractCommand;
 import com.epam.bets.command.CommandType;
-import com.epam.bets.command.EmptyCommand;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,7 +10,7 @@ public class CommandFactory {
     private static final Logger LOGGER = LogManager.getLogger(CommandFactory.class);
 
     public AbstractCommand initCommand(String cmd) {
-        AbstractCommand command = new EmptyCommand();
+        AbstractCommand command = null;
         try {
             CommandType cmdEnum = CommandType.valueOf(cmd.toUpperCase());
             command = cmdEnum.getCommand();

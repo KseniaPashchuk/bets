@@ -70,24 +70,25 @@ public class FaqDAOImpl extends FaqDAO {
     }
 
     @Override
-    public boolean create(FAQ entity) throws DaoException {
+    public int create(FAQ entity) throws DaoException {
         try (PreparedStatement statementFAQ = connection.prepareStatement(CREATE_FAQ)) {
             statementFAQ.setString(1, entity.getQuestion());
             statementFAQ.setString(2, entity.getAnswer());
             statementFAQ.executeUpdate();
-            return true;
+            return 1;
         } catch (SQLException e) {
             if(e.getErrorCode() == EXISTING_ENTITY_ERROR_CODE){
-                return false;
+                return 0;
             }
             throw new DaoException("Can't create faq", e);
         }
     }
 
     @Override
-    public boolean update(FAQ entity, int id) throws DaoException {
+    public boolean update(FAQ entity) throws DaoException {
         try (PreparedStatement statementNews = connection.prepareStatement(UPDATE_FAQ)) {
             statementNews.setString(1, entity.getAnswer());
+            statementNews.setString(2, entity.getQuestion());
             statementNews.executeUpdate();
             return true;
         } catch (SQLException e) {

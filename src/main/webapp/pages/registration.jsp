@@ -25,8 +25,8 @@
             <span>/</span>
             <a class="btn-registration" href="javascript:showRegisterPopup()" style="color: #ffa71b">Регистрация</a>
         </div>
-        <form class="enter" id="login_form" onsubmit="validateEnter(this.form)" method="POST" action="controller">
-            <input type="hidden" name="command" value="signin"/>
+        <form class="enter" id="login_form" onsubmit="validateEnter(this.form)" method="POST" action="${pageContext.servletContext.contextPath}/controller">
+            <input type="hidden" name="command" value="sign_in"/>
             <div class="head-enter-registration">Вход в систему</div>
             <label class="hidden error-label" id="login-error">Неправильный логин или пароль!</label>
             <div class="shell-for-input">
@@ -52,8 +52,8 @@
             <span>/</span>
             <a class="btn-registration" href="javascript:showRegisterPopup()" style="color: white">Регистрация</a>
         </div>
-        <form class="registration" id="reg_form" onsubmit="validateEnter(this.form)" method="POST" action="controller">
-            <input type="hidden" name="command" value="signup"/>
+        <form class="registration" id="reg_form" onsubmit="validateEnter(this.form)" method="POST" action="${pageContext.servletContext.contextPath}/controller">
+            <input type="hidden" name="command" value="sign_up"/>
             <div class="about-registration">
                 <div class="head-enter-registration">Регистрация пользователя</div>
                 <div class="necessarily">Все поля формы обязательны для заполнения!</div>
@@ -112,7 +112,7 @@
                     </div>
                     <div class="shell-for-input clearfix">
                         <div class="select-birth-date input-group date" id='select-birth-date'>
-                            <input type="text" class="form-control" name="birth_date"/>
+                            <input type="text" class="form-control" name="birth_date" placeholder="dd/mm/yyyy "/>
                             <span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>

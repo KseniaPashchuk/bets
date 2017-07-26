@@ -8,7 +8,11 @@ public interface UserReceiver extends Receiver{
 
     User signIn(String login, String password) throws ReceiverException;
 
-    boolean signUp(User user) throws ReceiverException;
+    int signUp(User user) throws ReceiverException;
 
-    User showProfileInfo (String login) throws ReceiverException;
+    User showProfileInfo (int userId) throws ReceiverException;
+
+    boolean editProfile(User user) throws ReceiverException;
+
+    boolean editPassword(String login, String oldPassword, String newPassword) throws ReceiverException;
 }

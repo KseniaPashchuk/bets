@@ -8,9 +8,11 @@ import com.epam.bets.pool.ProxyConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,18 +20,18 @@ public class UserDAOImpl extends UserDAO {
 
     private static final Logger LOGGER = LogManager.getLogger(UserDAOImpl.class);
     private static final String SELECT_ALL_USERS =
-            "SELECT user_id, login, first_name, last_name, birth_date, credit_card, role, avatar_url FROM user";
+            "SELECT user_id, login, first_name, last_name, birth_date, role, avatar_url, balance FROM user";
     private static final String SELECT_USER_BY_ID =
-            "SELECT user_id, login, first_name, last_name, birth_date, credit_card, role, avatar_url FROM user WHERE user_id=?";
+            "SELECT user_id, login, first_name, last_name, birth_date, role, avatar_url, balance FROM user WHERE user_id=?";
     private static final String SELECT_USER_BY_LOGIN =
-            "SELECT user_id, login, first_name, last_name, birth_date, credit_card, role, avatar_url FROM user WHERE login=?";
+            "SELECT user_id, login, first_name, last_name, birth_date, role, avatar_url, balance FROM user WHERE login=?";
     private static final String SELECT_PASSWORD_BY_LOGIN =
             "SELECT password FROM user WHERE login=?";
-    private static final String DELETE_USER_BY_ID = "DELETE FROM user WHERE news_id=?";
-    private static final String CREATE_USER = "INSERT INTO user (user_id, login, password, first_name, last_name, birth_date, credit_card, role, avatar_url)" +
+    private static final String DELETE_USER_BY_ID = "DELETE FROM user WHERE user_id=?";
+    private static final String CREATE_USER = "INSERT INTO user (user_id, login, password, first_name, last_name, birth_date, role, avatar_url, balance)" +
             " VALUES( NULL, ?, ?, ?, ?, ?, ?, ?, ?)";
-    private static final String UPDATE_USER_BY_LOGIN = "UPDATE user SET password=?, first_name=?, last_name=?, birth_date=?, credit_card=? WHERE login=?";
-    private static final String UPDATE_USER = "UPDATE user SET password=?, first_name=?, last_name=?, birth_date=?, credit_card=? WHERE user_id=?";
+    private static final String UPDATE_USER = "UPDATE user SET first_name=?, last_name=?, birth_date=? WHERE user_id=?";
+    private static final String UPDATE_USER_PASSWORD = "UPDATE user SET password=? WHERE login=?";
 
     public UserDAOImpl() {
     }
@@ -60,13 +62,13 @@ public class UserDAOImpl extends UserDAO {
                 user = buildUser(resultSet);
             }
         } catch (SQLException e) {
-            throw new DaoException("Can't find user by id", e);// throw new DBException();
+            throw new DaoException("Can't find user by id", e);
         }
         return user;
     }
 
     @Override
-    public User findUserByLogin(String login) throws DaoException {//TODO do like this one!
+    public User findUserByLogin(String login) throws DaoException {
         User user = null;
         try (PreparedStatement statementUser = connection.prepareStatement(SELECT_USER_BY_LOGIN)) {
             statementUser.setString(1, login);
@@ -82,7 +84,7 @@ public class UserDAOImpl extends UserDAO {
 
     @Override
     public String findPasswordByLogin(String login) throws DaoException {
-        String password = "";//TODO
+        String password = "";
         try (PreparedStatement statementUser = connection.prepareStatement(SELECT_PASSWORD_BY_LOGIN)) {
             statementUser.setString(1, login);
             ResultSet resultSet = statementUser.executeQuery();
@@ -108,35 +110,37 @@ public class UserDAOImpl extends UserDAO {
 
 
     @Override
-    public boolean create(User entity) throws DaoException {
-        try (PreparedStatement statementUser = connection.prepareStatement(CREATE_USER)) {
+    public int create(User entity) throws DaoException {
+        try (PreparedStatement statementUser = connection.prepareStatement(CREATE_USER, Statement.RETURN_GENERATED_KEYS)) {
             statementUser.setString(1, entity.getLogin());
             statementUser.setString(2, entity.getPassword());
             statementUser.setString(3, entity.getFirstName());
             statementUser.setString(4, entity.getLastName());
             statementUser.setDate(5, java.sql.Date.valueOf(entity.getBirthDate()));
-            statementUser.setString(6, entity.getCreditCard());
-            statementUser.setString(7, entity.getRole().getStringRepresentation());
-            statementUser.setString(8, entity.getAvatarUrl());
+            statementUser.setString(6, entity.getRole().getStringRepresentation());
+            statementUser.setString(7, entity.getAvatarUrl());
+            statementUser.setBigDecimal(8, entity.getBalance());
             statementUser.executeUpdate();
-            return true;
+            ResultSet generatedKey = statementUser.getGeneratedKeys();
+            if (generatedKey.next()) {
+                return generatedKey.getInt(1);
+            }
         } catch (SQLException e) {
             if (e.getErrorCode() == EXISTING_ENTITY_ERROR_CODE) {
-                return false;
+                return 0;
             }
             throw new DaoException("Can't create user", e);
         }
+        return 0;
     }
 
     @Override
-    public boolean update(User entity, int id) throws DaoException {
+    public boolean update(User entity) throws DaoException {
         try (PreparedStatement statementUser = connection.prepareStatement(UPDATE_USER)) {
-            statementUser.setString(1, entity.getPassword());
-            statementUser.setString(2, entity.getFirstName());
-            statementUser.setString(3, entity.getLastName());
-            statementUser.setDate(4, java.sql.Date.valueOf(entity.getBirthDate()));
-            statementUser.setString(5, entity.getCreditCard());
-            statementUser.setInt(6, id);
+            statementUser.setString(1, entity.getFirstName());
+            statementUser.setString(2, entity.getLastName());
+            statementUser.setDate(3, java.sql.Date.valueOf(entity.getBirthDate()));
+            statementUser.setInt(4, entity.getId());
             statementUser.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -144,14 +148,12 @@ public class UserDAOImpl extends UserDAO {
         }
     }
 
-    public boolean updateByLogin(User entity) throws DaoException {
-        try (PreparedStatement statementUser = connection.prepareStatement(UPDATE_USER_BY_LOGIN)) {
-            statementUser.setString(1, entity.getPassword());
-            statementUser.setString(2, entity.getFirstName());
-            statementUser.setString(3, entity.getLastName());
-            statementUser.setDate(4, java.sql.Date.valueOf(entity.getBirthDate()));
-            statementUser.setString(5, entity.getCreditCard());
-            statementUser.setString(6, entity.getLogin());
+
+    @Override
+    public boolean updatePasswordByLogin(String login, String password) throws DaoException {
+        try (PreparedStatement statementUser = connection.prepareStatement(UPDATE_USER_PASSWORD)) {
+            statementUser.setString(1, password);
+            statementUser.setString(2, login);
             statementUser.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -166,8 +168,8 @@ public class UserDAOImpl extends UserDAO {
         user.setFirstName(resultSet.getString(PARAM_NAME_FIRST_NAME));
         user.setLastName(resultSet.getString(PARAM_NAME_LAST_NAME));
         user.setBirthDate(resultSet.getDate(PARAM_NAME_BIRTH_DATE).toLocalDate());
-        user.setCreditCard(resultSet.getString(PARAM_NAME_CREDIT_CARD));
         user.setRole(UserRole.valueOf(resultSet.getString(PARAM_NAME_ROLE).toUpperCase()));
+        user.setBalance(resultSet.getBigDecimal(PARAM_NAME_BALANCE));
         return user;
     }
 

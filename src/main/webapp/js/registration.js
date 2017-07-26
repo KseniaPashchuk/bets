@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $('#select-birth-date').datetimepicker({
-        format: 'LL'
+        format:'DD/MM/YYYY'
     });
 
     $('input').focus(function () {
