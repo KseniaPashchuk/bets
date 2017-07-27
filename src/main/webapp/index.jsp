@@ -7,10 +7,10 @@
 <c:set var="role" value="${sessionScope.role}"/>
 <c:choose>
     <c:when test="${role == 'USER' || role == 'ADMIN'|| role == 'BOOKMAKER'}">
-        <jsp:forward page="/pages/main.jsp"/>
+        <jsp:forward page="/pages/common/main.jsp"/>
     </c:when>
     <c:otherwise>
-        <jsp:forward page="/pages/registration.jsp"/>
+        <jsp:forward page="/pages/guest/registration.jsp"/>
     </c:otherwise>
 </c:choose>
 </body>

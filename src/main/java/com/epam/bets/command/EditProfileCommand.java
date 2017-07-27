@@ -29,7 +29,7 @@ public class EditProfileCommand implements AbstractCommand {
     private static final String DATE_PATTERN = "dd/MM/yyyy";
     private UserReceiverImpl receiver = new UserReceiverImpl();
     private static final Locale locale = java.util.Locale.US;//TODO
-    private static final Logger LOGGER = LogManager.getLogger(SignInCommand.class);
+    private static final Logger LOGGER = LogManager.getLogger(EditProfileCommand.class);
 
 
     @Override

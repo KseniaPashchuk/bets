@@ -8,7 +8,7 @@ import java.util.List;
 public interface FAQReceiver extends Receiver{
 
     List<FAQ> showAllFAQ()throws ReceiverException;
-    boolean createFAQ()throws ReceiverException;
-    boolean deleteFAQ()throws ReceiverException;
-    boolean editFAQ()throws ReceiverException;
+    boolean createFAQ(FAQ faq)throws ReceiverException;
+    boolean deleteFAQ(String question)throws ReceiverException;
+    boolean editFAQ(FAQ faq)throws ReceiverException;
 }

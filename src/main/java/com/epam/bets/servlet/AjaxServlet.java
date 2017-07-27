@@ -15,7 +15,7 @@ import java.util.List;
 import com.epam.bets.factory.AjaxCommandFactory;
 import com.google.gson.Gson;
 
-@WebServlet("/ajax")
+@WebServlet(name = "AjaxServlet", urlPatterns = {"/ajax"})
 public class AjaxServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -32,6 +32,7 @@ public class UserDAOImpl extends UserDAO {
             " VALUES( NULL, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_USER = "UPDATE user SET first_name=?, last_name=?, birth_date=? WHERE user_id=?";
     private static final String UPDATE_USER_PASSWORD = "UPDATE user SET password=? WHERE login=?";
+    private static final String UPDATE_AVATAR = "UPDATE user SET avatar_url=? WHERE user_id=?";
 
     public UserDAOImpl() {
     }
@@ -161,6 +162,18 @@ public class UserDAOImpl extends UserDAO {
         }
     }
 
+    @Override
+    public boolean changeAvatar(int id, String avatarUrl) throws DaoException {
+        try (PreparedStatement statementUser = connection.prepareStatement(UPDATE_AVATAR)) {
+            statementUser.setString(1, avatarUrl);
+            statementUser.setInt(2, id);
+            statementUser.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            throw new DaoException("Can't update avatar", e);
+        }
+    }
+
     private User buildUser(ResultSet resultSet) throws SQLException {
         User user = new User();
         user.setId(resultSet.getInt(PARAM_NAME_ID));
@@ -170,6 +183,7 @@ public class UserDAOImpl extends UserDAO {
         user.setBirthDate(resultSet.getDate(PARAM_NAME_BIRTH_DATE).toLocalDate());
         user.setRole(UserRole.valueOf(resultSet.getString(PARAM_NAME_ROLE).toUpperCase()));
         user.setBalance(resultSet.getBigDecimal(PARAM_NAME_BALANCE));
+        user.setAvatarUrl(resultSet.getString(PARAM_NAME_AVATAR));
         return user;
     }
 

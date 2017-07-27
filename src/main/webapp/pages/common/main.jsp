@@ -3,20 +3,20 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" >
-    <link rel="stylesheet" type="text/css" href="../css/bets-style.css">
-    <script type="text/javascript" src="../js/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css" >
+    <link rel="stylesheet" type="text/css" href="../../css/bets-style.css">
+    <script type="text/javascript" src="../../js/index.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,500&amp;subset=cyrillic" rel="stylesheet">
 </head>
 <body>
 <div class="full-container">
     <header class="header-wrap row clearfix">
         <div class="logo-wrap colored-block col-lg-3">
-            <a href="${pageContext.servletContext.contextPath}/pages/main.jsp"><img class ="logo-img" src="../images/logo-1.png" alt="bets"></a>
+            <a href="${pageContext.servletContext.contextPath}/pages/common/main.jsp"><img class ="logo-img" src="../../images/logo-1.png" alt="bets"></a>
         </div>
         <div class="menu-wrap colored-block ">
             <ul class="main-menu clearfix">
-                <li class="item-main"><a href="${pageContext.servletContext.contextPath}/pages/news.jsp" class="main-link">Новости</a>
+                <li class="item-main"><a href="${pageContext.servletContext.contextPath}/pages/common/news.jsp" class="main-link">Новости</a>
                 </li>
                 <li class="item-main"><a href="#" class="main-link">Игры</a>
                 </li>
@@ -43,7 +43,7 @@
         <div class = "info-wrap clearfix">
             <div class="info row">
                 <div class = "pic-wrap col-lg-7">
-                    <img class ="pic" src="../images/5.jpg" alt="football">
+                    <img class ="pic" src="../../images/5.jpg" alt="football">
                 </div>
                 <div class="info-text colored-block col-lg-5">
                     <article class="article-wrap">
@@ -59,7 +59,7 @@
                 <div class="news-wrap">
                     <div class="news-post">
                         <div class = "post-pic-wrap col-lg-3">
-                            <img class ="post-pic" src="../images/kot.png" alt="football">
+                            <img class ="post-pic" src="../../images/kot.png" alt="football">
                         </div>
                         <div class = "col-lg-9">
                             <div class="post-title"><a href="#">KOT</a></div>
@@ -133,18 +133,18 @@
             <div class="connect-col">
                 <ul>
                     <li>
-                        <a href="javascript://"><img src="../images/twitter.png" class="connect-us"></a>
+                        <a href="javascript://"><img src="../../images/twitter.png" class="connect-us"></a>
                     </li>
                     <li>
-                        <a href="javascript://"> <img src="../images/youtube.png" class="connect-us"></a>
+                        <a href="javascript://"> <img src="../../images/youtube.png" class="connect-us"></a>
                     </li>
                     <li>
-                        <a href="javascript://"> <img src="../images/facebook.png" class="connect-us"></a>
+                        <a href="javascript://"> <img src="../../images/facebook.png" class="connect-us"></a>
                     </li>
                 </ul>
             </div>
             <div class="age-limit-col">
-                <a href="javascript://"><img src="../images/ft_18.png" class="age-limit" ></a>
+                <a href="javascript://"><img src="../../images/ft_18.png" class="age-limit" ></a>
             </div>
         </section>
         <section class="copyright colored-block">

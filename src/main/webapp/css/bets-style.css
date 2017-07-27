@@ -515,21 +515,35 @@ option {
 .last-news{
     padding-top: 15px;
 }
-.logout-form [type="button"]{
+.logout-form input[type="button"], .logout-form input[type="submit"],
+.edit-faq-form input[type="button"],.edit-faq-form input[type="submit"],
+.delete-faq-form input[type="button"], .delete-faq-form input[type="submit"],
+.delete-news-form input[type="button"], .delete-news-form input[type="submit"]{
     float: left;
     margin: 10px;
     padding: 5px 15px;
 }
-#logout-check{
+.popup-holder.logout-holder, .popup-holder.delete-faq-holder, .popup-holder.delete-news-holder{
     left: 50%;
     top: 80px;
     text-align: center;
     margin-left: -226px;
+    z-index: 100;
+    position: fixed;
 }
-.logout-close a:hover{
+.popup-holder.edit-faq-holder{
+    left: 50%;
+    top: 80px;
+    text-align: center;
+    margin-left: -275px;
+    z-index: 100;
+    position: fixed;
+}
+
+.popup-close a:hover{
     text-decoration:none;
 }
-.logout-form h3{
+.logout-form h3, .delete-faq-form h3, .delete-news-form h3{
     color: #f7a124;
     margin: 3%;
     font-weight: normal;
@@ -562,7 +576,7 @@ option {
     float: left;
     margin: 7px 20px 0  0;
 }
-.news input[type="button"], .btn-action{
+.select-news input[type="button"], .btn-action{
     font-size: 14px;
     transition: all 0.5s ease 0s;
     padding: 5px 15px;
@@ -610,6 +624,58 @@ option {
     padding-left: 0;
     padding-right: 0;
 }
+.create-news .input-text{
+    margin: 0 0 15px 0;
+}
+.create-news-title{
+    font-size: 23px;
+    margin: 20px 0 30px 0px;
+}
+.create-news-title:hover{
+    color:#fff;
+    cursor: pointer;
+}
+.create-news-wrap {
+    padding: 20px 20px 1px 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.edit-news-btns a{
+    color: #fff;
+}
+.edit-news-form input[type="button"], .edit-news-form input[type="submit"],.edit-news-form input[type="reset"]{
+    float: left;
+    margin: 10px;
+    padding: 5px 15px;
+}
+.edit-news-form {
+    text-align: center;
+}
+.edit-news-form .input-text.text-area{
+    height:500px;
+}
+.edit-news-form .input-text {
+    margin: 0 0 15px 0;
+}
+.edit-news-form{
+    width: 81%;
+    margin-left: 10%;
+    margin-bottom: 3%;
+    padding: 20px;
+}
+input[type="submit"].news-title{
+    border: none;
+    margin-left: 0;
+    margin-top: 5px;
+    padding-left: 0;
+    font-size: 25px;
+}
+input[type="submit"].news-title:hover{
+    text-decoration: underline;
+    background: transparent;
+    border: none;
+    color: #ffa71b;
+}
 
 /*-----------------FAQ------------------------------------------------------------------*/
 .faq-item{
@@ -633,12 +699,17 @@ option {
     color: #ffa71b;
     font-size: 30px;
     margin-bottom: 10px;
+    float: left;
+    margin-right: 30px;
 }
 .post{
-    padding: 20px 90px;
+    padding: 60px 90px;
 }
 .post-info{
     margin-bottom: 30px;
+}
+.post-info .news-edit-btn-group{
+    margin-top: 10px;
 }
 .input-text {
     padding: 15px 16px;
@@ -649,17 +720,17 @@ option {
     border-radius: 4px;
     font-size: 15px;
     color: #aaa;
-    margin: 0 0 15px 0;
-}
-.input-text {
     background: transparent;
+}
+.create-faq .input-text, .edit-faq-form .input-text{
+    margin: 0 0 15px 0;
 }
 .input-text.text-area {
     height: 230px;
     resize: none;
     overflow: auto;
 }
-.input-text:focus, .create-faq input[type="text"]:focus  {
+.input-text:focus, .create-faq input[type="text"]:focus, .create-news input[type="text"]:focus, .edit-news-form input[type="text"]:focus{
     border: 1px solid #fff;
     outline: 0;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(124, 197, 118, 0.3);
@@ -670,7 +741,7 @@ option {
     padding: 20px 20px 1px 20px;
     text-align: center;
 }
-.create-faq{
+.create-faq, .create-news{
     width: 70%;
     margin-left: 16%;
     margin-bottom: 3%;
@@ -687,9 +758,12 @@ option {
     margin-top:5px
 }
 
-.faq-edit-btn-group button{
+.faq-edit-btn-group button,.news-edit-btn-group button {
     background: transparent;
     border: 0;
+}
+.faq-edit-btn-group button:focus, .news-edit-btn-group button:focus{
+    outline: none;
 }
 .btn-edit:hover{
     color: #3a9226;
@@ -697,6 +771,17 @@ option {
 .btn-delete:hover{
     color: #860505;
 }
+
+.edit-faq-form{
+    width: 450px;
+}
+.delete-faq-form, .delete-news-form{
+    width: 385px;
+}
+.delete-faq-form .input-text, .delete-news-form .input-text {
+    margin: 25px 0 20px 0;
+}
+
 
 /*-----------------PROFILE-------------------------------------------------------------*/
 .user-profile {
@@ -709,7 +794,7 @@ option {
 .user-menu-wrap{
     padding: 0;
 }
-.user-info-wrap, .edit-info-wrap{
+.user-info-wrap, .edit-info-wrap, .refill-cash-wrap, .change-password-wrap{
     padding-left: 20px;
     padding-right: 0;
 }
@@ -742,9 +827,12 @@ option {
     margin-bottom: 10px;
     color: #fff;
 }
-
+refill-cash .label-row{
+    float: left;
+    margin-right: 25px;
+}
 .change-meta{
-    margin-top: 73%;
+    margin-top: 16%;
 }
 .user-menu{
     padding: 30px 10px;
@@ -760,15 +848,15 @@ option {
     color: #ffa71b;
     text-decoration: none;
 }
-/*------------ REFILL CASH ------------------------------------------------------------*/
+/*------------REFILL CASH----------------------------------------------------*/
 .user-refill-cash{
     height: 305px;
 }
-.refill-cash{
+.refill-cash, .change-password{
     padding: 45px 65px;
 
 }
-.refill-cash input, .refill-cash .common-select{
+.refill-cash input, .refill-cash .common-select, .change-password input, .change-password .common-select {
     width: 296px;
     height: 36px;
 }
@@ -780,17 +868,23 @@ option {
 .refill-cash .meta-label{
     margin-bottom: 26px;
 }
-.refill-cash .meta-value{
+.refill-cash .meta-value, .change-password .meta-value{
     margin-bottom: 15px;
 }
-.refill-cash input[type="reset"], .refill-cash input[type="submit"] {
+.refill-cash input[type="reset"], .refill-cash input[type="submit"], .change-password input[type="reset"], .change-password input[type="submit"] {
     float: left;
     margin: 10px;
     margin-top: 40px;
     padding: 5px 15px;
     max-width: 140px;
 }
-/*------------ GAMES ------------------------------------------------------------*/
+/*--------------------CHANGE PASSWORD--------------------------------------------------------*/
+.change-password .meta-label{
+    margin-bottom: 29px;
+    margin-top: 8px;
+}
+
+/*--------------------GAMES----------------------------------------------------------*/
 .games-menu-wrap{
     padding: 0;
     height: 100%;
@@ -908,7 +1002,6 @@ th{
 
 }
 .credit-card .form-control, .credit-card .input-group-addon {
-    border-radius: 0;
     background: #565656;
     border:0;
 }

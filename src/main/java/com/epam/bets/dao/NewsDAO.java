@@ -13,6 +13,7 @@ public abstract class NewsDAO extends  AbstractDAO<News>{
     protected static final String PARAM_NAME_TITLE = "title";
     protected static final String PARAM_NAME_DATE= "news_date";
     protected static final String PARAM_NAME_TEXT = "text";
+    protected static final String PARAM_NAME_PICTURE = "pic_url";
     protected NewsDAO() {
     }
 
@@ -22,4 +23,5 @@ public abstract class NewsDAO extends  AbstractDAO<News>{
 
     public abstract News findNewsByTitle(String title) throws DaoException;
     public abstract List<News> findNewsByDate(LocalDate date) throws DaoException;
+    public abstract boolean deleteByTitle(String title) throws DaoException;
 }

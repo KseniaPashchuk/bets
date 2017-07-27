@@ -17,17 +17,18 @@ import java.util.List;
 public class NewsDAOImpl extends NewsDAO {
 
     private static final String SELECT_ALL_NEWS =
-            "SELECT news_id, title, news_date, text FROM news";
+            "SELECT news_id, title, news_date, text, pic_url FROM news";
     private static final String SELECT_NEWS_BY_ID =
-            "SELECT news_id, title, news_date, text FROM news WHERE news_id=?";
+            "SELECT news_id, title, news_date, text, pic_url FROM news WHERE news_id=?";
     private static final String SELECT_NEWS_BY_TITLE =
-            "SELECT news_id, title, news_date, text FROM news WHERE title=?";
+            "SELECT news_id, title, news_date, text, pic_url FROM news WHERE title=?";
     private static final String SELECT_NEWS_BY_DATE =
-            "SELECT news_id, title, news_date, text FROM news WHERE news_date=?";
+            "SELECT news_id, title, news_date, text, pic_url FROM news WHERE news_date=?";
     private static final String DELETE_NEWS_BY_ID = "DELETE FROM news WHERE news_id=?";
-    private static final String CREATE_NEWS = "INSERT INTO news (news_id, title, news_date, text)" +
-            " VALUES( NULL, ?, ?, ?)";
-    private static final String UPDATE_NEWS = "UPDATE news SET title=?, news_date=?, text=? WHERE news_id=?";
+    private static final String DELETE_NEWS_BY_TITLE = "DELETE FROM news WHERE title=?";
+    private static final String CREATE_NEWS = "INSERT INTO news (news_id, title, news_date, text, pic_url)" +
+            " VALUES( NULL, ?, ?, ?, ?)";
+    private static final String UPDATE_NEWS = "UPDATE news SET title=?, text=?, pic_url=? WHERE news_id=?";
 
 
     public NewsDAOImpl() {
@@ -93,6 +94,17 @@ public class NewsDAOImpl extends NewsDAO {
     }
 
     @Override
+    public boolean deleteByTitle(String title) throws DaoException {
+        try (PreparedStatement statementNews = connection.prepareStatement(DELETE_NEWS_BY_TITLE)) {
+            statementNews.setString(1, title);
+            statementNews.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            throw new DaoException("Can't delete news", e);
+        }
+    }
+
+    @Override
     public boolean delete(int id) throws DaoException {
         try (PreparedStatement statementNews = connection.prepareStatement(DELETE_NEWS_BY_ID)) {
             statementNews.setInt(1, id);
@@ -109,6 +121,7 @@ public class NewsDAOImpl extends NewsDAO {
             statementNews.setString(1, entity.getTitle());
             statementNews.setDate(2, java.sql.Date.valueOf(entity.getDate()));
             statementNews.setString(3, entity.getText());
+            statementNews.setString(4, entity.getPictureUrl());
             statementNews.executeUpdate();
             return 1;
         } catch (SQLException e) {
@@ -123,8 +136,8 @@ public class NewsDAOImpl extends NewsDAO {
     public boolean update(News news) throws DaoException {
         try (PreparedStatement statementNews = connection.prepareStatement(UPDATE_NEWS)) {
             statementNews.setString(1, news.getTitle());
-            statementNews.setDate(2, java.sql.Date.valueOf(news.getDate()));
-            statementNews.setString(3, news.getText());
+            statementNews.setString(2, news.getText());
+            statementNews.setString(3, news.getPictureUrl());
             statementNews.setInt(4, news.getId());
             statementNews.executeUpdate();
             return true;
@@ -139,6 +152,7 @@ public class NewsDAOImpl extends NewsDAO {
         news.setTitle(resultSet.getString(PARAM_NAME_TITLE));
         news.setDate(resultSet.getDate(PARAM_NAME_DATE).toLocalDate());
         news.setText(resultSet.getString(PARAM_NAME_TEXT));
+        news.setPictureUrl(resultSet.getString(PARAM_NAME_PICTURE));
         return news;
     }
 

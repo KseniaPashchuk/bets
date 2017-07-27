@@ -15,12 +15,12 @@ public class User extends Entity {
     private UserRole role;
     private LocalDate birthDate;
     private String avatarUrl;
-    private final String defaultAvatar = "defaultUser.png";
+    private final String DEFAULT_AVATAR = "defaultUser.jpg";
 
     public User() {
         balance = new BigDecimal("0");
         role = UserRole.USER;
-        avatarUrl = defaultAvatar;
+        avatarUrl = DEFAULT_AVATAR;
     }
 
     public int getId() {

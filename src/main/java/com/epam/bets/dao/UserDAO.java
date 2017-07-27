@@ -14,6 +14,7 @@ public abstract class UserDAO extends AbstractDAO<User> {
     protected static final String PARAM_NAME_BIRTH_DATE = "birth_date";
     protected static final String PARAM_NAME_ROLE = "role";
     protected static final String PARAM_NAME_BALANCE = "balance";
+    protected static final String PARAM_NAME_AVATAR = "avatar_url";
 
     protected UserDAO() {
     }
@@ -27,4 +28,6 @@ public abstract class UserDAO extends AbstractDAO<User> {
     public abstract String findPasswordByLogin(String login) throws DaoException;
 
     public abstract boolean updatePasswordByLogin(String login, String password) throws DaoException;
+
+    public abstract boolean changeAvatar(int id, String avatarUrl) throws DaoException;
 }

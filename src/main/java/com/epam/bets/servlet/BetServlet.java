@@ -21,7 +21,7 @@ import static com.epam.bets.constant.PageConstant.SERVER_ERROR_PAGE;
 /**
  *
  */
-@WebServlet("/controller")
+@WebServlet(name = "BetServlet", urlPatterns = {"/controller"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 5,// Максимальный буфера данных в байтах,
         // при его привышении данные начнут записываться на диск во временную директорию
         // устанавливаем один мегабайт

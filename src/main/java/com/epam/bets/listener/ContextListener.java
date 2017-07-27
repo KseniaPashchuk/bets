@@ -11,7 +11,7 @@ import javax.servlet.annotation.WebListener;
 
 @WebListener
 public class ContextListener implements ServletContextListener {
-    private static final Logger LOGGER = LogManager.getLogger(ContextListener.class);
+
     public void contextInitialized(ServletContextEvent ev) {
         ConnectionPool.getInstance();
         ev.getServletContext().log("ConnectionPool was initialized");
@@ -19,9 +19,8 @@ public class ContextListener implements ServletContextListener {
     }
 
     public void contextDestroyed(ServletContextEvent ev) {
-        LOGGER.log(Level.INFO, "Start destroying servlet container");
         ConnectionPool.getInstance().closePool();
-        LOGGER.log(Level.INFO, "ConnectionPool was destroyed");
+        ev.getServletContext().log("ConnectionPool was initialized");
     }
 }
 

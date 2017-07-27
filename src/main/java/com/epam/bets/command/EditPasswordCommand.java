@@ -1,16 +1,13 @@
 package com.epam.bets.command;
 
-import com.epam.bets.entity.User;
 import com.epam.bets.exception.ReceiverException;
 import com.epam.bets.receiver.impl.UserReceiverImpl;
-import com.epam.bets.validator.LoginValidator;
 import com.epam.bets.validator.PasswordValidator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import static com.epam.bets.constant.ErrorConstant.INVALID_PARAMS_ERROR;
 import static com.epam.bets.constant.ErrorConstant.INVALID_PARAMS_MESSAGE;
@@ -25,7 +22,7 @@ public class EditPasswordCommand implements AbstractCommand {
     private static final String NEXT_PAGE = MAIN_PAGE;
     private static final String ERROR_PAGE = MAIN_PAGE;
 
-    private static final Logger LOGGER = LogManager.getLogger(SignInCommand.class);
+    private static final Logger LOGGER = LogManager.getLogger(EditPasswordCommand.class);
     private UserReceiverImpl receiver = new UserReceiverImpl();
 
     @Override

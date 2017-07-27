@@ -2,6 +2,7 @@ package com.epam.bets.receiver.impl;
 
 import com.epam.bets.dao.DaoFactory;
 import com.epam.bets.dao.FaqDAO;
+import com.epam.bets.dao.TransactionManager;
 import com.epam.bets.dao.impl.FaqDAOImpl;
 import com.epam.bets.entity.FAQ;
 import com.epam.bets.exception.DaoException;
@@ -27,17 +28,68 @@ public class FAQReceiverImpl implements FAQReceiver {
     }
 
     @Override
-    public boolean createFAQ() throws ReceiverException {
-        return false;
+    public boolean createFAQ(FAQ faq) throws ReceiverException {
+        boolean isFAQCreated = false;
+        FaqDAO faqDAO = new FaqDAOImpl();
+        TransactionManager manager = new TransactionManager();
+        manager.beginTransaction(faqDAO);
+        try {
+            if (faqDAO.create(faq) != 0) {
+                isFAQCreated = true;
+                manager.commit();
+            } else {
+                manager.rollback();
+            }
+        } catch (DaoException e) {
+            manager.rollback();
+            throw new ReceiverException(e);
+        } finally {
+            manager.close();
+        }
+        return isFAQCreated;
     }
 
     @Override
-    public boolean deleteFAQ() throws ReceiverException {
-        return false;
+    public boolean deleteFAQ(String question) throws ReceiverException {
+        boolean isFAQDeleted = false;
+        FaqDAO faqDAO = new FaqDAOImpl();
+        TransactionManager manager = new TransactionManager();
+        manager.beginTransaction(faqDAO);
+        try {
+            isFAQDeleted = faqDAO.deleteByQuestion(question);
+            if (isFAQDeleted) {
+                manager.commit();
+            } else {
+                manager.rollback();
+            }
+        } catch (DaoException e) {
+            manager.rollback();
+            throw new ReceiverException(e);
+        } finally {
+            manager.close();
+        }
+        return isFAQDeleted;
     }
 
     @Override
-    public boolean editFAQ() throws ReceiverException {
-        return false;
+    public boolean editFAQ(FAQ faq) throws ReceiverException {
+        boolean isFAQUpdated = false;
+        FaqDAO faqDAO = new FaqDAOImpl();
+        TransactionManager manager = new TransactionManager();
+        manager.beginTransaction(faqDAO);
+        try {
+            isFAQUpdated = faqDAO.update(faq);
+            if (isFAQUpdated) {
+                manager.commit();
+            } else {
+                manager.rollback();
+            }
+        } catch (DaoException e) {
+            manager.rollback();
+            throw new ReceiverException(e);
+        } finally {
+            manager.close();
+        }
+        return isFAQUpdated;
     }
 }

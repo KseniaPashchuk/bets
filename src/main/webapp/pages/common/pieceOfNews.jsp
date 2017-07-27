@@ -2,13 +2,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../css/bets-style.css">
 
-    <script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
-    <script type="text/javascript" src="../js/index.js"></script>
-    <script type="text/javascript" src="../js/faq.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../css/bets-style.css">
+    <link rel="stylesheet" href="../../css/font-awesome.css">
     <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,500&amp;subset=cyrillic" rel="stylesheet">
+
+    <c:if test="${role == 'ADMIN'}">
+        <script type="text/javascript" src="../../js/jquery-3.2.1.js"></script>
+        <script type="text/javascript" src="../../js/pieceOfNewsSettingHelper.js"></script>
+    </c:if>
+
 
 </head>
 <body>
@@ -16,13 +20,13 @@
     <header class="header-wrap row clearfix">
 
         <div class="logo-wrap colored-block col-lg-3">
-            <a href="${pageContext.servletContext.contextPath}/pages/main.jsp"><img class="logo-img"
-                                                                                    src="../images/logo-1.png"
-                                                                                    alt="bets"></a>
+            <a href="${pageContext.servletContext.contextPath}/pages/common/main.jsp"><img class="logo-img"
+                                                                                           src="../../images/logo-1.png"
+                                                                                           alt="bets"></a>
         </div>
         <div class="menu-wrap colored-block ">
             <ul class="main-menu clearfix">
-                <li class="item-main"><a href="${pageContext.servletContext.contextPath}/pages/news.jsp"
+                <li class="item-main"><a href="${pageContext.servletContext.contextPath}/pages/common/news.jsp"
                                          class="main-link">Новости</a>
                 </li>
                 <li class="item-main"><a href="games.html" class="main-link">Игры</a>
@@ -48,22 +52,19 @@
 
     <section class="content clearfix">
         <article class="row">
-            <div class="colored-block">
-                <div class="faq-wrap">
-                    <c:forEach var="item" items="${faqList}">
-                        <div class="faq-item">
-                            <div class="faq-item-title" id="faq_title_${item.id}">
-                                    ${item.question}
-                            </div>
-                            <div class="faq-item-answer" id="faq_answer_${item.id}" style="display: none">
-                                    ${item.answer}
-                            </div>
-                        </div>
-                    </c:forEach>
-                </div>
+            <div class="news colored-block">
+                <c:choose>
+                    <c:when test="${role == 'ADMIN'}">
+                        <%@include file="../admin/pieceOfNewsSetting.jspf" %>
+                    </c:when>
+                    <c:otherwise>
+                        <%@include file="../user/pieceOfNews.jspf" %>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </article>
     </section>
+
     <footer class="row ">
         <section class="footer-coloms clearfix">
             <div class="bets-col">
@@ -103,18 +104,18 @@
             <div class="connect-col">
                 <ul>
                     <li>
-                        <a href="javascript://"><img src="../images/twitter.png" class="connect-us"></a>
+                        <a href="javascript://"><img src="../../images/twitter.png" class="connect-us"></a>
                     </li>
                     <li>
-                        <a href="javascript://"> <img src="../images/youtube.png" class="connect-us"></a>
+                        <a href="javascript://"> <img src="../../images/youtube.png" class="connect-us"></a>
                     </li>
                     <li>
-                        <a href="javascript://"> <img src="../images/facebook.png" class="connect-us"></a>
+                        <a href="javascript://"> <img src="../../images/facebook.png" class="connect-us"></a>
                     </li>
                 </ul>
             </div>
             <div class="age-limit-col">
-                <a href="javascript://"><img src="../images/ft_18.png" class="age-limit"></a>
+                <a href="javascript://"><img src="../../images/ft_18.png" class="age-limit"></a>
             </div>
         </section>
         <section class="copyright colored-block">
@@ -137,5 +138,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>

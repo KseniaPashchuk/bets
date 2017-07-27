@@ -1,9 +1,26 @@
 $(function () {
+
     $('#select-news-date').datetimepicker({
         format: 'DD/MM/YYYY',
         defaultDate: new Date()
     });
 
+    $(".create-news-title").click(function (event) {
+        $(".create-news").slideToggle(400);
+    });
+
+    $(".delete-news-close").click(function (event) {
+        $("#delete-news-popup").hide();
+        $("#delete-news").hide();
+        return false;
+    });
+
+    $("body").on('click',".btn-delete-news",function(event){
+        $("#delete-news-popup").show();
+        $("#delete-news").show();
+        $("#delete-news-title").val($(this).parents(".news-item").eq(0).find('.news-title').val());
+        return false;
+    });
 
     $('#select-news-btn').click(function (event) {
 
@@ -15,8 +32,8 @@ $(function () {
             dataType: 'json',
             success: function (data) {
                 console.log("The news dated " + newsDate + " was successfully received");
-                $('#user-news-wrap').empty();
-                $('#user-pagination').empty();
+                $('#news-wrap').empty();
+                $('#pagination').empty();
                 if (data.length != 0) {
                     display(data);
                 } else {
@@ -31,15 +48,13 @@ $(function () {
         });
     });
 
-
     function display(data) {
-
-        $('#user-pagination').pagination({
+        $('#pagination').pagination({
             dataSource: data,
             pageSize: 9,
 
             callback: function (data, pagination) {
-                var dataContainer = $('#user-news-wrap');
+                var dataContainer = $('#news-wrap');
                 var html = '';
                 $.each(data, function (key, item) {
                     var date = new Date(item.date.year, item.date.month - 1, item.date.day);
@@ -53,9 +68,10 @@ $(function () {
                         '<a href="#"><img class="img-responsive" src="/image/news/' + item.pictureUrl + '" alt=""></a>' +
                         '<input class="news-title" type="submit" name="title" value="' + item.title + '">' +
                         '<span class="fa fa-clock-o">' +
-                        '<i class="icon-time news-time-icon"></i>' +
+                        '<i class="icon-time news-time-icon"> </i>' +
                         '<time class="news-date entry-date published">' + date.toLocaleString('de-DE') + '</time>' +
                         '</span>' +
+                        '<input type="button" class="btn-delete-news" value="DELETE">' +
                         '</form>';
 
                     if (key % 3 == 2) {

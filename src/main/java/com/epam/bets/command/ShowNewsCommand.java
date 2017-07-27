@@ -21,15 +21,14 @@ import static com.epam.bets.constant.PageConstant.NEWS_PAGE;
 public class ShowNewsCommand implements AjaxCommand<News>{
 
     private static final String PARAM_NAME_DATE = "date";
-    private static final String NEXT_PAGE = NEWS_PAGE;
-    private static final String ERROR_PAGE = MAIN_PAGE;
 
-    private static final Logger LOGGER = LogManager.getLogger(SignInCommand.class);
+
+    private static final Logger LOGGER = LogManager.getLogger(ShowNewsCommand.class);
     private NewsReceiverImpl receiver = new NewsReceiverImpl();
 
 
     public List<News> execute(HttpServletRequest request) {
-        PageNavigator navigator = new PageNavigator(NEXT_PAGE, PageType.FORWARD);
+
         List<News> newsList = null;
         try {
             String dateString = request.getParameter(PARAM_NAME_DATE);
@@ -38,7 +37,6 @@ public class ShowNewsCommand implements AjaxCommand<News>{
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e, e);
             request.setAttribute(NO_NEWS_ERROR, NO_NEWS_MESSAGE);
-            navigator.setPageUrl(ERROR_PAGE);
         }
         return newsList;
     }

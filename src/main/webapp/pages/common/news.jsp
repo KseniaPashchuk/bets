@@ -1,12 +1,29 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"  %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../css/bets-style.css">
-    <link rel="stylesheet" href="../css/font-awesome.css">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" type="text/css" href="../../css/bets-style.css">
+    <link rel="stylesheet" href="../../css/font-awesome.css">
+    <link rel="stylesheet" href="../../css/pagination.css"/>
     <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,500&amp;subset=cyrillic" rel="stylesheet">
+
+    <script type="text/javascript" src="../../js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/pagination.js"></script>
+    <script type="text/javascript" src="../../js/moment.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="../../js/index.js"></script>
+    <c:choose>
+        <c:when test="${role == 'ADMIN'}">
+            <script type="text/javascript" src="../../js/newsSettingHelper.js"></script>
+        </c:when>
+        <c:otherwise>
+            <script type="text/javascript" src="../../js/newsHelper.js"></script>
+        </c:otherwise>
+    </c:choose>
 
 </head>
 <body>
@@ -14,13 +31,13 @@
     <header class="header-wrap row clearfix">
 
         <div class="logo-wrap colored-block col-lg-3">
-            <a href="${pageContext.servletContext.contextPath}/pages/main.jsp"><img class="logo-img"
-                                                                                    src="../images/logo-1.png"
-                                                                                    alt="bets"></a>
+            <a href="${pageContext.servletContext.contextPath}/pages/common/main.jsp"><img class="logo-img"
+                                                                                           src="../../images/logo-1.png"
+                                                                                           alt="bets"></a>
         </div>
         <div class="menu-wrap colored-block ">
             <ul class="main-menu clearfix">
-                <li class="item-main"><a href="${pageContext.servletContext.contextPath}/pages/news.jsp"
+                <li class="item-main"><a href="${pageContext.servletContext.contextPath}/pages/common/news.jsp"
                                          class="main-link">Новости</a>
                 </li>
                 <li class="item-main"><a href="games.html" class="main-link">Игры</a>
@@ -45,22 +62,15 @@
     </header>
 
     <section class="content clearfix">
-        <article class="row">
-            <div class="news colored-block">
-                <div class="post">
-                    <div class="post-info">
-                        <div class="post-title">${title}</div>
-                        <div class="post-meta">
-								<span class="fa fa-clock-o"><i class="icon-time"> </i>
-									<time class="entry-date published">${date}</time></span>
-                        </div>
-                    </div>
-                    <div class="post-text">
-                        ${text}
-                    </div>
-                </div>
-            </div>
-        </article>
+        <c:choose>
+            <c:when test="${role == 'ADMIN'}">
+                <%@include file="../admin/newsSetting.jspf" %>
+            </c:when>
+            <c:otherwise>
+                <%@include file="../user/news.jspf" %>
+            </c:otherwise>
+        </c:choose>
+
     </section>
 
     <footer class="row ">
@@ -69,13 +79,13 @@
                 <span class="col-title">Ставки</span>
                 <ul>
                     <li>
-                        <a href="javascript://" rel="nofollow">Правила</a>
+                        <a href="javascript://">Правила</a>
                     </li>
                     <li>
-                        <a href="javascript://" rel="nofollow">События</a>
+                        <a href="javascript://">События</a>
                     </li>
                     <li>
-                        <a href="javascript://" rel="nofollow">Результаты</a>
+                        <a href="javascript://">Результаты</a>
                     </li>
                 </ul>
             </div>
@@ -84,7 +94,7 @@
                 <span class="col-title">Помощь</span>
                 <ul>
                     <li>
-                        <a href="javascript://" rel="nofollow">FAQ</a>
+                        <a href="javascript://">FAQ</a>
                     </li>
                 </ul>
             </div>
@@ -92,28 +102,28 @@
                 <span class="col-title">BETS</span>
                 <ul>
                     <li>
-                        <a href="javascript://" rel="nofollow">О нас</a>
+                        <a href="javascript://">О нас</a>
                     </li>
                     <li>
-                        <a href="javascript://" rel="nofollow">Правила сайта</a>
+                        <a href="javascript://">Правила сайта</a>
                     </li>
                 </ul>
             </div>
             <div class="connect-col">
                 <ul>
                     <li>
-                        <a href="javascript://"><img src="../images/twitter.png" class="connect-us"></a>
+                        <a href="javascript://"><img src="../../images/twitter.png" class="connect-us"></a>
                     </li>
                     <li>
-                        <a href="javascript://"> <img src="../images/youtube.png" class="connect-us"></a>
+                        <a href="javascript://"> <img src="../../images/youtube.png" class="connect-us"></a>
                     </li>
                     <li>
-                        <a href="javascript://"> <img src="../images/facebook.png" class="connect-us"></a>
+                        <a href="javascript://"> <img src="../../images/facebook.png" class="connect-us"></a>
                     </li>
                 </ul>
             </div>
             <div class="age-limit-col">
-                <a href="javascript://"><img src="../images/ft_18.png" class="age-limit"></a>
+                <a href="javascript://"><img src="../../images/ft_18.png" class="age-limit"></a>
             </div>
         </section>
         <section class="copyright colored-block">
@@ -125,10 +135,11 @@
 
     <div class="popup-wrap" id="logout-popup">
         <div class="popup-holder" id="logout-check" style="display: none">
-            <form class="logout-form clearfix" id="logout">
+            <form class="logout-form clearfix" id="logout" method="GET" action="/controller">
                 <h3>Вы действительно хотите выйти?</h3>
                 <div class="btn-group">
-                    <input class="button-logout" id="btn-logout" type="button" value='Выйти'>
+                    <input type="hidden" name="command" value="log_out"/>
+                    <input class="button-logout" id="btn-logout" type="submit" value='Выйти'>
                     <input class="button-logout" type="button" value='Отмена' onclick="closeLogoutPopup()">
                 </div>
             </form>
@@ -136,6 +147,5 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>

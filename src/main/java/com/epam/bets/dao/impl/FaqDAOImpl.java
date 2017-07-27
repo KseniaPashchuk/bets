@@ -20,6 +20,7 @@ public class FaqDAOImpl extends FaqDAO {
     private static final String SELECT_FAQ_BY_QUESTION =
             "SELECT faq_id, question, answer FROM faq WHERE question=?";
     private static final String DELETE_FAQ_BY_ID = "DELETE FROM faq WHERE faq_id=?";
+    private static final String DELETE_FAQ_BY_QUESTION = "DELETE FROM faq WHERE question=?";
     private static final String CREATE_FAQ = "INSERT INTO faq (faq_id, question, answer)" +
             " VALUES( NULL, ?, ?)";
     private static final String UPDATE_FAQ = "UPDATE faq SET answer=? WHERE question=?";
@@ -27,9 +28,11 @@ public class FaqDAOImpl extends FaqDAO {
 
     public FaqDAOImpl() {
     }
+
     public FaqDAOImpl(ProxyConnection connection) {
         super(connection);
     }
+
 
     @Override
     public List<FAQ> findAll() throws DaoException {
@@ -70,6 +73,17 @@ public class FaqDAOImpl extends FaqDAO {
     }
 
     @Override
+    public boolean deleteByQuestion(String question) throws DaoException {
+        try (PreparedStatement statementFAQ = connection.prepareStatement(DELETE_FAQ_BY_QUESTION)) {
+            statementFAQ.setString(1, question);
+            statementFAQ.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            throw new DaoException("Can't delete faq", e);
+        }
+    }
+
+    @Override
     public int create(FAQ entity) throws DaoException {
         try (PreparedStatement statementFAQ = connection.prepareStatement(CREATE_FAQ)) {
             statementFAQ.setString(1, entity.getQuestion());
@@ -77,7 +91,7 @@ public class FaqDAOImpl extends FaqDAO {
             statementFAQ.executeUpdate();
             return 1;
         } catch (SQLException e) {
-            if(e.getErrorCode() == EXISTING_ENTITY_ERROR_CODE){
+            if (e.getErrorCode() == EXISTING_ENTITY_ERROR_CODE) {
                 return 0;
             }
             throw new DaoException("Can't create faq", e);

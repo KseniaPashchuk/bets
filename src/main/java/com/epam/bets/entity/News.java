@@ -8,8 +8,10 @@ public class News extends Entity{
     private String text;
     private LocalDate date;
     private String pictureUrl;
+    private final String DEFAULT_PICTURE = "defaultNews.jpg";
 
     public News() {
+        pictureUrl = DEFAULT_PICTURE;
     }
 
     public int getId() {

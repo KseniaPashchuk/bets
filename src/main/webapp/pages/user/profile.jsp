@@ -3,11 +3,11 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../css/bets-style.css">
-    <script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
-    <script type="text/javascript" src="../js/index.js"></script>
-    <script type="text/javascript" src="../js/profileHelper.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../css/bets-style.css">
+    <script type="text/javascript" src="../../js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="../../js/index.js"></script>
+    <script type="text/javascript" src="../../js/profileHelper.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,500&amp;subset=cyrillic" rel="stylesheet">
 
 </head>
@@ -15,7 +15,7 @@
 <div class="full-container">
     <header class="header-wrap row clearfix">
         <div class="logo-wrap colored-block col-lg-3">
-            <a href="../index.html"><img class="logo-img" src="../images/logo-1.png" alt="bets"></a>
+            <a href="../index.html"><img class="logo-img" src="../../images/logo-1.png" alt="bets"></a>
         </div>
         <div class="menu-wrap colored-block ">
             <ul class="main-menu clearfix">
@@ -50,24 +50,31 @@
                 <div class="user-menu colored-block">
                     <div class="user-menu-item"><a href="" id="profile">Профиль</a></div>
                     <div class="user-menu-item"><a href="" id="edit">Редактировать профиль</a></div>
+                    <div class="user-menu-item"><a href="" id="password">Изменить пароль</a></div>
                     <div class="user-menu-item"><a href="">Мои ставки</a></div>
                     <%--TODO winned, loosed, all--%>
                     <div class="user-menu-item"><a href="" id="cash">Пополнить счет</a></div>
 
-                        <%--<div class="user-menu-item"><div id="profile">Профиль</div></div>--%>
-                        <%--<div class="user-menu-item"><div id="edit">Редактировать профиль</div></div>--%>
-                        <%--<div class="user-menu-item"><a href="${pageContext.servletContext.contextPath}/pages/userBets.jsp">Мои ставки</a></div>--%>
-                        <%--&lt;%&ndash;TODO winned, loosed, all&ndash;%&gt;--%>
-                        <%--<div class="user-menu-item"><div id="cash">Пополнить счет</div></div>--%>
+                    <%--<div class="user-menu-item"><div id="profile">Профиль</div></div>--%>
+                    <%--<div class="user-menu-item"><div id="edit">Редактировать профиль</div></div>--%>
+                    <%--<div class="user-menu-item"><a href="${pageContext.servletContext.contextPath}/pages/userBets.jsp">Мои ставки</a></div>--%>
+                    <%--&lt;%&ndash;TODO winned, loosed, all&ndash;%&gt;--%>
+                    <%--<div class="user-menu-item"><div id="cash">Пополнить счет</div></div>--%>
                 </div>
             </div>
             <div class="user-info-wrap col-lg-9 col-md-9 col-sm-9" id="user-profile">
                 <div class="user-info colored-block">
-                    <div class="user-avatar col-lg-5 col-md-5 col-sm-5">
-                        <img class="avatar-pic" src="../images/kot.png" alt="can't find your picture">
-                        <%--TODO--%>
-                        <button class="btn-action" id="change-user-avatar">Изменить аватар</button>
-                    </div>
+                    <form class="user-avatar col-lg-5 col-md-5 col-sm-5"
+                          action="${pageContext.servletContext.contextPath}/controller"
+                          method="post" enctype="multipart/form-data">
+                        <img class="avatar-pic" src="${pageContext.request.contextPath}/image/news/${avatarUrl}"
+                             alt="can't find your picture">
+                        <div class="group">
+                            <label class="btn-action" for="avatar">Choose</label>
+                            <input type="submit" id="saveAvatar" value="SAVE">
+                        </div>
+                        <input type="file" name="newAvatarURL" id="avatar" style="display: none">
+                    </form>
                     <div class="user-meta col-lg-7 col-md-7 col-sm-7 clearfix">
                         <div class="label-row col-lg-6">
                             <div class="meta-label">Логин(email)</div>
@@ -87,8 +94,8 @@
                                 <div class="meta-value">${item}</div>
                             </c:forEach>
                         </div>
-                        <button class="btn-action change-meta" id="change-user-meta"><a href="editProfile.jsp">Редактировать</a></button>
                     </div>
+                    <button class="btn-action change-meta" id="change-user-meta"><a href="">Редактировать</a></button>
                 </div>
             </div>
             <div class="edit-info-wrap col-lg-9 col-md-9 col-sm-9" style="display: none" id="edit-user-info">
@@ -124,8 +131,9 @@
                             <div style="display: flex;">
                                 <div class="edit-label">Дата рождения</div>
                                 <div class="edit-input clearfix">
-                                    <div class="input-group date" id='edit-birth-date' >
-                                        <input type="text" class="form-control" name="edit_birth_date" value="${birthDate}"/>
+                                    <div class="input-group date" id='edit-birth-date'>
+                                        <input type="text" class="form-control" name="edit_birth_date"
+                                               value="${birthDate}"/>
                                         <span class="input-group-addon">
 												<span class="glyphicon glyphicon-calendar"></span>
 											</span>
@@ -196,7 +204,7 @@
                     </div>
                     <div style="text-align: center;">
                         <div class="btn-group">
-                            <input type="submit" id="refill-cash-btn" value="Сохранить">
+                            <input type="submit" id="refill-cash-btn" value="Пополнить">
                             <input type="reset" class="cancel-refill-cash-btn" value="Отмена">
                         </div>
                     </div>
@@ -244,18 +252,18 @@
             <div class="connect-col">
                 <ul>
                     <li>
-                        <a href="javascript://"><img src="../images/twitter.png" class="connect-us"></a>
+                        <a href="javascript://"><img src="../../images/twitter.png" class="connect-us"></a>
                     </li>
                     <li>
-                        <a href="javascript://"> <img src="../images/youtube.png" class="connect-us"></a>
+                        <a href="javascript://"> <img src="../../images/youtube.png" class="connect-us"></a>
                     </li>
                     <li>
-                        <a href="javascript://"> <img src="../images/facebook.png" class="connect-us"></a>
+                        <a href="javascript://"> <img src="../../images/facebook.png" class="connect-us"></a>
                     </li>
                 </ul>
             </div>
             <div class="age-limit-col">
-                <a href="javascript://"><img src="../images/ft_18.png" class="age-limit"></a>
+                <a href="javascript://"><img src="../../images/ft_18.png" class="age-limit"></a>
             </div>
         </section>
         <section class="copyright colored-block">

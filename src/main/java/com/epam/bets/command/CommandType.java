@@ -8,7 +8,12 @@ public enum CommandType {
     SHOW_FAQ(new ShowFAQCommand()),
     SHOW_USER_PROFILE(new ShowUserProfileCommand()),
     EDIT_PROFILE(new EditProfileCommand()),
-    EDIT_FAQ(new EditFAQCommand());
+    CREATE_FAQ(new CreateFAQCommand()),
+    EDIT_FAQ(new EditFAQCommand()),
+    DELETE_FAQ(new DeleteFAQCommand()),
+    CREATE_NEWS(new CreateNewsCommand()),
+    EDIT_NEWS(new EditNewsCommand()),
+    DELETE_NEWS(new DeleteNewsCommand());
     private AbstractCommand command;
 
     CommandType(AbstractCommand command) {

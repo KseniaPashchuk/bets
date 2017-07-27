@@ -1,7 +1,11 @@
 package com.epam.bets.receiver.impl;
 
 import com.epam.bets.dao.DaoFactory;
+import com.epam.bets.dao.FaqDAO;
 import com.epam.bets.dao.NewsDAO;
+import com.epam.bets.dao.TransactionManager;
+import com.epam.bets.dao.impl.FaqDAOImpl;
+import com.epam.bets.dao.impl.NewsDAOImpl;
 import com.epam.bets.entity.News;
 import com.epam.bets.exception.DaoException;
 import com.epam.bets.exception.ReceiverException;
@@ -19,7 +23,7 @@ public class NewsReceiverImpl implements NewsReceiver {
             NewsDAO newsDAO = factory.getNewsDao();
             newsList = newsDAO.findNewsByDate(date);
         } catch (DaoException e) {
-            throw new ReceiverException(e); //TODO
+            throw new ReceiverException(e);
         }
         return newsList;
     }
@@ -31,23 +35,74 @@ public class NewsReceiverImpl implements NewsReceiver {
             NewsDAO newsDAO = factory.getNewsDao();
             news = newsDAO.findNewsByTitle(title);
         } catch (DaoException e) {
-            throw new ReceiverException(e); //TODO
+            throw new ReceiverException(e);
         }
         return news;
     }
 
     @Override
     public boolean createNews(News news) throws ReceiverException {
-        return false;
+        boolean isNewsCreated = false;
+        NewsDAO newsDAO = new NewsDAOImpl();
+        TransactionManager manager = new TransactionManager();
+        manager.beginTransaction(newsDAO);
+        try {
+            if (newsDAO.create(news) != 0) {
+                isNewsCreated = true;
+                manager.commit();
+            } else {
+                manager.rollback();
+            }
+        } catch (DaoException e) {
+            manager.rollback();
+            throw new ReceiverException(e);
+        } finally {
+            manager.close();
+        }
+        return isNewsCreated;
     }
 
     @Override
-    public boolean delete(News news) throws ReceiverException {
-        return false;
+    public boolean deleteNews(String title) throws ReceiverException {
+        boolean isNewsDeleted = false;
+        NewsDAO newsDAO = new NewsDAOImpl();
+        TransactionManager manager = new TransactionManager();
+        manager.beginTransaction(newsDAO);
+        try {
+            isNewsDeleted = newsDAO.deleteByTitle(title);
+            if (isNewsDeleted) {
+                manager.commit();
+            } else {
+                manager.rollback();
+            }
+        } catch (DaoException e) {
+            manager.rollback();
+            throw new ReceiverException(e);
+        } finally {
+            manager.close();
+        }
+        return isNewsDeleted;
     }
 
     @Override
     public boolean editNews(News news) throws ReceiverException {
-        return false;
+        boolean isNewsUpdated = false;
+        NewsDAO newsDAO = new NewsDAOImpl();
+        TransactionManager manager = new TransactionManager();
+        manager.beginTransaction(newsDAO);
+        try {
+            isNewsUpdated = newsDAO.update(news);
+            if (isNewsUpdated) {
+                manager.commit();
+            } else {
+                manager.rollback();
+            }
+        } catch (DaoException e) {
+            manager.rollback();
+            throw new ReceiverException(e);
+        } finally {
+            manager.close();
+        }
+        return isNewsUpdated;
     }
 }

@@ -1,0 +1,21 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<article class="row">
+    <div class="news colored-block">
+        <div class="select-news clearfix">
+            <div class="select-news-title"> Показать новости за</div>
+            <div class="select-news-date input-group date" id='select-news-date'>
+                <input type="text" class="form-control"/>
+                <span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+            </div>
+            <input type="button" id="select-news-btn" class="select-news-btn" value="Показать">
+        </div>
+        <div class="news-wrap" id="user-news-wrap">
+
+        </div>
+        <div class="news-pagination" id="user-pagination">
+        </div>
+    </div>
+</article>

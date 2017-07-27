@@ -22,19 +22,6 @@ public class UserReceiverImpl implements UserReceiver {
     private static final Logger LOGGER = LogManager.getLogger(UserReceiverImpl.class);
 
     @Override
-    public boolean checkExistingUser(String login) throws ReceiverException {
-        boolean alreadyExist = false;
-        try (DaoFactory factory = new DaoFactory()) {
-            UserDAO userDAO = factory.getUserDao();
-            if (userDAO.findUserByLogin(login) != null) {
-                alreadyExist = true;
-            }
-        } catch (DaoException e) {
-            throw new ReceiverException(e);
-        }
-        return alreadyExist;
-    }
-
     public User signIn(String login, String password) throws ReceiverException {
         User user = null;
         try (DaoFactory factory = new DaoFactory()) {
@@ -49,6 +36,7 @@ public class UserReceiverImpl implements UserReceiver {
         return user;
     }
 
+    @Override
     public int signUp(User user) throws ReceiverException {
         int userIndex = 0;
         UserDAO userDAO = new UserDAOImpl();
@@ -129,9 +117,39 @@ public class UserReceiverImpl implements UserReceiver {
             if (DigestUtils.md5Hex(oldPassword).equals(realPassword)) {
                 isPasswordUpdated = userDAO.updatePasswordByLogin(login, newPassword);
             }
+            if (isPasswordUpdated) {
+                manager.commit();
+            } else {
+                manager.rollback();
+            }
         } catch (DaoException e) {
+            manager.rollback();
             throw new ReceiverException(e);
+        } finally {
+            manager.close();
         }
         return isPasswordUpdated;
+    }
+
+    @Override
+    public boolean editAvatar(int userId, String avatarUrl) throws ReceiverException {
+        boolean isAvatarUpdated = false;
+        UserDAO userDAO = new UserDAOImpl();
+        TransactionManager manager = new TransactionManager();
+        manager.beginTransaction(userDAO);
+        try {
+            isAvatarUpdated = userDAO.changeAvatar(userId, avatarUrl);
+            if (isAvatarUpdated) {
+                manager.commit();
+            } else {
+                manager.rollback();
+            }
+        } catch (DaoException e) {
+            manager.rollback();
+            throw new ReceiverException(e);
+        } finally {
+            manager.close();
+        }
+        return isAvatarUpdated;
     }
 }

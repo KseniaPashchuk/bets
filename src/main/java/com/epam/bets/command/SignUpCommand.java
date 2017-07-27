@@ -35,7 +35,7 @@ public class SignUpCommand implements AbstractCommand {
     private static final String ERROR_PAGE = REGISTRATION_PAGE;
     private static final String DATE_PATTERN = "dd/MM/yyyy";
     private static final Locale locale = java.util.Locale.US;//TODO
-    private static final Logger LOGGER = LogManager.getLogger(SignInCommand.class);
+    private static final Logger LOGGER = LogManager.getLogger(SignUpCommand.class);
 
 //TODO проверка на дату рождения
 
