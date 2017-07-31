@@ -6,6 +6,7 @@ $(function () {
 
             reader.onload = function (e) {
                 $('#avatar').attr('src', e.target.result);
+                $('#avatar-pic').attr('src', e.target.result);
             };
 
             reader.readAsDataURL(input.files[0]);
@@ -13,11 +14,11 @@ $(function () {
     }
 
 
-    $("#avatar").change(function(){
+    $("#avatar").change(function () {
         readURL(this);
     });
 
-    $("#profile").click(function(event) {
+    $("#profile").click(function (event) {
         $("#edit-user-info").hide();
         $("#refill-user-cash").hide();
         $("#user-profile").show();
@@ -26,38 +27,38 @@ $(function () {
 
     $("#profile").trigger('click');
 
-    $("#edit").click(function(event) {
+    $("#edit").click(function (event) {
         $("#user-profile").hide();
         $("#refill-user-cash").hide();
         $("#edit-user-info").show();
         return false;
     });
-    $("#change-user-meta").click(function(event) {
+    $("#change-user-meta").click(function (event) {
         $("#user-profile").hide();
         $("#refill-user-cash").hide();
         $("#edit-user-info").show();
         return false;
     });
 
-    $("#cash").click(function(event) {
+    $("#cash").click(function (event) {
         $("#user-profile").hide();
         $("#edit-user-info").hide();
         $("#refill-user-cash").show();
         return false;
     });
 
-    $("#add-credit-card-btn").click(function(event) {
-        if( $('.credit-card.active').length < 3){
+    $("#add-credit-card-btn").click(function (event) {
+        if ($('.credit-card.active').length < 3) {
             $('.credit-card.hidden:first').removeClass('hidden').addClass('active');
         }
         return false;
     });
 
-    $(".delete-card-btn").click(function(event) {
-        if( $('.credit-card.active').length > 1){
+    $(".delete-card-btn").click(function (event) {
+        if ($('.credit-card.active').length > 1) {
             $('#' + this.id.substring(7, this.id.length)).val('');
             $('#' + this.id.substring(7, this.id.length)).prop('disabled', false);
-            $('#credit_card_' +this.id.substring(7, this.id.length)).removeClass('active').addClass('hidden');
+            $('#credit_card_' + this.id.substring(7, this.id.length)).removeClass('active').addClass('hidden');
         }
         return false;
     });

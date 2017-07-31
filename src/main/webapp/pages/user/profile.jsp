@@ -51,25 +51,26 @@
                     <div class="user-menu-item"><a href="" id="profile">Профиль</a></div>
                     <div class="user-menu-item"><a href="" id="edit">Редактировать профиль</a></div>
                     <div class="user-menu-item"><a href="" id="password">Изменить пароль</a></div>
-                    <div class="user-menu-item"><a href="">Мои ставки</a></div>
-                    <%--TODO winned, loosed, all--%>
+                    <div class="user-menu-item dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" id="bets">Мои ставки <span class="caret"></span></a>
+                        <ul class="dropdown-menu" >
+                            <li><a href="#">ALL</a></li>
+                            <li><a href="#">WINNED</a></li>
+                            <li><a href="#">LOOSED</a></li>
+                        </ul>
+                    </div>
                     <div class="user-menu-item"><a href="" id="cash">Пополнить счет</a></div>
 
-                    <%--<div class="user-menu-item"><div id="profile">Профиль</div></div>--%>
-                    <%--<div class="user-menu-item"><div id="edit">Редактировать профиль</div></div>--%>
-                    <%--<div class="user-menu-item"><a href="${pageContext.servletContext.contextPath}/pages/userBets.jsp">Мои ставки</a></div>--%>
-                    <%--&lt;%&ndash;TODO winned, loosed, all&ndash;%&gt;--%>
-                    <%--<div class="user-menu-item"><div id="cash">Пополнить счет</div></div>--%>
                 </div>
             </div>
             <div class="user-info-wrap col-lg-9 col-md-9 col-sm-9" id="user-profile">
                 <div class="user-info colored-block">
-                    <form class="user-avatar col-lg-5 col-md-5 col-sm-5"
-                          action="${pageContext.servletContext.contextPath}/controller"
+                    <form class="user-avatar col-lg-5 col-md-5 col-sm-5"  action="${pageContext.servletContext.contextPath}/controller"
                           method="post" enctype="multipart/form-data">
-                        <img class="avatar-pic" src="${pageContext.request.contextPath}/image/news/${avatarUrl}"
-                             alt="can't find your picture">
-                        <div class="group">
+                        <div class="avatar-wrap">
+                            <img class="avatar-pic" id="avatar-pic" src="${pageContext.request.contextPath}/image/user/${avatarUrl}" alt="can't find your picture">
+                        </div>
+                        <div class="btn-group">
                             <label class="btn-action" for="avatar">Choose</label>
                             <input type="submit" id="saveAvatar" value="SAVE">
                         </div>

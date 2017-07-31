@@ -1,9 +1,6 @@
 package com.epam.bets.dao;
 
-import com.epam.bets.dao.impl.CreditCardDAOImpl;
-import com.epam.bets.dao.impl.FaqDAOImpl;
-import com.epam.bets.dao.impl.NewsDAOImpl;
-import com.epam.bets.dao.impl.UserDAOImpl;
+import com.epam.bets.dao.impl.*;
 import com.epam.bets.pool.ConnectionPool;
 import com.epam.bets.pool.ProxyConnection;
 import org.apache.logging.log4j.Level;
@@ -35,6 +32,10 @@ public class DaoFactory implements AutoCloseable {
 
     public FaqDAO getFaqDao() {
         return new FaqDAOImpl(connection);
+    }
+
+    public MatchDAO getMatchDao(){
+        return new MatchDAOImpl(connection);
     }
 
     @Override

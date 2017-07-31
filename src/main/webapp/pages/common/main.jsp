@@ -18,7 +18,7 @@
             <ul class="main-menu clearfix">
                 <li class="item-main"><a href="${pageContext.servletContext.contextPath}/pages/common/news.jsp" class="main-link">Новости</a>
                 </li>
-                <li class="item-main"><a href="#" class="main-link">Игры</a>
+                <li class="item-main"><a href="${pageContext.servletContext.contextPath}/pages/common/games.jsp" class="main-link">Игры</a>
                 </li>
                 <li class="item-main">
                     <a href="${pageContext.servletContext.contextPath}/controller?command=show_faq" class="main-link">FAQ</a>

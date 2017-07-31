@@ -21,8 +21,6 @@ import static com.epam.bets.constant.PageConstant.NEWS_PAGE;
 public class ShowNewsCommand implements AjaxCommand<News>{
 
     private static final String PARAM_NAME_DATE = "date";
-
-
     private static final Logger LOGGER = LogManager.getLogger(ShowNewsCommand.class);
     private NewsReceiverImpl receiver = new NewsReceiverImpl();
 
@@ -36,7 +34,6 @@ public class ShowNewsCommand implements AjaxCommand<News>{
             newsList = receiver.showAllNews(date);
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e, e);
-            request.setAttribute(NO_NEWS_ERROR, NO_NEWS_MESSAGE);
         }
         return newsList;
     }

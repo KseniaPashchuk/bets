@@ -694,6 +694,8 @@ input[type="submit"].news-title:hover{
 .faq-item-answer{
     font-size:20px;
     margin-left: 32px;
+    word-wrap: break-word;
+
 }
 .post .post-title{
     color: #ffa71b;
@@ -803,11 +805,13 @@ input[type="submit"].news-title:hover{
 }
 .user-avatar{
     padding: 20px;
+    text-align: center;
 }
 .avatar-pic{
-    margin: 10px 30px;
     border-radius: 50px;
-    width: 200px;
+    width:100%;
+    height: 100%;
+    object-fit: cover;
 }
 .btn-action{
     margin: 20px auto 0;
@@ -847,6 +851,32 @@ refill-cash .label-row{
 .user-menu a:hover{
     color: #ffa71b;
     text-decoration: none;
+}
+.dropdown-menu > li > a {
+    color: #ece6e6;
+}
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: #262626;
+    text-decoration: none;
+    background-color: #ffa71b;
+}
+
+.dropdown-menu {
+    background-color: #232323;
+}
+.avatar-wrap{
+    width:200px;
+    height: 200px;
+    text-align: -webkit-center;
+    margin: 0 auto 20px;
+}
+
+.user-avatar .btn-group input[type="submit"], .user-avatar .btn-group .btn-action{
+    float: left;
+    margin: 5px;
+    padding: 5px 15px;
+    font-size: 15px;
+    font-weight: normal;
 }
 /*------------REFILL CASH----------------------------------------------------*/
 .user-refill-cash{
@@ -1059,3 +1089,27 @@ th{
 	top: 0;
 	width: 100%;
 	}*/
+/*------------------ GAME RESULTS ------------------------------------------------------*/
+
+.results-filter p {
+    color: #bababa;
+    font-size: 18px;
+    margin: 10px 0;
+    padding: 0;
+}
+.search-results-block {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    padding: 15px 0 40px 20px;
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+.search-results-block input[type="button"]{
+    margin: 25px 0 0 35px;
+    padding: 5px 30px;
+}
+.select-results-date{
+    max-width:200px;
+}
