@@ -1,10 +1,8 @@
 package com.epam.bets.receiver.impl;
 
 import com.epam.bets.dao.DaoFactory;
-import com.epam.bets.dao.FaqDAO;
 import com.epam.bets.dao.NewsDAO;
 import com.epam.bets.dao.TransactionManager;
-import com.epam.bets.dao.impl.FaqDAOImpl;
 import com.epam.bets.dao.impl.NewsDAOImpl;
 import com.epam.bets.entity.News;
 import com.epam.bets.exception.DaoException;
@@ -104,5 +102,27 @@ public class NewsReceiverImpl implements NewsReceiver {
             manager.close();
         }
         return isNewsUpdated;
+    }
+
+    @Override
+    public boolean editPicture(int newsId, String pictureUrl) throws ReceiverException {
+        boolean isPictureUpdated = false;
+        NewsDAO userDAO = new NewsDAOImpl();
+        TransactionManager manager = new TransactionManager();
+        manager.beginTransaction(userDAO);
+        try {
+            isPictureUpdated = userDAO.updatePicture(newsId, pictureUrl);
+            if (isPictureUpdated) {
+                manager.commit();
+            } else {
+                manager.rollback();
+            }
+        } catch (DaoException e) {
+            manager.rollback();
+            throw new ReceiverException(e);
+        } finally {
+            manager.close();
+        }
+        return isPictureUpdated;
     }
 }

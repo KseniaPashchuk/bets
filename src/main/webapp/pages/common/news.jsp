@@ -1,5 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"  %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Title</title>
@@ -33,7 +33,7 @@
         <div class="logo-wrap colored-block col-lg-3">
             <a href="${pageContext.servletContext.contextPath}/pages/common/main.jsp"><img class="logo-img"
                                                                                            src="../../images/logo-1.png"
-                                                                                           alt="bets"></a>
+                                                                                           alt="coefficients"></a>
         </div>
         <div class="menu-wrap colored-block ">
             <ul class="main-menu clearfix">
@@ -64,74 +64,16 @@
     <section class="content clearfix">
         <c:choose>
             <c:when test="${role == 'ADMIN'}">
-                <%@include file="../admin/newsSetting.jspf" %>
+                <%@include file="../admin/newsSetting.jsp" %>
             </c:when>
             <c:otherwise>
-                <%@include file="../user/news.jspf" %>
+                <%@include file="../user/news.jsp" %>
             </c:otherwise>
         </c:choose>
 
     </section>
 
-    <footer class="row ">
-        <section class="footer-coloms clearfix">
-            <div class="bets-col">
-                <span class="col-title">Ставки</span>
-                <ul>
-                    <li>
-                        <a href="javascript://">Правила</a>
-                    </li>
-                    <li>
-                        <a href="javascript://">События</a>
-                    </li>
-                    <li>
-                        <a href="javascript://">Результаты</a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="help-col">
-                <span class="col-title">Помощь</span>
-                <ul>
-                    <li>
-                        <a href="javascript://">FAQ</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="comp-col">
-                <span class="col-title">BETS</span>
-                <ul>
-                    <li>
-                        <a href="javascript://">О нас</a>
-                    </li>
-                    <li>
-                        <a href="javascript://">Правила сайта</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="connect-col">
-                <ul>
-                    <li>
-                        <a href="javascript://"><img src="../../images/twitter.png" class="connect-us"></a>
-                    </li>
-                    <li>
-                        <a href="javascript://"> <img src="../../images/youtube.png" class="connect-us"></a>
-                    </li>
-                    <li>
-                        <a href="javascript://"> <img src="../../images/facebook.png" class="connect-us"></a>
-                    </li>
-                </ul>
-            </div>
-            <div class="age-limit-col">
-                <a href="javascript://"><img src="../../images/ft_18.png" class="age-limit"></a>
-            </div>
-        </section>
-        <section class="copyright colored-block">
-            <p>©2017 <span>Bets - удача навашей стороне.</span>
-            </p>
-        </section>
-
-    </footer>
+    <%@ include file="jspf/footer.jspf" %>
 
     <div class="popup-wrap" id="logout-popup">
         <div class="popup-holder" id="logout-check" style="display: none">

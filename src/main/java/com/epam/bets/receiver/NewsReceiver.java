@@ -13,4 +13,5 @@ public interface NewsReceiver extends Receiver{
     boolean createNews(News news) throws ReceiverException;
     boolean deleteNews(String title) throws ReceiverException;
     boolean editNews(News news) throws ReceiverException;
+    boolean editPicture(int newsId, String pictureUrl) throws ReceiverException;
 }

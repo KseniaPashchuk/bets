@@ -1,13 +1,18 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <article class="row">
     <div class="news ">
 
         <div class=" create-news-wrap colored-block">
             <div class="create-news-title">Create News</div>
-            <form class="create-news" style="display: none"  action="${pageContext.servletContext.contextPath}/controller" method="POST">
+            <form class="create-news" style="display: none"  action="${pageContext.servletContext.contextPath}/controller"
+                  method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="command" value="create_news"/>
                 <input class="input-text" type="text" name="news_title" value="" placeholder="Title">
-                <input class="input-text" type="text" name="news_picture" value="" placeholder="choose picture">
+                <label class="file_upload">
+                    <span class="button">Выбрать</span>
+                    <mark id="news-pic">Choose picture</mark>
+                    <input type="file" name="news_picture" id="news_picture" >
+                </label>
                 <textarea class="input-text text-area" name="news_text" cols="0" rows="0"
                           onfocus="if(this.value==this.defaultValue)this.value='';"
                           onblur="if(this.value=='')this.value=this.defaultValue;">Text</textarea>

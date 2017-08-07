@@ -163,7 +163,7 @@ public class UserDAOImpl extends UserDAO {
     }
 
     @Override
-    public boolean changeAvatar(int id, String avatarUrl) throws DaoException {
+    public boolean updateAvatar(int id, String avatarUrl) throws DaoException {
         try (PreparedStatement statementUser = connection.prepareStatement(UPDATE_AVATAR)) {
             statementUser.setString(1, avatarUrl);
             statementUser.setInt(2, id);

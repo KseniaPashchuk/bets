@@ -29,6 +29,7 @@ public class NewsDAOImpl extends NewsDAO {
     private static final String CREATE_NEWS = "INSERT INTO news (news_id, title, news_date, text, pic_url)" +
             " VALUES( NULL, ?, ?, ?, ?)";
     private static final String UPDATE_NEWS = "UPDATE news SET title=?, text=?, pic_url=? WHERE news_id=?";
+    private static final String UPDATE_PICTURE = "UPDATE user SET pic_url=? WHERE news_id=?";
 
 
     public NewsDAOImpl() {
@@ -101,6 +102,18 @@ public class NewsDAOImpl extends NewsDAO {
             return true;
         } catch (SQLException e) {
             throw new DaoException("Can't delete news", e);
+        }
+    }
+
+    @Override
+    public boolean updatePicture(int id, String pictureUrl) throws DaoException {
+        try (PreparedStatement statementUser = connection.prepareStatement(UPDATE_PICTURE)) {
+            statementUser.setString(1, pictureUrl);
+            statementUser.setInt(2, id);
+            statementUser.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            throw new DaoException("Can't update picture", e);
         }
     }
 

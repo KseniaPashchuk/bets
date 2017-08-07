@@ -4,74 +4,51 @@ public enum BetType {
     FW {
         @Override
         public boolean isWinningBet(int firstTeamScore, int secondTeamScore, int total) {
-            if (firstTeamScore > secondTeamScore) {
-                return true;
-            }
-            return false;
+           return (firstTeamScore > secondTeamScore);
+
         }
     },
     SW {
         @Override
         public boolean isWinningBet(int firstTeamScore, int secondTeamScore, int total) {
-            if (secondTeamScore > firstTeamScore) {
-                return true;
-            }
-            return false;
+           return (secondTeamScore > firstTeamScore);
         }
     },
 
     X {
         @Override
         public boolean isWinningBet(int firstTeamScore, int secondTeamScore, int total) {
-            if (firstTeamScore == secondTeamScore) {
-                return true;
-            }
-            return false;
+            return (firstTeamScore == secondTeamScore);
         }
     },
     FWX {
         @Override
         public boolean isWinningBet(int firstTeamScore, int secondTeamScore, int total) {
-            if (firstTeamScore >= secondTeamScore) {
-                return true;
-            }
-            return false;
+            return (firstTeamScore >= secondTeamScore);
         }
     },
     XSW {
         @Override
         public boolean isWinningBet(int firstTeamScore, int secondTeamScore, int total) {
-            if (secondTeamScore >= firstTeamScore) {
-                return true;
-            }
-            return false;
+           return (secondTeamScore >= firstTeamScore);
         }
     },
     FS {
         @Override
         public boolean isWinningBet(int firstTeamScore, int secondTeamScore, int total) {
-            if (secondTeamScore > firstTeamScore || firstTeamScore > secondTeamScore) {
-                return true;
-            }
-            return false;
+            return (secondTeamScore > firstTeamScore || firstTeamScore > secondTeamScore);
         }
     },
     TM {
         @Override
         public boolean isWinningBet(int firstTeamScore, int secondTeamScore, int total) {
-            if (firstTeamScore + secondTeamScore > total) {
-                return true;
-            }
-            return false;
+            return (firstTeamScore + secondTeamScore > total);
         }
     },
     TL {
-        @Override
+        @Override//TODO
         public boolean isWinningBet(int firstTeamScore, int secondTeamScore, int total) {
-            if (firstTeamScore + secondTeamScore < total) {
-                return true;
-            }
-            return false;
+            return (firstTeamScore + secondTeamScore < total);
         }
     };
 

@@ -5,8 +5,8 @@
             <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"/>
         </Console>
 
-        <RollingFile name="fileLogger" fileName="C:/Users/ASUS/IdeaProjects/bets/logs/latest.log"
-                     filePattern="C:/Users/ASUS/IdeaProjects/bets/logs/${date:yyyy-MM}/logs-%d{yyyy-MM-dd HH.mm}.log">
+        <RollingFile name="fileLogger" fileName="C:/Users/ASUS/IdeaProjects/coefficients/logs/latest.log"
+                     filePattern="C:/Users/ASUS/IdeaProjects/coefficients/logs/${date:yyyy-MM}/logs-%d{yyyy-MM-dd HH.mm}.log">
             <PatternLayout>
                 <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
             </PatternLayout>

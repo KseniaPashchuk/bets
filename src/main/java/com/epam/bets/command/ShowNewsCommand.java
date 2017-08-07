@@ -1,6 +1,7 @@
 package com.epam.bets.command;
 
 import com.epam.bets.entity.News;
+import com.epam.bets.exception.CommandException;
 import com.epam.bets.exception.ReceiverException;
 import com.epam.bets.receiver.impl.NewsReceiverImpl;
 import org.apache.logging.log4j.Level;
@@ -25,7 +26,7 @@ public class ShowNewsCommand implements AjaxCommand<News>{
     private NewsReceiverImpl receiver = new NewsReceiverImpl();
 
 
-    public List<News> execute(HttpServletRequest request) {
+    public List<News> execute(HttpServletRequest request) throws CommandException {
 
         List<News> newsList = null;
         try {
@@ -33,7 +34,7 @@ public class ShowNewsCommand implements AjaxCommand<News>{
             LocalDate date = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             newsList = receiver.showAllNews(date);
         } catch (ReceiverException e) {
-            LOGGER.log(Level.ERROR, e, e);
+            throw new CommandException(e);
         }
         return newsList;
     }

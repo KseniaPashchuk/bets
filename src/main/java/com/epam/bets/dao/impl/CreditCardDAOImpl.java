@@ -59,18 +59,14 @@ public class CreditCardDAOImpl extends CreditCardDAO {
 
     @Override
     public int create(CreditCards entity) throws DaoException {
-        try (PreparedStatement statementCreditCard = connection.prepareStatement(CREATE_CREDIT_CARD, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statementCreditCard = connection.prepareStatement(CREATE_CREDIT_CARD)) {
             for (int i = 0; i < entity.getCreditCarsSize(); i++) {
                 statementCreditCard.setString(1, entity.getCreditCard(i));
                 statementCreditCard.setInt(2, entity.getUserId());
                 statementCreditCard.executeUpdate();
-                ResultSet generatedKey = statementCreditCard.getGeneratedKeys();
             }
             return 1;
         } catch (SQLException e) {
-            if (e.getErrorCode() == EXISTING_ENTITY_ERROR_CODE) {
-                return 0;
-            }
             throw new DaoException("Can't create credit cards", e);
         }
     }

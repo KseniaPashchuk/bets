@@ -29,5 +29,5 @@ public abstract class UserDAO extends AbstractDAO<User> {
 
     public abstract boolean updatePasswordByLogin(String login, String password) throws DaoException;
 
-    public abstract boolean changeAvatar(int id, String avatarUrl) throws DaoException;
+    public abstract boolean updateAvatar(int id, String avatarUrl) throws DaoException;
 }

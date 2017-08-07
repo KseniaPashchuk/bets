@@ -1,5 +1,8 @@
-package com.epam.bets.command;
+package com.epam.bets.command.admin;
 
+import com.epam.bets.command.AbstractCommand;
+import com.epam.bets.command.PageNavigator;
+import com.epam.bets.command.PageType;
 import com.epam.bets.entity.News;
 import com.epam.bets.exception.ReceiverException;
 import com.epam.bets.receiver.impl.NewsReceiverImpl;
@@ -17,6 +20,7 @@ public class EditNewsCommand implements AbstractCommand {
     private static final String PARAM_NAME_ID = "news_id";
     private static final String PARAM_NAME_TITLE = "edit_title";
     private static final String PARAM_NAME_TEXT = "edit_text";
+    private static final String PARAM_NAME_PICTURE = "edit_news_picture";
     private static final String NEXT_PAGE = AFTER_EDIT_NEWS_PAGE;
     private static final String ERROR_PAGE = NEWS_PAGE;
     private static final Logger LOGGER = LogManager.getLogger(EditNewsCommand.class);
@@ -30,6 +34,7 @@ public class EditNewsCommand implements AbstractCommand {
             news.setId(Integer.parseInt(request.getParameter(PARAM_NAME_ID)));
             news.setTitle(request.getParameter(PARAM_NAME_TITLE));
             news.setText(request.getParameter(PARAM_NAME_TEXT));
+            news.setPictureUrl(request.getParameter(PARAM_NAME_PICTURE));
             if (receiver.editNews(news)) {
                 navigator = new PageNavigator(NEXT_PAGE + news.getTitle(), PageType.REDIRECT);
             } else {

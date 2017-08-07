@@ -8,6 +8,7 @@ public class Bet extends Entity {
     private boolean isWon;
     private String footballMatch;
     private BetType betType;
+    private int userId;
 
     public Bet() {
 
@@ -51,5 +52,13 @@ public class Bet extends Entity {
 
     public void setBetType(BetType betType) {
         this.betType = betType;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

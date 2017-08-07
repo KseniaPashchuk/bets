@@ -7,8 +7,6 @@ import com.epam.bets.dao.impl.FaqDAOImpl;
 import com.epam.bets.entity.FAQ;
 import com.epam.bets.exception.DaoException;
 import com.epam.bets.exception.ReceiverException;
-import com.epam.bets.pool.ConnectionPool;
-import com.epam.bets.pool.ProxyConnection;
 import com.epam.bets.receiver.FAQReceiver;
 
 import java.util.List;

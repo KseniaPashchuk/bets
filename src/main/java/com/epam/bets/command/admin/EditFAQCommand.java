@@ -1,10 +1,11 @@
-package com.epam.bets.command;
+package com.epam.bets.command.admin;
 
+import com.epam.bets.command.AbstractCommand;
+import com.epam.bets.command.PageNavigator;
+import com.epam.bets.command.PageType;
 import com.epam.bets.entity.FAQ;
 import com.epam.bets.exception.ReceiverException;
 import com.epam.bets.receiver.impl.FAQReceiverImpl;
-import com.epam.bets.receiver.impl.UserReceiverImpl;
-import com.epam.bets.validator.PasswordValidator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

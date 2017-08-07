@@ -22,4 +22,21 @@ $(function () {
         $("#delete-news-title").val($(this).parents(".post-info").eq(0).find('.post-title').text());
         return false;
     });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#news-picture').attr('src', e.target.result);
+                $('#news-pic').attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#news-picture").change(function () {
+        readURL(this);
+    });
 });

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
 
 <div class="post" id="news-post">
     <div class="post-info">
@@ -13,14 +13,27 @@
             <time class="entry-date published">${date}</time></span>
         </div>
     </div>
-    <img class="avatar-pic" src="${pageContext.request.contextPath}/image/news/${picture}"
-         alt="football">
+
+    <form class="news-picture" action="${pageContext.servletContext.contextPath}/controller"
+          method="post" enctype="multipart/form-data">
+        <input type="hidden" name="command" value="edit_news_picture"/>
+        <input type="hidden" name="news_id" value="${id}"/>
+        <img class="news-pic" id="news-pic" src="${pageContext.request.contextPath}/image/news/${picture}"
+             alt="football">
+        <div class="btn-group">
+            <label class="btn-action" for="news-picture">Choose</label>
+            <input type="submit" id="saveAvatar" value="SAVE">
+        </div>
+        <input type="file" name="edit_news_picture" id="news-picture" style="display: none">
+    </form>
+
     <div class="post-text">${text}</div>
 </div>
-<form class="edit-news-form" style="display: none;" id="edit-news" action="${pageContext.servletContext.contextPath}/controller" method="POST">
+<form class="edit-news-form" style="display: none;" id="edit-news"
+      action="${pageContext.servletContext.contextPath}/controller" method="POST">
     <input type="hidden" name="command" value="edit_news"/>
     <input type="hidden" name="news_id" value="${id}"/>
-    <input class="input-text" type="text" name="edit_title" id ="edit_title" value="${title}">
+    <input class="input-text" type="text" name="edit_title" id="edit_title" value="${title}">
     <textarea class="input-text text-area" name="edit_text" id="edit_text" cols="0" rows="0">${text}</textarea>
     <div class="btn-group">
         <input type="submit" value='Сохранить'>
@@ -29,7 +42,8 @@
 </form>
 <div class="popup-wrap" id="delete-news-popup">
     <div class="popup-holder delete-news-holder" id="delete-news" style="display: none">
-        <form class="delete-news-form clearfix" action="${pageContext.servletContext.contextPath}/controller" method="POST">
+        <form class="delete-news-form clearfix" action="${pageContext.servletContext.contextPath}/controller"
+              method="POST">
             <input type="hidden" name="command" value="delete_news"/>
             <h3>Вы действительно хотите удалить следующий элемент?</h3>
             <input class="input-text" type="text" name="delete_title" id="delete-news-title" value=""

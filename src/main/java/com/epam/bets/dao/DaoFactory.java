@@ -34,8 +34,12 @@ public class DaoFactory implements AutoCloseable {
         return new FaqDAOImpl(connection);
     }
 
-    public MatchDAO getMatchDao(){
+    public MatchDAO getMatchDao() {
         return new MatchDAOImpl(connection);
+    }
+
+    public GainCoefficientDAO getGainCoefficientDao() {
+        return new GainCoefficientDAOImpl(connection);
     }
 
     @Override

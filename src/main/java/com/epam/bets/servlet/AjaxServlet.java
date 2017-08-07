@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import com.epam.bets.exception.CommandException;
 import com.epam.bets.factory.AjaxCommandFactory;
 import com.google.gson.Gson;
+
+import static com.epam.bets.constant.PageConstant.SERVER_ERROR_PAGE;
 
 @WebServlet(name = "AjaxServlet", urlPatterns = {"/ajax"})
 public class AjaxServlet extends HttpServlet {
@@ -31,8 +34,11 @@ public class AjaxServlet extends HttpServlet {
             throws ServletException, IOException {
         String commandName = request.getParameter("command");
         AjaxCommand command = new AjaxCommandFactory().initCommand(commandName);
-        //ShowNewsCommand command = new ShowNewsCommand();
         response.setContentType("application/json");
-        response.getWriter().write(new Gson().toJson(command.execute(request)));
+        try {
+            response.getWriter().write(new Gson().toJson(command.execute(request)));
+        } catch (CommandException e) {
+            response.sendRedirect(SERVER_ERROR_PAGE);
+        }
     }
 }

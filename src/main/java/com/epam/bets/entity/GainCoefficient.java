@@ -11,6 +11,11 @@ public class GainCoefficient extends Entity {
     public GainCoefficient() {
     }
 
+    public GainCoefficient(BetType betType, BigDecimal coefficient) {
+        this.betType = betType;
+        this.coefficient = coefficient;
+    }
+
     public int getFootballMatchId() {
         return footballMatchId;
     }

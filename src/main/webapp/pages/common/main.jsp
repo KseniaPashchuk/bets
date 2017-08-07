@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="с" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Title</title>
@@ -12,13 +12,13 @@
 <div class="full-container">
     <header class="header-wrap row clearfix">
         <div class="logo-wrap colored-block col-lg-3">
-            <a href="${pageContext.servletContext.contextPath}/pages/common/main.jsp"><img class ="logo-img" src="../../images/logo-1.png" alt="bets"></a>
+            <a href="${pageContext.servletContext.contextPath}/pages/common/main.jsp"><img class ="logo-img" src="../../images/logo-1.png" alt="coefficients"></a>
         </div>
         <div class="menu-wrap colored-block ">
             <ul class="main-menu clearfix">
                 <li class="item-main"><a href="${pageContext.servletContext.contextPath}/pages/common/news.jsp" class="main-link">Новости</a>
                 </li>
-                <li class="item-main"><a href="${pageContext.servletContext.contextPath}/pages/common/games.jsp" class="main-link">Игры</a>
+                <li class="item-main"><a href="${pageContext.servletContext.contextPath}/controller?command=create_matches_page" class="main-link">Игры</a>
                 </li>
                 <li class="item-main">
                     <a href="${pageContext.servletContext.contextPath}/controller?command=show_faq" class="main-link">FAQ</a>
@@ -94,66 +94,9 @@
         </div>
     </section>
 
-    <footer class="row ">
-        <section class="footer-coloms clearfix">
-            <div class="bets-col">
-                <span class="col-title">Ставки</span>
-                <ul>
-                    <li>
-                        <a href="javascript://" rel="nofollow">Правила</a>
-                    </li>
-                    <li>
-                        <a href="javascript://" rel="nofollow">События</a>
-                    </li>
-                    <li>
-                        <a href="javascript://" rel="nofollow">Результаты</a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="help-col">
-                <span class="col-title">Помощь</span>
-                <ul>
-                    <li>
-                        <a href="javascript://" rel="nofollow">FAQ</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="comp-col">
-                <span class="col-title">BETS</span>
-                <ul>
-                    <li>
-                        <a href="javascript://" rel="nofollow">О нас</a>
-                    </li>
-                    <li>
-                        <a href="javascript://" rel="nofollow">Правила сайта</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="connect-col">
-                <ul>
-                    <li>
-                        <a href="javascript://"><img src="../../images/twitter.png" class="connect-us"></a>
-                    </li>
-                    <li>
-                        <a href="javascript://"> <img src="../../images/youtube.png" class="connect-us"></a>
-                    </li>
-                    <li>
-                        <a href="javascript://"> <img src="../../images/facebook.png" class="connect-us"></a>
-                    </li>
-                </ul>
-            </div>
-            <div class="age-limit-col">
-                <a href="javascript://"><img src="../../images/ft_18.png" class="age-limit" ></a>
-            </div>
-        </section>
-        <section class="copyright colored-block">
-            <p>©2017 <span>Bets - удача навашей стороне.</span>
-            </p>
-        </section>
-    </footer>
+    <%@ include file="jspf/footer.jspf" %>
     <div class="popup-wrap" id="logout-popup">
-        <div class="popup-holder" id="logout-check" style="display: none">
+        <div class="popup-holder logout-holder" id="logout-check" style="display: none">
             <form action="${pageContext.servletContext.contextPath}/controller" method="GET" class="logout-form clearfix" id="logout">
                 <h3>Вы действительно хотите выйти?</h3>
                 <div class="btn-group">

@@ -5,12 +5,16 @@ import com.epam.bets.entity.BetType;
 import com.epam.bets.entity.GainCoefficient;
 import com.epam.bets.entity.Match;
 import com.epam.bets.exception.DaoException;
+import com.epam.bets.pool.ProxyConnection;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GainCoefficientDAOImpl extends GainCoefficientDAO {
 
@@ -23,10 +27,19 @@ public class GainCoefficientDAOImpl extends GainCoefficientDAO {
             "WHERE football_match_id=? AND bet_type_id=?";
 
     private static final String UPDATE_GAIN_COEFFICIENT = "UPDATE gain_coefficient SET coefficient=? " +
-            "WHERE match_id=? AND football_match_id=?";
+            "WHERE bet_type_id=(SELECT bet_type_id FROM bet_type WHERE bet_type=?) AND football_match_id=?";
 
     private static final String CREATE_GAIN_COEFFICIENT = "INSERT INTO gain_coefficient (football_match_id," +
-            " coefficient, bet_type_id) VALUES( ?, ?, ?)";
+            " coefficient, bet_type_id) VALUES( ?, ?, (SELECT bet_type_id FROM bet_type WHERE bet_type=?))";
+
+
+    public GainCoefficientDAOImpl() {
+    }
+
+    public GainCoefficientDAOImpl(ProxyConnection connection) {
+        super(connection);
+    }
+
 
     @Override
     public List<GainCoefficient> findAll() throws DaoException {
@@ -45,7 +58,15 @@ public class GainCoefficientDAOImpl extends GainCoefficientDAO {
 
     @Override
     public int create(GainCoefficient entity) throws DaoException {
-        return 0;
+        try (PreparedStatement statementCoefficients = connection.prepareStatement(CREATE_GAIN_COEFFICIENT)) {
+            statementCoefficients.setInt(1, entity.getFootballMatchId());
+            statementCoefficients.setBigDecimal(2, entity.getCoefficient());
+            statementCoefficients.setString(3, entity.getBetType().toString());
+            statementCoefficients.executeUpdate();
+            return 1;
+        } catch (SQLException e) {
+            throw new DaoException("Can't find coefficients", e);
+        }
     }
 
     @Override
@@ -54,29 +75,52 @@ public class GainCoefficientDAOImpl extends GainCoefficientDAO {
     }
 
     @Override
-    public List<GainCoefficient> findMatchCoefficients(int matchId) throws DaoException {
-        List<GainCoefficient> coefficients;
-        try (PreparedStatement statementNews = connection.prepareStatement(SELECT_GAIN_COEFFICIENTS_BY_MATCH_ID)) {
-            statementNews.setInt(1, matchId);
-            ResultSet resultSet = statementNews.executeQuery();
+    public Map<BetType, BigDecimal> findMatchCoefficients(int matchId) throws DaoException {
+        Map<BetType, BigDecimal> coefficients;
+        try (PreparedStatement statementCoefficients = connection.prepareStatement(SELECT_GAIN_COEFFICIENTS_BY_MATCH_ID)) {
+            statementCoefficients.setInt(1, matchId);
+            ResultSet resultSet = statementCoefficients.executeQuery();
             coefficients = buildCoefficientList(resultSet);
         } catch (SQLException e) {
             throw new DaoException("Can't find coefficients", e);
         }
         return coefficients;
     }
-    private GainCoefficient buildCoefficient(ResultSet resultSet) throws SQLException {
-        GainCoefficient coefficient = new GainCoefficient();
-        coefficient.setFootballMatchId(resultSet.getInt(PARAM_NAME_FOOTBALL_MATCH_ID));
-        coefficient.setCoefficient(resultSet.getBigDecimal(PARAM_NAME_GAIN_COEFFICIENT));
-        coefficient.setBetType(BetType.valueOf(resultSet.getString(PARAM_NAME_BET_TYPE).toUpperCase()));
-        return coefficient;
+
+    @Override
+    public boolean createCoefficients(int matchId, Map<BetType, BigDecimal> map) throws DaoException {
+        try (PreparedStatement statementCoefficients = connection.prepareStatement(CREATE_GAIN_COEFFICIENT)) {
+            for (Map.Entry<BetType, BigDecimal> coeff : map.entrySet()) {
+                statementCoefficients.setInt(1, matchId);
+                statementCoefficients.setBigDecimal(2, coeff.getValue());
+                statementCoefficients.setString(3, coeff.getKey().toString());
+                statementCoefficients.executeUpdate();
+            }
+            return true;
+        } catch (SQLException e) {
+            throw new DaoException("Can't find coefficients", e);
+        }
+    }
+    @Override
+    public boolean updateCoefficients(int matchId, Map<BetType, BigDecimal> map) throws DaoException {
+        try (PreparedStatement statementCoefficients = connection.prepareStatement(UPDATE_GAIN_COEFFICIENT)) {
+            for (Map.Entry<BetType, BigDecimal> coeff : map.entrySet()) {
+                statementCoefficients.setBigDecimal(1, coeff.getValue());
+                statementCoefficients.setString(2, coeff.getKey().toString());
+                statementCoefficients.setInt(3, matchId);
+                statementCoefficients.executeUpdate();
+            }
+            return true;
+        } catch (SQLException e) {
+            throw new DaoException("Can't update coefficients", e);
+        }
     }
 
-    private List<GainCoefficient> buildCoefficientList(ResultSet resultSet) throws SQLException {
-        List<GainCoefficient> coefficients = new ArrayList<>();
+    private Map<BetType, BigDecimal> buildCoefficientList(ResultSet resultSet) throws SQLException {
+        Map<BetType, BigDecimal> coefficients = new HashMap<>();
         while (resultSet.next()) {
-            coefficients.add(buildCoefficient(resultSet));
+            coefficients.put(BetType.valueOf(resultSet.getString(PARAM_NAME_BET_TYPE)),
+                    resultSet.getBigDecimal(PARAM_NAME_GAIN_COEFFICIENT));
         }
         return coefficients;
     }

@@ -1,6 +1,7 @@
 package com.epam.bets.command;
 
 import com.epam.bets.entity.Match;
+import com.epam.bets.exception.CommandException;
 import com.epam.bets.exception.ReceiverException;
 import com.epam.bets.receiver.impl.MatchReceiverImpl;
 import org.apache.logging.log4j.Level;
@@ -20,7 +21,7 @@ public class ShowMatchResultsCommand implements AjaxCommand<Match> {
     private static final Logger LOGGER = LogManager.getLogger(ShowMatchResultsCommand.class);
 
     @Override
-    public List<Match> execute(HttpServletRequest request) {
+    public List<Match> execute(HttpServletRequest request) throws CommandException {
         List<Match> matchList = null;
         try {
             String confederacy = request.getParameter(PARAM_NAME_CONFEDERACY);
@@ -28,8 +29,7 @@ public class ShowMatchResultsCommand implements AjaxCommand<Match> {
             LocalDate date = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             matchList = receiver.showMatchResults(date, confederacy);
         } catch (ReceiverException e) {
-            LOGGER.log(Level.ERROR, e, e);
-
+            throw new CommandException(e);
         }
         return matchList;
     }

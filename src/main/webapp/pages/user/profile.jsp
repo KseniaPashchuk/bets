@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
@@ -15,7 +15,7 @@
 <div class="full-container">
     <header class="header-wrap row clearfix">
         <div class="logo-wrap colored-block col-lg-3">
-            <a href="../index.html"><img class="logo-img" src="../../images/logo-1.png" alt="bets"></a>
+            <a href="../index.html"><img class="logo-img" src="../../images/logo-1.png" alt="coefficients"></a>
         </div>
         <div class="menu-wrap colored-block ">
             <ul class="main-menu clearfix">
@@ -52,7 +52,7 @@
                     <div class="user-menu-item"><a href="" id="edit">Редактировать профиль</a></div>
                     <div class="user-menu-item"><a href="" id="password">Изменить пароль</a></div>
                     <div class="user-menu-item dropdown">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown" id="bets">Мои ставки <span class="caret"></span></a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" id="coefficients">Мои ставки <span class="caret"></span></a>
                         <ul class="dropdown-menu" >
                             <li><a href="#">ALL</a></li>
                             <li><a href="#">WINNED</a></li>
@@ -67,6 +67,7 @@
                 <div class="user-info colored-block">
                     <form class="user-avatar col-lg-5 col-md-5 col-sm-5"  action="${pageContext.servletContext.contextPath}/controller"
                           method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="command" value="edit_user_avatar"/>
                         <div class="avatar-wrap">
                             <img class="avatar-pic" id="avatar-pic" src="${pageContext.request.contextPath}/image/user/${avatarUrl}" alt="can't find your picture">
                         </div>
@@ -74,7 +75,7 @@
                             <label class="btn-action" for="avatar">Choose</label>
                             <input type="submit" id="saveAvatar" value="SAVE">
                         </div>
-                        <input type="file" name="newAvatarURL" id="avatar" style="display: none">
+                        <input type="file" name="new_user_avatar" id="avatar" style="display: none">
                     </form>
                     <div class="user-meta col-lg-7 col-md-7 col-sm-7 clearfix">
                         <div class="label-row col-lg-6">
@@ -214,65 +215,7 @@
         </div>
     </section>
 
-    <footer class="row ">
-        <section class="footer-coloms clearfix">
-            <div class="bets-col">
-                <span class="col-title">Ставки</span>
-                <ul>
-                    <li>
-                        <a href="javascript://" rel="nofollow">Правила</a>
-                    </li>
-                    <li>
-                        <a href="javascript://" rel="nofollow">События</a>
-                    </li>
-                    <li>
-                        <a href="javascript://" rel="nofollow">Результаты</a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="help-col">
-                <span class="col-title">Помощь</span>
-                <ul>
-                    <li>
-                        <a href="javascript://" rel="nofollow">FAQ</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="comp-col">
-                <span class="col-title">BETS</span>
-                <ul>
-                    <li>
-                        <a href="javascript://" rel="nofollow">О нас</a>
-                    </li>
-                    <li>
-                        <a href="javascript://" rel="nofollow">Правила сайта</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="connect-col">
-                <ul>
-                    <li>
-                        <a href="javascript://"><img src="../../images/twitter.png" class="connect-us"></a>
-                    </li>
-                    <li>
-                        <a href="javascript://"> <img src="../../images/youtube.png" class="connect-us"></a>
-                    </li>
-                    <li>
-                        <a href="javascript://"> <img src="../../images/facebook.png" class="connect-us"></a>
-                    </li>
-                </ul>
-            </div>
-            <div class="age-limit-col">
-                <a href="javascript://"><img src="../../images/ft_18.png" class="age-limit"></a>
-            </div>
-        </section>
-        <section class="copyright colored-block">
-            <p>©2017 <span>Bets - удача навашей стороне.</span>
-            </p>
-        </section>
-
-    </footer>
+    <%@include file="../common/jspf/footer.jspf" %>
 
     <div class="popup-wrap" id="logout-popup">
         <div class="popup-holder" id="logout-check" style="display: none">

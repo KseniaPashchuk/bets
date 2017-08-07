@@ -22,6 +22,27 @@ $(function () {
         return false;
     });
 
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#news_picture').attr('src', e.target.result);
+
+                var filename = input.files[ 0 ].name;
+                $('#news-pic').text(filename);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+    }
+
+    $("#news_picture").change(function(){
+        readURL(this);
+    });
+
     $('#select-news-btn').click(function (event) {
 
         var selectDate = $('#select-news-date').data("DateTimePicker").date();
@@ -65,6 +86,7 @@ $(function () {
                     html +=
                         '<form class=" col-md-4 news-item  colored-block" action="/controller" method="GET">' +
                         '<input type="hidden" name="command" value="show_piece_of_news"/>' +
+                        '<input type="hidden" name="title" value="'+item.title+'"/>' +
                         '<a href="#"><img class="img-responsive" src="/image/news/' + item.pictureUrl + '" alt=""></a>' +
                         '<input class="news-title" type="submit" name="title" value="' + item.title + '">' +
                         '<span class="fa fa-clock-o">' +

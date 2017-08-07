@@ -13,6 +13,8 @@ public class PageConstant {
     public static final String PIECE_OF_NEWS_PAGE = "/pages/common/pieceOfNews.jsp";
     public static final String FAQ_PAGE = "/pages/common/faq.jsp";
     public static final String AFTER_EDIT_FAQ_PAGE = "/controller?command=show_faq";//TODO
+    public static final String MATCHES_PAGE = "/pages/common/matches.jsp";
+    public static final String AFTER_EDIT_MATCHES_PAGE = "/controller?command=create_matches_page";
     public static final String RULES_PAGE = "";
     public static final String CONDITIONS_PAGE = "";
     public static final String SERVER_ERROR_PAGE = "";

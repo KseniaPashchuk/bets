@@ -10,8 +10,6 @@ import com.epam.bets.entity.CreditCards;
 import com.epam.bets.entity.User;
 import com.epam.bets.exception.DaoException;
 import com.epam.bets.exception.ReceiverException;
-import com.epam.bets.pool.ConnectionPool;
-import com.epam.bets.pool.ProxyConnection;
 import com.epam.bets.receiver.UserReceiver;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
@@ -38,7 +36,7 @@ public class UserReceiverImpl implements UserReceiver {
 
     @Override
     public int signUp(User user) throws ReceiverException {
-        int userIndex = 0;
+        int userIndex;
         UserDAO userDAO = new UserDAOImpl();
         CreditCardDAO creditCardDAO = new CreditCardDAOImpl();
         TransactionManager manager = new TransactionManager();
@@ -53,7 +51,6 @@ public class UserReceiverImpl implements UserReceiver {
                 if (cardIndex != 0) {
                     manager.commit();
                 } else {
-                    userIndex = 0;
                     manager.rollback();
                 }
             } else {
@@ -85,15 +82,14 @@ public class UserReceiverImpl implements UserReceiver {
 
     @Override
     public boolean editProfile(User user) throws ReceiverException {
-        boolean isUserUpdated = false;
         UserDAO userDAO = new UserDAOImpl();
         CreditCardDAO creditCardDAO = new CreditCardDAOImpl();
         TransactionManager manager = new TransactionManager();
         manager.beginTransaction(userDAO, creditCardDAO);
         try {
-            isUserUpdated = userDAO.update(user) && creditCardDAO.update(user.getCreditCards());
-            if (isUserUpdated) {
+            if (userDAO.update(user) && creditCardDAO.update(user.getCreditCards())) {
                 manager.commit();
+                return true;
             } else {
                 manager.rollback();
             }
@@ -103,53 +99,51 @@ public class UserReceiverImpl implements UserReceiver {
         } finally {
             manager.close();
         }
-        return isUserUpdated;
+        return false;
     }
 
     @Override
     public boolean editPassword(String login, String oldPassword, String newPassword) throws ReceiverException {
-        boolean isPasswordUpdated = false;
         UserDAO userDAO = new UserDAOImpl();
         TransactionManager manager = new TransactionManager();
         manager.beginTransaction(userDAO);
         try {
             String realPassword = userDAO.findPasswordByLogin(login);
             if (DigestUtils.md5Hex(oldPassword).equals(realPassword)) {
-                isPasswordUpdated = userDAO.updatePasswordByLogin(login, newPassword);
+                if (userDAO.updatePasswordByLogin(login, newPassword)) {
+                    manager.commit();
+                    return true;
+                } else {
+                    manager.rollback();
+                }
             }
-            if (isPasswordUpdated) {
-                manager.commit();
-            } else {
+            } catch(DaoException e){
                 manager.rollback();
+                throw new ReceiverException(e);
+            } finally{
+                manager.close();
             }
-        } catch (DaoException e) {
-            manager.rollback();
-            throw new ReceiverException(e);
-        } finally {
-            manager.close();
+            return false;
         }
-        return isPasswordUpdated;
-    }
 
-    @Override
-    public boolean editAvatar(int userId, String avatarUrl) throws ReceiverException {
-        boolean isAvatarUpdated = false;
-        UserDAO userDAO = new UserDAOImpl();
-        TransactionManager manager = new TransactionManager();
-        manager.beginTransaction(userDAO);
-        try {
-            isAvatarUpdated = userDAO.changeAvatar(userId, avatarUrl);
-            if (isAvatarUpdated) {
-                manager.commit();
-            } else {
+        @Override
+        public boolean editAvatar ( int userId, String avatarUrl) throws ReceiverException {
+            UserDAO userDAO = new UserDAOImpl();
+            TransactionManager manager = new TransactionManager();
+            manager.beginTransaction(userDAO);
+            try {
+                if (userDAO.updateAvatar(userId, avatarUrl)) {
+                    manager.commit();
+                    return true;
+                } else {
+                    manager.rollback();
+                }
+            } catch (DaoException e) {
                 manager.rollback();
+                throw new ReceiverException(e);
+            } finally {
+                manager.close();
             }
-        } catch (DaoException e) {
-            manager.rollback();
-            throw new ReceiverException(e);
-        } finally {
-            manager.close();
+            return false;
         }
-        return isAvatarUpdated;
     }
-}
