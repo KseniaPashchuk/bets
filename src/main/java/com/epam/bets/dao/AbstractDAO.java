@@ -25,13 +25,7 @@ public abstract class AbstractDAO<T extends Entity> implements AutoCloseable {
         this.connection = connection;
     }
 
-    public abstract List<T> findAll() throws DaoException;
-
-    public abstract T findEntityById(int id) throws DaoException;
-
-    public abstract boolean delete(int id) throws DaoException;
-
-    public abstract int create(T entity) throws DaoException;
+     public abstract int create(T entity) throws DaoException;
 
     public abstract boolean update(T entity) throws DaoException;
 

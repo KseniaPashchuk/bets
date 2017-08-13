@@ -19,7 +19,5 @@ public interface MatchReceiver extends Receiver {
 
     boolean editMatch(Match match) throws ReceiverException;
 
-    boolean editResults() throws ReceiverException;
-
     boolean setMatchScore(int matchId, BigDecimal firstTeamScore,  BigDecimal secondTeamScore) throws ReceiverException;
 }

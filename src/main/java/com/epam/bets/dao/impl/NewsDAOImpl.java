@@ -40,7 +40,7 @@ public class NewsDAOImpl extends NewsDAO {
     }
 
     @Override
-    public List<News> findAll() throws DaoException {
+    public List<News> findAllNews() throws DaoException {
         List<News> newsList;
         try (PreparedStatement statementNews = connection.prepareStatement(SELECT_ALL_NEWS)) {
             ResultSet resultSet = statementNews.executeQuery();
@@ -49,21 +49,6 @@ public class NewsDAOImpl extends NewsDAO {
             throw new DaoException("Can't find all news", e);
         }
         return newsList;
-    }
-
-    @Override
-    public News findEntityById(int id) throws DaoException {
-        News news = null;
-        try (PreparedStatement statementNews = connection.prepareStatement(SELECT_NEWS_BY_ID)) {
-            statementNews.setInt(1, id);
-            ResultSet resultSet = statementNews.executeQuery();
-            if (resultSet.next()) {
-                news = buildNews(resultSet);
-            }
-        } catch (SQLException e) {
-            throw new DaoException("Can't find news by given id", e);
-        }
-        return news;
     }
 
     @Override
@@ -114,17 +99,6 @@ public class NewsDAOImpl extends NewsDAO {
             return true;
         } catch (SQLException e) {
             throw new DaoException("Can't update picture", e);
-        }
-    }
-
-    @Override
-    public boolean delete(int id) throws DaoException {
-        try (PreparedStatement statementNews = connection.prepareStatement(DELETE_NEWS_BY_ID)) {
-            statementNews.setInt(1, id);
-            statementNews.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-            throw new DaoException("Can't delete news", e);
         }
     }
 

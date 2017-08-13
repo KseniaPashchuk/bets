@@ -1,9 +1,9 @@
 package com.epam.bets.command.admin;
 
 import com.epam.bets.command.AbstractCommand;
-import com.epam.bets.command.EditUserAvatarCommand;
-import com.epam.bets.command.PageNavigator;
-import com.epam.bets.command.PageType;
+import com.epam.bets.command.common.EditUserAvatarCommand;
+import com.epam.bets.navigator.PageNavigator;
+import com.epam.bets.navigator.PageType;
 import com.epam.bets.exception.ReceiverException;
 import com.epam.bets.receiver.impl.LoadReceiverImpl;
 import com.epam.bets.receiver.impl.NewsReceiverImpl;
@@ -17,7 +17,6 @@ import javax.servlet.http.Part;
 import java.io.IOException;
 
 import static com.epam.bets.constant.PageConstant.AFTER_EDIT_PROFILE_PAGE;
-import static com.epam.bets.constant.PageConstant.MAIN_PAGE;
 import static com.epam.bets.constant.PageConstant.NEWS_PAGE;
 
 public class EditNewsPictureCommand implements AbstractCommand {

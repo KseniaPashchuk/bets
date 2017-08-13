@@ -32,8 +32,8 @@ class PoolManager {
             properties.put("useUnicode", resource.getString("db.useUnicode"));
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         } catch (MissingResourceException e) {
-            LOGGER.log(Level.FATAL, "Can not find no properties file " + e.getMessage());
-            throw new RuntimeException("Can not find no properties file " + e.getMessage());
+            LOGGER.log(Level.FATAL, "Can not find properties file " + e.getMessage());
+            throw new RuntimeException("Can not find properties file " + e.getMessage());
         } catch (SQLException e) {
             LOGGER.log(Level.FATAL, "Can not register driver" + e.getMessage());
             throw new RuntimeException("Can not register driver " + e.getMessage());

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class CreditCards extends Entity{
+
     private List<String> creditCards;
     private int userId;
 

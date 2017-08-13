@@ -42,6 +42,10 @@ public class DaoFactory implements AutoCloseable {
         return new GainCoefficientDAOImpl(connection);
     }
 
+    public BetDAO getBetDao(){
+        return new BetDAOImpl(connection);
+    }
+
     @Override
     public void close() {
         try {

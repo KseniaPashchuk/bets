@@ -3,7 +3,7 @@ package com.epam.bets.servlet;
 
 import com.epam.bets.factory.CommandFactory;
 import com.epam.bets.command.AbstractCommand;
-import com.epam.bets.command.PageNavigator;
+import com.epam.bets.navigator.PageNavigator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -2,9 +2,6 @@ package com.epam.bets.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Match extends Entity {
     private int id;
@@ -15,12 +12,12 @@ public class Match extends Entity {
     private BigDecimal total;
     private BigDecimal maxBet;
     private LocalDateTime date;
-    private Map<BetType, BigDecimal> coefficients;
+    private GainCoefficient matchCoefficients;
     private BigDecimal firstTeamScore;
     private BigDecimal secondTeamScore;
 
     public Match() {
-        coefficients = new HashMap<>();
+        matchCoefficients = new GainCoefficient();
     }
 
     public int getId() {
@@ -79,19 +76,20 @@ public class Match extends Entity {
         this.maxBet = maxBet;
     }
 
-    public Map<BetType, BigDecimal> getCoefficients() {
-        return coefficients;
-    }
-
-    public void setCoefficients(Map<BetType, BigDecimal> coefficients) {
-        this.coefficients = coefficients;
-    }
-
     public void addCoefficient(BetType type, BigDecimal coeff) {
-        coefficients.put(type, coeff);
+        matchCoefficients.addCoefficient(type, coeff);
     }
 
-   public LocalDateTime getDate() {
+
+    public GainCoefficient getMatchCoefficients() {
+        return matchCoefficients;
+    }
+
+    public void setMatchCoefficients(GainCoefficient matchCoefficients) {
+        this.matchCoefficients = matchCoefficients;
+    }
+
+    public LocalDateTime getDate() {
         return date;
     }
 
@@ -126,7 +124,7 @@ public class Match extends Entity {
                 ", total=" + total +
                 ", maxBet=" + maxBet +
                 ", date=" + date +
-                ", coefficients=" + coefficients +
+                ", matchCoefficients=" + matchCoefficients +
                 ", firstTeamScore=" + firstTeamScore +
                 ", secondTeamScore=" + secondTeamScore +
                 '}';

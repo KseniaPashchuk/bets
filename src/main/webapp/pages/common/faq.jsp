@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en_EN'}"/>
+<fmt:setBundle basename="locale"/>
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
@@ -20,7 +22,7 @@
         <div class="logo-wrap colored-block col-lg-3">
             <a href="${pageContext.servletContext.contextPath}/pages/main.jsp"><img class="logo-img"
                                                                                     src="../../images/logo-1.png"
-                                                                                    alt="coefficients"></a>
+                                                                                    alt="matchCoefficients"></a>
         </div>
         <div class="menu-wrap colored-block ">
             <ul class="main-menu clearfix">
@@ -60,18 +62,7 @@
 
     </section>
     <%@ include file="jspf/footer.jspf" %>
-    <div class="popup-wrap" id="logout-popup">
-        <div class="popup-holder" id="logout-check" style="display: none">
-            <form class="logout-form clearfix" id="logout">
-                <h3>Вы действительно хотите выйти?</h3>
-                <div class="btn-group">
-                    <input class="button-logout" id="btn-logout" type="button" value='Выйти'>
-                    <input class="button-logout" type="button" value='Отмена' onclick="closeLogoutPopup()">
-                </div>
-            </form>
-            <div class="popup-close logout-close"><a href="javascript:closeLogoutPopup()">x</a></div>
-        </div>
-    </div>
+    <%@ include file="jspf/logout.jspf" %>
 </div>
 </body>
 </html>

@@ -19,6 +19,8 @@ import java.util.List;
 public class UserDAOImpl extends UserDAO {
 
     private static final Logger LOGGER = LogManager.getLogger(UserDAOImpl.class);
+
+    private static final String LOGIN_EXISTS = "SELECT  login FROM user WHERE login=?";
     private static final String SELECT_ALL_USERS =
             "SELECT user_id, login, first_name, last_name, birth_date, role, avatar_url, balance FROM user";
     private static final String SELECT_USER_BY_ID =
@@ -27,12 +29,15 @@ public class UserDAOImpl extends UserDAO {
             "SELECT user_id, login, first_name, last_name, birth_date, role, avatar_url, balance FROM user WHERE login=?";
     private static final String SELECT_PASSWORD_BY_LOGIN =
             "SELECT password FROM user WHERE login=?";
+    private static final String SELECT_BALANCE =
+            "SELECT balance FROM user WHERE user_id=?";
     private static final String DELETE_USER_BY_ID = "DELETE FROM user WHERE user_id=?";
     private static final String CREATE_USER = "INSERT INTO user (user_id, login, password, first_name, last_name, birth_date, role, avatar_url, balance)" +
             " VALUES( NULL, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_USER = "UPDATE user SET first_name=?, last_name=?, birth_date=? WHERE user_id=?";
     private static final String UPDATE_USER_PASSWORD = "UPDATE user SET password=? WHERE login=?";
     private static final String UPDATE_AVATAR = "UPDATE user SET avatar_url=? WHERE user_id=?";
+    private static final String UPDATE_BALANCE = "UPDATE user SET balance=? WHERE user_id=?";
 
     public UserDAOImpl() {
     }
@@ -41,20 +46,9 @@ public class UserDAOImpl extends UserDAO {
         super(connection);
     }
 
-    @Override
-    public List<User> findAll() throws DaoException {
-        List<User> userList;
-        try (PreparedStatement statementUser = connection.prepareStatement(SELECT_ALL_USERS)) {
-            ResultSet resultSet = statementUser.executeQuery();
-            userList = buildUserList(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException("Can't find all users", e);
-        }
-        return userList;
-    }
 
     @Override
-    public User findEntityById(int id) throws DaoException {
+    public User findUserById(int id) throws DaoException {
         User user = null;
         try (PreparedStatement statementUser = connection.prepareStatement(SELECT_USER_BY_ID)) {
             statementUser.setInt(1, id);
@@ -97,18 +91,6 @@ public class UserDAOImpl extends UserDAO {
         }
         return password;
     }
-
-    @Override
-    public boolean delete(int id) throws DaoException {
-        try (PreparedStatement statementUser = connection.prepareStatement(DELETE_USER_BY_ID)) {
-            statementUser.setInt(1, id);
-            statementUser.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-            throw new DaoException("Can't delete user", e);
-        }
-    }
-
 
     @Override
     public int create(User entity) throws DaoException {
@@ -171,6 +153,41 @@ public class UserDAOImpl extends UserDAO {
             return true;
         } catch (SQLException e) {
             throw new DaoException("Can't update avatar", e);
+        }
+    }
+
+    @Override
+    public boolean loginExists(String login) throws DaoException {
+        try (PreparedStatement statementUser = connection.prepareStatement(LOGIN_EXISTS)) {
+            statementUser.setString(1, login);
+            ResultSet resultSet = statementUser.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            throw new DaoException("Can't update avatar", e);
+        }
+    }
+
+    @Override
+    public boolean updateBalance(int userId, BigDecimal balance) throws DaoException {
+        BigDecimal currentBalance;
+        try (PreparedStatement statementSelectBalance = connection.prepareStatement(SELECT_BALANCE);
+             PreparedStatement statementUpdateBalance = connection.prepareStatement(UPDATE_BALANCE)) {
+            statementSelectBalance.setInt(1, userId);
+
+            ResultSet resultSet = statementSelectBalance.executeQuery();
+            if (resultSet.next()) {
+                currentBalance = resultSet.getBigDecimal(PARAM_NAME_BALANCE);
+                statementUpdateBalance.setBigDecimal(1, currentBalance.add(balance));
+                statementUpdateBalance.setInt(2, userId);
+                statementUpdateBalance.executeUpdate();
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            throw new DaoException(e);
         }
     }
 

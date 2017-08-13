@@ -1,12 +1,14 @@
 package com.epam.bets.dao;
 
 import com.epam.bets.entity.Match;
+import com.epam.bets.entity.News;
 import com.epam.bets.exception.DaoException;
 import com.epam.bets.pool.ProxyConnection;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public abstract class MatchDAO extends AbstractDAO<Match> {
     protected static final String PARAM_NAME_ID = "match_id";
@@ -28,6 +30,9 @@ public abstract class MatchDAO extends AbstractDAO<Match> {
         super(connection);
     }
 
+    public abstract List<Match> findAllMatches() throws DaoException;
+
+
     public abstract List<Match> findResultsByDate(LocalDate date) throws DaoException;
 
     public abstract List<Match> findResultsByDateAndConfederacy(LocalDate date, String confederacy) throws DaoException;
@@ -40,4 +45,5 @@ public abstract class MatchDAO extends AbstractDAO<Match> {
 
     public abstract boolean setScore(int matchId, BigDecimal firstTeamScore, BigDecimal secondTeamScore) throws DaoException;
 
+    public abstract Match findFinishedMatchInfo(int matchId) throws DaoException;
 }

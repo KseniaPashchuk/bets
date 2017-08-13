@@ -1,9 +1,8 @@
 package com.epam.bets.command.bookmaker;
 
 import com.epam.bets.command.AbstractCommand;
-import com.epam.bets.command.PageNavigator;
-import com.epam.bets.command.PageType;
-import com.epam.bets.command.ShowMatchesCommand;
+import com.epam.bets.navigator.PageNavigator;
+import com.epam.bets.navigator.PageType;
 import com.epam.bets.entity.BetType;
 import com.epam.bets.entity.Match;
 import com.epam.bets.exception.ReceiverException;
@@ -40,6 +39,7 @@ public class EditMatchCommand implements AbstractCommand {
     private static final String PARAM_NAME_T = "T";
     private static final String PARAM_NAME_TM = "TM";
     private static final String PARAM_NAME_MAX_BET = "max_bet";
+    private static final String DATE_PATTERN = "dd/MM/yyyy HH:mm";
     private static final String NEXT_PAGE = AFTER_EDIT_MATCHES_PAGE;
     private static final String ERROR_PAGE = MAIN_PAGE;
     private MatchReceiverImpl receiver = new MatchReceiverImpl();
@@ -53,7 +53,8 @@ public class EditMatchCommand implements AbstractCommand {
         match.setFirstTeam(request.getParameter(PARAM_NAME_FIRST_TEAM));
         match.setSecondTeam(request.getParameter(PARAM_NAME_SECOND_TEAM));
         match.setConfederacy(request.getParameter(PARAM_NAME_CONFEDERACY));
-        match.setDate(LocalDateTime.parse(request.getParameter(PARAM_NAME_DATE), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+        String str = request.getParameter(PARAM_NAME_DATE);
+        match.setDate(LocalDateTime.parse(request.getParameter(PARAM_NAME_DATE), DateTimeFormatter.ofPattern(DATE_PATTERN)));
         match.addCoefficient(BetType.FW, new BigDecimal(request.getParameter(PARAM_NAME_FW)));
         match.addCoefficient(BetType.X, new BigDecimal(request.getParameter(PARAM_NAME_X)));
         match.addCoefficient(BetType.SW, new BigDecimal(request.getParameter(PARAM_NAME_SW)));

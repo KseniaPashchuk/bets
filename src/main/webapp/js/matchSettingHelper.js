@@ -43,18 +43,6 @@ $(document).ready(function () {
     });
 
 
-    $("body").on('click', ".remove-row-btn", function (event) {
-        var idx = $(this).closest('tr').attr("id");
-        var aaa = $("#games tbody").find('tr[id=' + idx + '] td.active.selected').removeClass('selected');
-        $(this).closest('tr').remove();
-        var rowCount = $('#make-bet-table tbody tr').length;
-        if (rowCount < 2) {
-            $(".make-bet-close").click();
-        }
-        return false;
-    });
-
-
     $("body").on('click', ".btn-edit-game", function (event) {
         var elRow = $(this).closest('tr').find('td');
         var rowIdx = $(this).closest('tr').index();
@@ -98,13 +86,13 @@ $(document).ready(function () {
 
 
     $("body").on('click', ".btn-set-score", function (event) {
-        var rowIdx = $(this).closest('tr').index();
-        var id = matchesTable.cell(rowIdx + 1, 0).data();
+        var elRow = $(this).closest('tr').find('td');
+        var id = $(elRow).eq(0).text();
         $("input[id=set-score-match-id]").val(id);
-        var ev = matchesTable.cell(rowIdx + 1, 1).data();
-        var fisrtTeam = ev.split('-')[0];
-        var secondTeam = ev.split('-')[1];
-        $("#set-score-table").find('td[id=first-team]').text(fisrtTeam);
+        var ev = $(elRow).eq(1).text();
+        var firstTeam = ev.split('-')[0].trim();
+        var secondTeam = ev.split('-')[1].trim();
+        $("#set-score-table").find('td[id=first-team]').text(firstTeam);
         $("#set-score-table").find('td[id=second-team]').text(secondTeam);
         $("#set-score-popup").show();
         $("#set-score").show();
@@ -180,16 +168,16 @@ $(document).ready(function () {
                         html += '<tr id="' + item.id + '">' +
                             '<td>' + item.id + '</td>' +
                             '<td>' + item.firstTeam + ' - ' + item.secondTeam + '</td>' +
-                            '<td>' + formatDate(date) + '</td>' +
-                            '<td class="active">' + item.coefficients['FW'] + '</td>' +
-                            '<td class="active">' + item.coefficients['SW'] + '</td>' +
-                            '<td class="active">' + item.coefficients['X'] + '</td>' +
-                            '<td class="active">' + item.coefficients['FWX'] + '</td>' +
-                            '<td class="active">' + item.coefficients['FS'] + '</td>' +
-                            '<td class="active">' + item.coefficients['XSW'] + '</td>' +
-                            '<td class="active">' + item.coefficients['TL'] + '</td>' +
+                            '<td>' + moment(date).format("DD/MM/YY HH:mm") + '</td>' +
+                            '<td class="active">' + item.matchCoefficients.coefficients['FW'] + '</td>' +
+                            '<td class="active">' + item.matchCoefficients.coefficients['SW'] + '</td>' +
+                            '<td class="active">' + item.matchCoefficients.coefficients['X'] + '</td>' +
+                            '<td class="active">' + item.matchCoefficients.coefficients['FWX'] + '</td>' +
+                            '<td class="active">' + item.matchCoefficients.coefficients['FS'] + '</td>' +
+                            '<td class="active">' + item.matchCoefficients.coefficients['XSW'] + '</td>' +
+                            '<td class="active">' + item.matchCoefficients.coefficients['TL'] + '</td>' +
                             '<td>' + item.total + '</td>' +
-                            '<td class="active">' + item.coefficients['TM'] + '</td>' +
+                            '<td class="active">' + item.matchCoefficients.coefficients['TM'] + '</td>' +
                             '<td class="hidden">' + item.maxBet + '</td>' +
                             '<td class="hidden">' + item.confederacy + '</td>' +
                             '<td class="btn-ctrl"><button class="btn btn-primary btn-xs btn-edit-game">' +
@@ -212,16 +200,6 @@ $(document).ready(function () {
         });
     }
 
-    function formatDate(date) {
-        var day = date.getDate();
-        var month = date.getMonth();
-        var year = date.getFullYear();
-        var hour = date.getHours();
-        var minute = date.getMinutes();
-        return day + '/' + month + '/' + year + ' ' +hour + ':' +minute;
-    }
-
-
     $("#match-results").click(function () {
         $(".games-table").hide();
         $(".coupon").hide();
@@ -232,7 +210,7 @@ $(document).ready(function () {
     $("#show-results").click(function () {
 
         var selectDate = $('#select-results-date').data("DateTimePicker").date();
-        var resultsDate = moment(selectDate).format("YYYY-MM-DD");
+        var resultsDate = moment(selectDate).format("DD/MM/YYYY");
         var confederacy = $("#results-confederations").val();
         $.ajax({
             url: "/ajax?command=show_match_results&date=" + resultsDate + "&confederacy=" + confederacy,
@@ -249,18 +227,11 @@ $(document).ready(function () {
                     var html = '';
                     var confederacy = '';
                     $.each(data, function (key, item) {
-                        var date = new Date(item.date.year, item.date.month - 1, item.date.day);
+                        var date = new Date(item.date.date.year, item.date.date.month - 1, item.date.date.day,
+                            item.date.time.hour, item.date.time.minute);
                         if (item.confederacy != confederacy) {
                             html += '<tr>' +
-                                '<td colspan="12" style="background: white">' + item.confederacy + '</td>' +
-                                '<td style="display: none;"></td>' +
-                                '<td style="display: none;"></td>' +
-                                '<td style="display: none;"></td>' +
-                                '<td style="display: none;"></td>' +
-                                '<td style="display: none;"></td>' +
-                                '<td style="display: none;"></td>' +
-                                '<td style="display: none;"></td>' +
-                                '<td style="display: none;"></td>' +
+                                '<td colspan="12" style="background: #ffa71b">' + item.confederacy + '</td>' +
                                 '<td style="display: none;"></td>' +
                                 '<td style="display: none;"></td>' +
                                 '<td style="display: none;"></td>' +
@@ -269,7 +240,7 @@ $(document).ready(function () {
                         }
                         html += '<tr id="' + item.id + '">' +
                             '<td>' + item.id + '</td>' +
-                            '<td>' + date.toLocaleString('de-DE') + '</td>' +
+                            '<td>' + moment(date).format("DD/MM/YY HH:mm") + '</td>' +
                             '<td>' + item.firstTeam + ' - ' + item.secondTeam + '</td>' +
                             '<td>' + item.firstTeamScore + ' : ' + item.secondTeamScore + '</td>' +
                             '</tr>';

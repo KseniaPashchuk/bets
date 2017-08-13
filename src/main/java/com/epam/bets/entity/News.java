@@ -51,6 +51,8 @@ public class News extends Entity{
     }
 
     public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
+        if(!pictureUrl.isEmpty()) {
+            this.pictureUrl = pictureUrl;
+        }
     }
 }

@@ -1,8 +1,8 @@
 package com.epam.bets.command.admin;
 
 import com.epam.bets.command.AbstractCommand;
-import com.epam.bets.command.PageNavigator;
-import com.epam.bets.command.PageType;
+import com.epam.bets.navigator.PageNavigator;
+import com.epam.bets.navigator.PageType;
 import com.epam.bets.entity.News;
 import com.epam.bets.exception.ReceiverException;
 import com.epam.bets.receiver.impl.NewsReceiverImpl;

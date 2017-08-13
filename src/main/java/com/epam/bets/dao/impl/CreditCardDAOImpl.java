@@ -25,13 +25,9 @@ public class CreditCardDAOImpl extends CreditCardDAO {
         super(connection);
     }
 
-    @Override
-    public List<CreditCards> findAll() throws DaoException {
-        return null;
-    }
 
     @Override
-    public CreditCards findEntityById(int userId) throws DaoException {
+    public CreditCards findCardsByUserId(int userId) throws DaoException {
         CreditCards creditCards = new CreditCards();
         try (PreparedStatement statementCreditCard = connection.prepareStatement(SELECT_CREDIT_CARDS_BY_USER_ID)) {
             statementCreditCard.setInt(1, userId);
@@ -47,7 +43,7 @@ public class CreditCardDAOImpl extends CreditCardDAO {
     }
 
     @Override
-    public boolean delete(int userId) throws DaoException {
+    public boolean deleteByUserId(int userId) throws DaoException {
         try (PreparedStatement statementCreditCard = connection.prepareStatement(DELETE_CREDIT_CARDS_BY_USER_ID)) {
             statementCreditCard.setInt(1, userId);
             statementCreditCard.executeUpdate();
@@ -73,7 +69,7 @@ public class CreditCardDAOImpl extends CreditCardDAO {
 
     @Override
     public boolean update(CreditCards entity) throws DaoException {
-        boolean isDeleted = delete(entity.getUserId());
+        boolean isDeleted = deleteByUserId(entity.getUserId());
         int isCreated = 0;
         if (isDeleted) {
             isCreated = create(entity);

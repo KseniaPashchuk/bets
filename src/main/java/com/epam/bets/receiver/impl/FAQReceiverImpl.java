@@ -18,7 +18,7 @@ public class FAQReceiverImpl implements FAQReceiver {
         List<FAQ> faqList;
         try (DaoFactory factory = new DaoFactory()) {
             FaqDAO faqDAO = factory.getFaqDao();
-            faqList = faqDAO.findAll();
+            faqList = faqDAO.findAllFAQ();
         } catch (DaoException e) {
             throw new ReceiverException(e); //TODO
         }

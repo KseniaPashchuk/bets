@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <article class="row">
-    <div class="news colored-block">
-        <div class="select-news clearfix">
+    <div class="news ">
+        <div class="select-news colored-block clearfix">
             <div class="select-news-title"> Показать новости за</div>
             <div class="select-news-date input-group date" id='select-news-date'>
                 <input type="text" class="form-control"/>

@@ -1,8 +1,6 @@
 package com.epam.bets.servlet;
 
 import com.epam.bets.command.AjaxCommand;
-import com.epam.bets.command.ShowNewsCommand;
-import com.epam.bets.entity.News;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 import com.epam.bets.exception.CommandException;
 import com.epam.bets.factory.AjaxCommandFactory;

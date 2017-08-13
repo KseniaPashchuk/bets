@@ -35,7 +35,7 @@ public class FaqDAOImpl extends FaqDAO {
 
 
     @Override
-    public List<FAQ> findAll() throws DaoException {
+    public List<FAQ> findAllFAQ() throws DaoException {
         List<FAQ> faqList;
         try (PreparedStatement statementFAQ = connection.prepareStatement(SELECT_ALL_FAQ)) {
             ResultSet resultSet = statementFAQ.executeQuery();
@@ -46,31 +46,6 @@ public class FaqDAOImpl extends FaqDAO {
         return faqList;
     }
 
-    @Override
-    public FAQ findEntityById(int id) throws DaoException {
-        FAQ faq = null;
-        try (PreparedStatement statementFAQ = connection.prepareStatement(SELECT_FAQ_BY_ID)) {
-            statementFAQ.setInt(1, id);
-            ResultSet resultSet = statementFAQ.executeQuery();
-            if (resultSet.next()) {
-                faq = buildFAQ(resultSet);
-            }
-        } catch (SQLException e) {
-            throw new DaoException("Can't find faq by given id", e);
-        }
-        return faq;
-    }
-
-    @Override
-    public boolean delete(int id) throws DaoException {
-        try (PreparedStatement statementFAQ = connection.prepareStatement(DELETE_FAQ_BY_ID)) {
-            statementFAQ.setInt(1, id);
-            statementFAQ.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-            throw new DaoException("Can't delete faq", e);
-        }
-    }
 
     @Override
     public boolean deleteByQuestion(String question) throws DaoException {

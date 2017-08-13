@@ -94,12 +94,13 @@
 </div>
 <div class="popup-wrap" id="make-bet-popup">
     <div class="popup-holder make-bet-holder" id="make-bet" style="display: none">
-        <form class="make-bet-form clearfix">
+        <form class="make-bet-form clearfix" method="POST" action="${pageContext.servletContext.contextPath}/controller">
+            <input type="hidden" name="command" value="make_bet" />
             <table id="make-bet-table">
                 <thead>
                 <tr>
-                    <th>Date</th>
                     <th>Event</th>
+                    <th>Date</th>
                     <th>Bet type</th>
                     <th>Coeff</th>
                     <th>Summ</th>

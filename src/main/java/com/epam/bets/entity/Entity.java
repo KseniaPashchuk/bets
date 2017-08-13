@@ -1,4 +1,6 @@
 package com.epam.bets.entity;
 
-public class Entity {
+import java.io.Serializable;
+
+public class Entity implements Serializable {
 }

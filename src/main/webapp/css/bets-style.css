@@ -529,7 +529,7 @@ option {
 }
 .popup-holder.logout-holder, .popup-holder.delete-faq-holder,
 .popup-holder.delete-news-holder, .popup-holder.make-bet-holder,
-.popup-holder.set-score-holder{
+.popup-holder.set-score-holder, .popup-holder.forget-pass-holder{
     left: 50%;
     top: 80px;
     text-align: center;
@@ -715,7 +715,6 @@ button.news-title:hover{
     color: #ffa71b;
     font-size: 21px;
     margin: 5px 35px  10px 35px;
-    float: left;
 }
 .faq-item-title:hover{
     text-decoration:underline;
@@ -860,9 +859,11 @@ button.news-title:hover{
 }
 
 .user-meta{
-    padding: 50px 20px 0;
+    padding: 45px 5px 0;
 }
-
+.user-meta .value-row{
+    padding: 0;
+}
 .meta-label{
     color: #ffa71b;
     font-size: 17px;
@@ -876,6 +877,9 @@ button.news-title:hover{
 .label-row{
     float: left;
     margin-right: 25px;
+}
+.user-meta .label-row{
+    margin-right: 0;
 }
 .change-meta{
     margin-top: 16%;
@@ -1383,7 +1387,9 @@ table.dataTable thead>tr>th.sorting_asc, table.dataTable thead>tr>th.sorting_des
     opacity: 0
 }
 
-
+.matches-table td, .results-table td, .bets-table td{
+    color:black;
+}
 .coefficient-button, .matches-table tbody tr td.active{
     background: transparent;
     color: #616060;
@@ -1396,15 +1402,16 @@ table.dataTable thead>tr>th.sorting_asc, table.dataTable thead>tr>th.sorting_des
 }
 
 
-.matches-table{
+.matches-table, .results-table, .bets-table{
     background: #fff;
     border-color: black;
 }
 
-.matches-table thead {
+.matches-table thead, .results-table thead, .bets-table thead{
     background: black;
     color: #ffa71b;
 }
+
 .games-table .col-sm-12{
     padding: 0;
 }
@@ -1608,3 +1615,17 @@ table.dataTable {
 /*.btn-xs, .btn-group-xs > .btn {*/
     /*padding: 4px 6px;*/
 /*}*/
+.forget-pass-holder p{
+    font-size: 16px;
+}
+.forget-pass-holder h2{
+    color:#ffa71b;
+}
+.popup-holder.forget-pass-holder {
+    min-width: 400px;
+    position: absolute;
+    margin-left: -195px;
+}
+.user-meta .label-row{
+    margin-right: 0;
+}

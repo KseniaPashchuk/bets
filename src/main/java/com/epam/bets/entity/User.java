@@ -101,7 +101,9 @@ public class User extends Entity {
     }
 
     public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+        if (!avatarUrl.isEmpty()) {
+            this.avatarUrl = avatarUrl;
+        }
     }
 
 

@@ -24,7 +24,6 @@ public abstract class GainCoefficientDAO extends AbstractDAO<GainCoefficient> {
     }
 
 
-    public abstract Map<BetType, BigDecimal> findMatchCoefficients(int matchId) throws DaoException;
-    public abstract boolean createCoefficients(int matchId, Map<BetType, BigDecimal> map) throws DaoException;
-    public abstract boolean updateCoefficients(int matchId, Map<BetType, BigDecimal> map) throws DaoException;
+    public abstract GainCoefficient findCoefficientsByMatchId(int matchId) throws DaoException;
+
 }

@@ -4,7 +4,7 @@
         <div class="games-menu colored-block">
             <div class="matches-list">
                 <div class="matches-title">
-                    <a href="javascript://" id="matches-title">Mатчи</a> <span
+                    <a href="javascript://" id="matches-title"><fmt:message key="common.bets.matches"/></a> <span
                         class="glyphicon glyphicon-chevron-down dropdown" style="color: #ffa71b"
                         aria-hidden="true"></span>
                 </div>
@@ -16,30 +16,20 @@
                     </div>
                 </div>
             </div>
-            <div class="results"><a href="javascript://" id="match-results">Результаты</a></div>
+            <div class="results"><a href="javascript://" id="match-results"><fmt:message key="common.bets.results"/></a></div>
         </div>
     </div>
     <div class="games-table-wrap col-lg-9">
         <div class="create-block colored-block">
-            <button>Create new game</button>
+            <button><fmt:message key="bookmaker.bets.create"/></button>
         </div>
-        <div class="coupon colored-block" id="coupon">
-            <div class="coupon-title">Your bets</div>
-            <div class="user-coeff">
-                <div class="btn-group">
-                    <button id="make-bet-btn">make bet</button>
-                    <button id="clean-bets-btn">cancel</button>
-                </div>
-            </div>
-        </div>
-
         <div class="games-table colored-block" style="display:none;">
             <table id="games" class="table table-bordered matches-table" cellspacing="0" width="100%">
                 <thead>
                 <tr>
                     <th>№</th>
-                    <th>Event</th>
-                    <th>Date</th>
+                    <th><fmt:message key="common.bets.event"/></th>
+                    <th><fmt:message key="common.bets.date"/></th>
                     <th>1</th>
                     <th>X</th>
                     <th>2</th>
@@ -49,8 +39,8 @@
                     <th>L</th>
                     <th>T</th>
                     <th>M</th>
-                    <th class="btn-ctrl-th">EDIT</th>
-                    <th class="btn-ctrl-th">Score</th>
+                    <th class="btn-ctrl-th"><fmt:message key="common.btn.edit"/></th>
+                    <th class="btn-ctrl-th"><fmt:message key="bookmaker.bets.score"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -60,7 +50,7 @@
         <div class="row search-results-block colored-block" style="display:none;">
             <div class="column-12 results-filter clearfix">
                 <div class="col-lg-4">
-                    <p>Результаты за</p>
+                    <p><fmt:message key="bookmaker.bets.results_for"/></p>
                     <div class="select-results-date input-group date" id='select-results-date'>
                         <input type="text" class="form-control"/>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
@@ -68,7 +58,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <p>Чемпионат</p>
+                    <p><fmt:message key="common.bets.confederacy"/></p>
                     <div class="common-select">
                         <select id="results-confederations" class="dark-select">
                             <c:forEach var="item" items="${confederationList}">
@@ -78,7 +68,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <input class="input-btn show-results-btn" type="button" value="Show" id="show-results">
+                    <input class="input-btn show-results-btn" type="button" value="<fmt:message key="common.btn.show"/>" id="show-results">
                 </div>
             </div>
         </div>
@@ -87,9 +77,9 @@
                 <thead>
                 <tr>
                     <th>№</th>
-                    <th>Date</th>
-                    <th>Event</th>
-                    <th>Score</th>
+                    <th><fmt:message key="common.bets.date"/></th>
+                    <th><fmt:message key="common.bets.event"/></th>
+                    <th><fmt:message key="bookmaker.bets.score"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -109,7 +99,7 @@
             <input type="hidden" name="confederacy" id="edit-confederacy" value=""/>
             <div class="table-responsive">
                 <div class="edit-match-info">
-                    <label for="first-team-select">First team</label>
+                    <label for="first-team-select"><fmt:message key="bookmaker.bets.first_team"/></label>
                     <select id="first-team-select" class="dark-select">
                         <c:forEach var="item" items="${teamList}">
                             <option value="${item}">${item}</option>
@@ -117,7 +107,7 @@
                     </select>
                 </div>
                 <div class="edit-match-info">
-                    <label for="second-team-select">second team</label>
+                    <label for="second-team-select"><fmt:message key="bookmaker.bets.second_team"/></label>
                     <select id="second-team-select" class="dark-select">
                         <c:forEach var="item" items="${teamList}">
                             <option value="${item}">${item}</option>
@@ -125,7 +115,7 @@
                     </select>
                 </div>
                 <div class="edit-match-info">
-                    <label for="confederacy-select">confederacy</label>
+                    <label for="confederacy-select"><fmt:message key="common.bets.confederacy"/></label>
                     <select id="confederacy-select" class="dark-select">
                         <c:forEach var="item" items="${confederationList}">
                             <option value="${item}">${item}</option>
@@ -133,7 +123,7 @@
                     </select>
                 </div>
                 <div class="edit-match-info clearfix">
-                    <label for="create-match-date">date</label>
+                    <label for="create-match-date"><fmt:message key="common.bets.date"/></label>
                     <div class="input-group date date-input" id='edit-match-date'>
                         <input type="text" class="form-control" name="match_date" id='create-match-date-input'/>
                         <span class="input-group-addon">
@@ -142,7 +132,7 @@
                     </div>
                 </div>
                 <table id="edit-games-table">
-                    <caption>coefficients</caption>
+                    <caption><fmt:message key="bookmaker.bets.coefficiens"/></caption>
                     <thead>
                     <tr>
                         <th>1</th>
@@ -154,7 +144,7 @@
                         <th>L</th>
                         <th>T</th>
                         <th>M</th>
-                        <th>MaxBet</th>
+                        <th><fmt:message key="common.bets.max_bet"/></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -174,8 +164,8 @@
                 </table>
             </div>
             <div class="btn-group">
-                <input type="button" class="save-edit-game" value='Сохранить'>
-                <input class="edit-games-close" type="button" value='Отмена'>
+                <input type="button" class="save-edit-game" value='<fmt:message key="common.btn.save"/>'>
+                <input class="edit-games-close" type="button" value='<fmt:message key="common.btn.cancel"/>'>
             </div>
         </form>
         <div class="popup-close edit-games-close"><a href="">x</a></div>
@@ -187,7 +177,7 @@
             <input type="hidden" name="command" value="set_score" />
             <input type="hidden" name="match_id" id="set-score-match-id" value=""/>
             <table id="set-score-table">
-                <caption>Set score</caption>
+                <caption><fmt:message key="bookmaker.bets.set_score"/></caption>
                 <tr>
                     <td id="first-team"></td>
                     <td><input class="score-input" type="text" name="first_team_score" value=""/></td>
@@ -198,8 +188,8 @@
                 </tr>
             </table>
             <div class="btn-group">
-                <input type="button" class="save-set-score" value='save'>
-                <input class="set-score-close" type="button" value='cancel'>
+                <input type="submit" class="save-set-score" value='<fmt:message key="common.btn.save"/>'>
+                <input class="set-score-close" type="button" value='<fmt:message key="common.btn.cancel"/>'>
             </div>
         </form>
         <div class="popup-close set-score-close"><a href="">x</a></div>
@@ -215,7 +205,7 @@
 
             <div class="table-responsive">
                 <div class="edit-match-info">
-                    <label for="first-team-create">First team</label>
+                    <label for="first-team-create"><fmt:message key="bookmaker.bets.first_team"/></label>
                     <select id="first-team-create" class="dark-select">
                         <c:forEach var="item" items="${teamList}">
                             <option value="${item}">${item}</option>
@@ -223,7 +213,7 @@
                     </select>
                 </div>
                 <div class="edit-match-info">
-                    <label for="second-team-create">second team</label>
+                    <label for="second-team-create"><fmt:message key="bookmaker.bets.second_team"/></label>
                     <select id="second-team-create" class="dark-select">
                         <c:forEach var="item" items="${teamList}">
                             <option value="${item}">${item}</option>
@@ -231,7 +221,7 @@
                     </select>
                 </div>
                 <div class="edit-match-info">
-                    <label for="confederacy-create">confederacy</label>
+                    <label for="confederacy-create"><fmt:message key="common.bets.confederacy"/></label>
                     <select id="confederacy-create" class="dark-select">
                         <c:forEach var="item" items="${confederationList}">
                             <option value="${item}">${item}</option>
@@ -239,7 +229,7 @@
                     </select>
                 </div>
                 <div class="edit-match-info clearfix">
-                    <label for="create-match-date">date</label>
+                    <label for="create-match-date"><fmt:message key="common.bets.date"/></label>
                     <div class="input-group date date-input" id='create-match-date'>
                         <input type="text" class="form-control" name="match_date"/>
                         <span class="input-group-addon">
@@ -248,7 +238,7 @@
                     </div>
                 </div>
                 <table id="create-game-table">
-                    <caption>coefficients</caption>
+                    <caption><fmt:message key="bookmaker.bets.coefficiens"/></caption>
                     <thead>
                     <tr>
                         <th>1</th>
@@ -260,7 +250,7 @@
                         <th>L</th>
                         <th>T</th>
                         <th>M</th>
-                        <th>MaxBet</th>
+                        <th><fmt:message key="common.bets.max_bet"/></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -280,8 +270,8 @@
                 </table>
             </div>
             <div class="btn-group">
-                <input type="button" class="save-create-game" value='Сохранить'>
-                <input class="create-game-close" type="button" value='Отмена'>
+                <input type="button" class="save-create-game" value='<fmt:message key="common.btn.save"/>'>
+                <input class="create-game-close" type="button" value='<fmt:message key="common.btn.cancel"/>'>
             </div>
         </form>
         <div class="popup-close create-game-close"><a href="">x</a></div>

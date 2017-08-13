@@ -21,9 +21,9 @@
 <div class="authorization-wrap">
     <div class="enter-wrap popup-holder" id="enter-wrap">
         <div class="buttons">
-            <a class="btn-enter" href="javascript:showLoginPopup()" style="color: white">Вход</a>
+            <a class="btn-enter" href="javascript://"  style="color: white">Вход</a>
             <span>/</span>
-            <a class="btn-registration" href="javascript:showRegisterPopup()" style="color: #ffa71b">Регистрация</a>
+            <a class="btn-registration" href="javascript://" style="color: #ffa71b">Регистрация</a>
         </div>
         <form class="enter" id="login_form" onsubmit="validateEnter(this.form)" method="POST" action="${pageContext.servletContext.contextPath}/controller">
             <input type="hidden" name="command" value="sign_in"/>
@@ -42,15 +42,15 @@
                            value="" autocomplete="off">
                 </label>
             </div>
-            <a href="javascript://" class="forget-link">Забыли пароль?</a>
+            <a href="javascript://" class="forget-link" id="forget-password">Забыли пароль?</a>
             <input type="submit" id="login-btn" class="sign-in-btn" value="Войти">
         </form>
     </div>
     <div class="register-wrap popup-holder" style="display: none" id="register-wrap">
         <div class="buttons">
-            <a class="btn-enter" href="javascript:showLoginPopup()" style="color: #ffa71b">Вход</a>
+            <a class="btn-enter" href="javascript://"  style="color: #ffa71b">Вход</a>
             <span>/</span>
-            <a class="btn-registration" href="javascript:showRegisterPopup()" style="color: white">Регистрация</a>
+            <a class="btn-registration" href="javascript://"  style="color: white">Регистрация</a>
         </div>
         <form class="registration" id="reg_form" onsubmit="validateEnter(this.form)" method="POST" action="${pageContext.servletContext.contextPath}/controller">
             <input type="hidden" name="command" value="sign_up"/>
@@ -127,8 +127,8 @@
                     </div>
                     <div class="confirmation">
                         <input id="rule" type="checkbox"/>
-                        <label for="rule">С <a class='read-rule' href='Info#Info/rules'>правилами</a> и <a
-                                class="orange" href="Default.aspx#Info/siteRules">условиями</a> ознакомлен и
+                        <label for="rule">С <a class='read-rule' href=''>правилами</a> и <a
+                                class="orange" href="">условиями</a> ознакомлен и
                             согласен</label>
                     </div>
                 </div>
@@ -138,19 +138,17 @@
         </form>
     </div>
     <div id="pass-recovery" style="display: none">
-        <div class="popup-holder forget-pass" id="forget-form">
-            <h2>Восстановление пароля.</h2>
-            <form class="forget-form" id="pass-rec">
-                <label>Введите Ваш E-mail</label>
-                <input type="text" name="input_mail" placeholder="E-mail">
+        <div class="popup-holder forget-pass-holder" id="forget-form">
+            <h3 ><i class="fa fa-lock fa-4x"></i></h3>
+            <h2 class="text-center">Forgot Password?</h2>
+            <p>You can reset your password here.</p>
+            <form class="forget-form" id="pass-rec" action="${pageContext.servletContext.contextPath}/controller" method="POST">
+                <input type="hidden" name="command" value="password_recover">
+                <input type="text"  placeholder="E-mail" name="email">
                 <p class="abort-mail error"></p>
-                <input class="button-enter button-forget" type="button" value='Восстановить'>
+                <input class="button-enter button-forget" type="submit" value='Восстановить'>
             </form>
-        </div>
-        <div id="after-forget" class="popup-holder after-forget">
-            <h2>Восстановление пароля.</h2>
-            <div class="notice">Пароль будет отправлен на указанный E-mail</div>
-            <div class="popup-close">x</div>
+            <div class="popup-close forget-pass-close"><a href="">x</a></div>
         </div>
     </div>
 </div>

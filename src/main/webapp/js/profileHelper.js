@@ -1,4 +1,8 @@
 $(function () {
+    $('#edit-birth-date').datetimepicker({
+        format: 'DD/MM/YYYY',
+        defaultDate: new Date()
+    });
 
     function readURL(input) {
         if (input.files && input.files[0]) {
@@ -13,37 +17,14 @@ $(function () {
         }
     }
 
-
     $("#avatar").change(function () {
         readURL(this);
     });
 
-    $("#profile").click(function (event) {
-        $("#edit-user-info").hide();
-        $("#refill-user-cash").hide();
-        $("#user-profile").show();
-        return false;
-    });
-
-    $("#profile").trigger('click');
-
-    $("#edit").click(function (event) {
-        $("#user-profile").hide();
-        $("#refill-user-cash").hide();
-        $("#edit-user-info").show();
-        return false;
-    });
     $("#change-user-meta").click(function (event) {
         $("#user-profile").hide();
         $("#refill-user-cash").hide();
         $("#edit-user-info").show();
-        return false;
-    });
-
-    $("#cash").click(function (event) {
-        $("#user-profile").hide();
-        $("#edit-user-info").hide();
-        $("#refill-user-cash").show();
         return false;
     });
 

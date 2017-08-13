@@ -6,9 +6,8 @@ $(function () {
 
 
     $('#select-news-btn').click(function (event) {
-
         var selectDate = $('#select-news-date').data("DateTimePicker").date();
-        var newsDate = moment(selectDate).format("YYYY-MM-DD");
+        var newsDate = moment(selectDate).format("DD/MM/YYYY");
         $.ajax({
             url: "/ajax?command=show_news&date=" + newsDate,
             type: 'GET',

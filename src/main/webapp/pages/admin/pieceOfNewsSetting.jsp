@@ -21,8 +21,8 @@
         <img class="news-pic" id="news-pic" src="${pageContext.request.contextPath}/image/news/${picture}"
              alt="football">
         <div class="btn-group">
-            <label class="btn-action" for="news-picture">Choose</label>
-            <input type="submit" id="saveAvatar" value="SAVE">
+            <label class="btn-action" for="news-picture"><fmt:message key="common.btn.choose"/></label>
+            <input type="submit" id="saveAvatar" value="<fmt:message key="common.btn.save"/>">
         </div>
         <input type="file" name="edit_news_picture" id="news-picture" style="display: none">
     </form>
@@ -36,8 +36,8 @@
     <input class="input-text" type="text" name="edit_title" id="edit_title" value="${title}">
     <textarea class="input-text text-area" name="edit_text" id="edit_text" cols="0" rows="0">${text}</textarea>
     <div class="btn-group">
-        <input type="submit" value='Сохранить'>
-        <input class="cancel-edit-news" type="button" value='Отмена'>
+        <input type="submit" value='<fmt:message key="common.btn.save"/>'>
+        <input class="cancel-edit-news" type="button" value='<fmt:message key="common.btn.cancel"/>'>
     </div>
 </form>
 <div class="popup-wrap" id="delete-news-popup">
@@ -45,12 +45,12 @@
         <form class="delete-news-form clearfix" action="${pageContext.servletContext.contextPath}/controller"
               method="POST">
             <input type="hidden" name="command" value="delete_news"/>
-            <h3>Вы действительно хотите удалить следующий элемент?</h3>
+            <h3><fmt:message key="admin.delete_question"/></h3>
             <input class="input-text" type="text" name="delete_title" id="delete-news-title" value=""
                    readonly="readonly">
             <div class="btn-group">
-                <input type="submit" value='Удалить'>
-                <input class="cancel-delete-news" type="button" value='Отмена'>
+                <input type="submit" value='<fmt:message key="common.btn.delete"/>'>
+                <input class="cancel-delete-news" type="button" value='<fmt:message key="common.btn.cancel"/>'>
             </div>
         </form>
         <div class="popup-close cancel-delete-news"><a href="">x</a></div>
