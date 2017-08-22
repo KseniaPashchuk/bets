@@ -1,31 +1,40 @@
 package com.epam.bets.receiver;
 
 import com.epam.bets.entity.Bet;
+import com.epam.bets.entity.CreditCards;
 import com.epam.bets.entity.User;
 import com.epam.bets.exception.ReceiverException;
+import com.epam.bets.request.RequestContent;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface UserReceiver extends Receiver {
 
-    User signIn(String login, String password) throws ReceiverException;
+    void signIn(RequestContent requestContent) throws ReceiverException;
 
-    int signUp(User user) throws ReceiverException;
+    void signUp(RequestContent requestContent) throws ReceiverException;
 
-    User showProfileInfo(int userId) throws ReceiverException;
+    void logout(RequestContent requestContent);
 
-    boolean editProfile(User user) throws ReceiverException;
+    void showProfileInfo(RequestContent requestContent) throws ReceiverException;
 
-    boolean editPassword(String login, String oldPassword, String newPassword) throws ReceiverException;
+    void editProfile(RequestContent requestContent) throws ReceiverException;
 
-    boolean editAvatar(int userId, String avatarUrl) throws ReceiverException;
+    void editPassword(RequestContent requestContent) throws ReceiverException;
 
-    boolean makeBet(List<Bet> bets) throws ReceiverException;
+    void makeBet(RequestContent requestContent) throws ReceiverException;
 
-    List<Bet> showBets(int userId, String type) throws ReceiverException;
+    List<Bet> showBets(RequestContent requestContent) throws ReceiverException;
 
-    boolean recoverPassword(String login) throws  ReceiverException;
+    void recoverPassword(RequestContent requestContent) throws ReceiverException;
 
-    boolean calculateGain(int matchId) throws ReceiverException;
+    void calculateGain(RequestContent requestContent) throws ReceiverException;
+
+    void findAllCreditCards(RequestContent requestContent) throws ReceiverException;
+
+    void findUserBalance(RequestContent requestContent) throws ReceiverException;
+
+    void changeLocale(RequestContent requestContent);
 
 }

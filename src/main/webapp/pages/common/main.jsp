@@ -2,14 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en_EN'}"/>
-<fmt:setBundle basename="locale"/>
+<fmt:setBundle basename="pagelocale"/>
 <html>
 <head>
     <title><fmt:message key="company_name"/></title>
-    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../../css/bets-style.css">
-    <script type="text/javascript" src="../../js/jquery-3.2.1.js"></script>
-    <script type="text/javascript" src="../../js/logout.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../resources/css/bets-style.css">
+    <script type="text/javascript" src="../../resources/js/lib/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="../../resources/js/lib/moment.js"></script>
+    <script type="text/javascript" src="../../resources/js/logout.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,500&amp;subset=cyrillic" rel="stylesheet">
 </head>
 <body>
@@ -30,7 +31,7 @@
         <div class="info-wrap clearfix">
             <div class="info row">
                 <div class="pic-wrap col-lg-7">
-                    <img class="pic" src="../../images/5.jpg" alt="football">
+                    <img class="pic" src="../../resources/images/5.jpg" alt="football">
                 </div>
                 <div class="info-text colored-block col-lg-5">
                     <article class="article-wrap">
@@ -41,19 +42,30 @@
             </div>
         </div>
         <div class="row">
-            <div class="last-news colored-block">
-                <div class="last-news-title">Последние новости</div>
+            <div class="last-news">
+                <div class="last-news-title"><fmt:message key="common.main.last_news"/></div>
                 <div class="news-wrap">
-                    <div class="news-post">
-                        <div class="post-pic-wrap col-lg-3">
-                            <img class="post-pic" src="../../images/kot.png" alt="football">
-                        </div>
-                        <div class="col-lg-9">
-                            <div class="post-title"><a href="#">KOT</a></div>
-                            <div class="post-meta">
-									<span class="fa fa-clock-o"><i class="icon-time"> </i>
-										<time class="entry-date published" datetime="2013-01-11T20:22:19+00:00">January 11, 2013</time></span>
-                            </div>
+                    <div class="news-wrap">
+                        <div class="news-row row">
+                            <c:forEach var="item" items="${lastNews}">
+                                <form class=" col-md-4 news-item  colored-block"
+                                      action="${pageContext.servletContext.contextPath}/controller" method="POST">
+                                    <input type="hidden" name="command" value="show_piece_of_news"/>
+                                    <a href="#"><img class="img-responsive"
+                                                     src="${pageContext.request.contextPath}/image/news/${item.pictureUrl}"
+                                                     alt=""></a>
+                                    <input class="news-title" type="submit" name="title" value="${item.title}">
+                                    <span class="fa fa-clock-o"><i class="icon-time news-time-icon"></i>
+                                    <time class="news-date entry-date published">
+                                        <fmt:parseDate value="${item.date}" pattern="yyyy-MM-dd" var="parsedDate"
+                                                       type="date"/>
+                                         <fmt:formatDate value="${parsedDate}" type="date" var="formattedDate" pattern="dd/MM/yy"/>
+                                   ${formattedDate}
+                                    </time>
+                                    </span>
+                                </form>
+                            </c:forEach>
+
                         </div>
                     </div>
                 </div>

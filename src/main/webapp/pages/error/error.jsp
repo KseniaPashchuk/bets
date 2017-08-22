@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" type="text/css" href="../../css/error.css">
+    <link rel="stylesheet" type="text/css" href="../../resources/css/error.css">
     <title>We've got some trouble</title>
 </head>
 

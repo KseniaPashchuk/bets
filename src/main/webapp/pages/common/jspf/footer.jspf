@@ -1,0 +1,60 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
+<footer class="row ">
+    <section class="footer-coloms clearfix">
+        <div class="bets-col">
+            <span class="col-title"><fmt:message key="common.footer.betting"/></span>
+            <ul>
+                <li>
+                    <a href="javascript://" ><fmt:message key="common.footer.rules"/></a>
+                </li>
+                <li>
+                    <a href="javascript://"><fmt:message key="common.footer.events"/></a>
+                </li>
+                <li>
+                    <a href="javascript://"><fmt:message key="common.footer.results"/></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="help-col">
+            <span class="col-title"><fmt:message key="common.footer.help"/></span>
+            <ul>
+                <li>
+                    <a href="javascript://"><fmt:message key="common.footer.FAQ"/></a>
+                </li>
+            </ul>
+        </div>
+        <div class="comp-col">
+            <span class="col-title"><fmt:message key="company_name"/></span>
+            <ul>
+                <li>
+                    <a href="javascript://"><fmt:message key="common.footer.about_us"/></a>
+                </li>
+                <li>
+                    <a href="javascript://"><fmt:message key="common.footer.site_rules"/></a>
+                </li>
+            </ul>
+        </div>
+        <div class="connect-col">
+            <ul>
+                <li>
+                    <a href="javascript://"><img src="../../resources/images/twitter.png" class="connect-us"></a>
+                </li>
+                <li>
+                    <a href="javascript://"> <img src="../../resources/images/youtube.png" class="connect-us"></a>
+                </li>
+                <li>
+                    <a href="javascript://"> <img src="../../resources/images/facebook.png" class="connect-us"></a>
+                </li>
+            </ul>
+        </div>
+        <div class="age-limit-col">
+            <a href="javascript://"><img src="../../resources/images/ft_18.png" class="age-limit"></a>
+        </div>
+    </section>
+    <section class="copyright colored-block">
+        <p>©2017 <span>Bets - удача навашей стороне.</span>
+        </p>
+    </section>
+
+</footer>

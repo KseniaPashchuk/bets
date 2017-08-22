@@ -1,0 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<div class="popup-wrap" id="logout-popup">
+    <div class="popup-holder logout-holder" id="logout-check" style="display: none">
+        <form action="${pageContext.servletContext.contextPath}/controller" method="GET" class="logout-form clearfix" id="logout">
+            <h3><fmt:message key="common.logout.want_to_logout"/></h3>
+            <div class="btn-group">
+                <input type="hidden" name="command" value="log_out" />
+                <input class="button-logout" id="btn-logout" type="submit" value='<fmt:message key="common.logout.btn.quit"/>'>
+                <input class="logout-close" type="button" value='<fmt:message key="common.btn.cancel"/>'>
+            </div>
+        </form>
+        <div class="popup-close logout-close"><a href="javascript://">x</a></div>
+    </div>
+</div>

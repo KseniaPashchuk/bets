@@ -24,12 +24,14 @@ public class NewsDAOImpl extends NewsDAO {
             "SELECT news_id, title, news_date, text, pic_url FROM news WHERE title=?";
     private static final String SELECT_NEWS_BY_DATE =
             "SELECT news_id, title, news_date, text, pic_url FROM news WHERE news_date=?";
+    private static final String SELECT_LAST_NEWS = "SELECT news_id, title, news_date, text, pic_url FROM " +
+            "news order by news_date desc limit 3";
     private static final String DELETE_NEWS_BY_ID = "DELETE FROM news WHERE news_id=?";
     private static final String DELETE_NEWS_BY_TITLE = "DELETE FROM news WHERE title=?";
     private static final String CREATE_NEWS = "INSERT INTO news (news_id, title, news_date, text, pic_url)" +
             " VALUES( NULL, ?, ?, ?, ?)";
-    private static final String UPDATE_NEWS = "UPDATE news SET title=?, text=?, pic_url=? WHERE news_id=?";
-    private static final String UPDATE_PICTURE = "UPDATE user SET pic_url=? WHERE news_id=?";
+    private static final String UPDATE_NEWS = "UPDATE news SET title=?, text=? WHERE news_id=?";
+    private static final String UPDATE_PICTURE = "UPDATE news SET pic_url=? WHERE news_id=?";
 
 
     public NewsDAOImpl() {
@@ -80,6 +82,18 @@ public class NewsDAOImpl extends NewsDAO {
     }
 
     @Override
+    public List<News> findLastNews() throws DaoException {
+        List<News> newsList;
+        try (PreparedStatement statementNews = connection.prepareStatement(SELECT_LAST_NEWS)) {
+            ResultSet resultSet = statementNews.executeQuery();
+            newsList = buildNewsList(resultSet);
+        } catch (SQLException e) {
+            throw new DaoException("Can't find last news ", e);
+        }
+        return newsList;
+    }
+
+    @Override
     public boolean deleteByTitle(String title) throws DaoException {
         try (PreparedStatement statementNews = connection.prepareStatement(DELETE_NEWS_BY_TITLE)) {
             statementNews.setString(1, title);
@@ -124,8 +138,7 @@ public class NewsDAOImpl extends NewsDAO {
         try (PreparedStatement statementNews = connection.prepareStatement(UPDATE_NEWS)) {
             statementNews.setString(1, news.getTitle());
             statementNews.setString(2, news.getText());
-            statementNews.setString(3, news.getPictureUrl());
-            statementNews.setInt(4, news.getId());
+            statementNews.setInt(3, news.getId());
             statementNews.executeUpdate();
             return true;
         } catch (SQLException e) {

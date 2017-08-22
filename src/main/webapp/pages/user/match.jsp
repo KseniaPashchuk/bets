@@ -4,7 +4,7 @@
         <div class="games-menu colored-block">
             <div class="matches-list">
                 <div class="matches-title">
-                    <a href="javascript://" id="matches-title">Mатчи</a> <span
+                    <a href="javascript://" id="matches-title"><fmt:message key="common.bets.matches"/></a> <span
                         class="glyphicon glyphicon-chevron-down dropdown" style="color: #ffa71b"
                         aria-hidden="true"></span>
                 </div>
@@ -16,16 +16,16 @@
                     </div>
                 </div>
             </div>
-            <div class="results"><a href="javascript://" id="match-results">Результаты</a></div>
+            <div class="results"><a href="javascript://" id="match-results"><fmt:message key="common.bets.results"/></a></div>
         </div>
     </div>
     <div class="games-table-wrap col-lg-9">
         <div class="coupon colored-block" id="coupon">
-            <div class="coupon-title">Your bets</div>
+            <div class="coupon-title"><fmt:message key="common.bets.your_bets"/></div>
             <div class="user-coeff">
                 <div class="btn-group">
-                    <button id="make-bet-btn">make bet</button>
-                    <button id="clean-bets-btn">cancel</button>
+                    <button id="make-bet-btn"><fmt:message key="common.bets.make_bet"/></button>
+                    <button id="clean-bets-btn"><fmt:message key="common.btn.cancel"/></button>
                 </div>
             </div>
         </div>
@@ -34,8 +34,8 @@
                 <thead>
                 <tr>
                     <th>№</th>
-                    <th>Event</th>
-                    <th>Date</th>
+                    <th><fmt:message key="common.bets.event"/></th>
+                    <th><fmt:message key="common.bets.date"/></th>
                     <th>1</th>
                     <th>X</th>
                     <th>2</th>
@@ -54,7 +54,7 @@
         <div class="row search-results-block colored-block" style="display:none;">
             <div class="column-12 results-filter clearfix">
                 <div class="col-lg-4">
-                    <p>Результаты за</p>
+                    <p><fmt:message key="common.bets.results_for"/></p>
                     <div class="select-results-date input-group date" id='select-results-date'>
                         <input type="text" class="form-control"/>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
@@ -62,7 +62,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <p>Чемпионат</p>
+                    <p><fmt:message key="common.bets.confederacy"/></p>
                     <div class="common-select">
                         <select id="results-confederations" class="dark-select">
                             <c:forEach var="item" items="${confederationList}">
@@ -81,9 +81,9 @@
                 <thead>
                 <tr>
                     <th>№</th>
-                    <th>Date</th>
-                    <th>Event</th>
-                    <th>Score</th>
+                    <th><fmt:message key="common.bets.date"/></th>
+                    <th><fmt:message key="common.bets.event"/></th>
+                    <th><fmt:message key="common.bets.score"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -99,12 +99,12 @@
             <table id="make-bet-table">
                 <thead>
                 <tr>
-                    <th>Event</th>
-                    <th>Date</th>
-                    <th>Bet type</th>
-                    <th>Coeff</th>
-                    <th>Summ</th>
-                    <th>Max summ</th>
+                    <th><fmt:message key="common.bets.event"/></th>
+                    <th><fmt:message key="common.bets.date"/></th>
+                    <th><fmt:message key="common.bets.bet_type"/></th>
+                    <th><fmt:message key="common.bets.coefficient"/></th>
+                    <th><fmt:message key="common.bets.summ"/></th>
+                    <th><fmt:message key="common.bets.max_bet"/></th>
                     <th></th>
                 </tr>
                 </thead>
@@ -113,8 +113,8 @@
                 </tbody>
             </table>
             <div class="btn-group">
-                <input type="submit" value='Bet!'>
-                <input class="make-bet-close" type="button" value='Cancel'>
+                <input type="submit" value='<fmt:message key="common.bets.make_bet"/>'>
+                <input class="make-bet-close" type="button" value='<fmt:message key="common.btn.cancel"/>'>
             </div>
         </form>
         <div class="popup-close make-bet-close"><a href="">x</a></div>

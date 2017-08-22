@@ -11,10 +11,10 @@
             </div>
             <input type="button" id="select-news-btn" class="select-news-btn" value="Показать">
         </div>
-        <div class="news-wrap" id="user-news-wrap">
+        <div class="news-wrap" id="news-wrap">
 
         </div>
-        <div class="news-pagination" id="user-pagination">
+        <div class="news-pagination" id="pagination">
         </div>
     </div>
 </article>

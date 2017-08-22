@@ -69,7 +69,7 @@ public class UserDAOImpl extends UserDAO {
             statementUser.setString(1, login);
             ResultSet resultSet = statementUser.executeQuery();
             if (resultSet.next()) {
-                return buildUser(resultSet);
+                user = buildUser(resultSet);
             }
         } catch (SQLException e) {
             throw new DaoException("Can't find user by login", e);
@@ -189,6 +189,21 @@ public class UserDAOImpl extends UserDAO {
         } catch (SQLException e) {
             throw new DaoException(e);
         }
+    }
+
+    @Override
+    public BigDecimal findBalance(int userId) throws DaoException {
+        BigDecimal currentBalance = null;
+        try (PreparedStatement statementSelectBalance = connection.prepareStatement(SELECT_BALANCE)) {
+            statementSelectBalance.setInt(1, userId);
+            ResultSet resultSet = statementSelectBalance.executeQuery();
+            if (resultSet.next()) {
+                currentBalance = resultSet.getBigDecimal(PARAM_NAME_BALANCE);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return currentBalance;
     }
 
     private User buildUser(ResultSet resultSet) throws SQLException {

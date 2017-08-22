@@ -6,6 +6,7 @@ import com.epam.bets.exception.CommandException;
 import com.epam.bets.exception.ReceiverException;
 import com.epam.bets.receiver.UserReceiver;
 import com.epam.bets.receiver.impl.UserReceiverImpl;
+import com.epam.bets.request.RequestContent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,18 +15,15 @@ import java.util.List;
 
 public class ShowUserBetsCommand implements AjaxCommand<Bet> {
 
-    private static final String PARAM_NAME_ID = "userId";
-    private static final String PARAM_NAME_TYPE = "type";
     private static final Logger LOGGER = LogManager.getLogger(ShowNewsCommand.class);
     private UserReceiver receiver = new UserReceiverImpl();
 
     @Override
-    public List<Bet> execute(HttpServletRequest request) throws CommandException {
+    public List<Bet> execute(RequestContent requestContent) throws CommandException {
         List<Bet> bets = null;
-        int userId = (int) request.getSession().getAttribute(PARAM_NAME_ID);
-        String type = request.getParameter(PARAM_NAME_TYPE);
+
         try {
-            bets = receiver.showBets(userId, type);
+            bets = receiver.showBets(requestContent);
         } catch (ReceiverException e) {
             throw new CommandException(e);
         }

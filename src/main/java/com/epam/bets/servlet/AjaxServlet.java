@@ -11,6 +11,7 @@ import java.io.IOException;
 
 import com.epam.bets.exception.CommandException;
 import com.epam.bets.factory.AjaxCommandFactory;
+import com.epam.bets.request.RequestContent;
 import com.google.gson.Gson;
 
 import static com.epam.bets.constant.PageConstant.SERVER_ERROR_PAGE;
@@ -31,9 +32,11 @@ public class AjaxServlet extends HttpServlet {
             throws ServletException, IOException {
         String commandName = request.getParameter("command");
         AjaxCommand command = new AjaxCommandFactory().initCommand(commandName);
+        RequestContent content = new RequestContent();
+        content.extractValues(request);
         response.setContentType("application/json");
         try {
-            response.getWriter().write(new Gson().toJson(command.execute(request)));
+            response.getWriter().write(new Gson().toJson(command.execute(content)));
         } catch (CommandException e) {
             response.sendRedirect(SERVER_ERROR_PAGE);
         }

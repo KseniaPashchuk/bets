@@ -6,7 +6,7 @@
             <time class="entry-date published">${date}</time></span>
         </div>
     </div>
-    <img class="avatar-pic" src="${pageContext.request.contextPath}/image/news/${picture}"
+    <img class="news-pic" src="${pageContext.request.contextPath}/image/news/${picture}"
          alt="football">
     <div class="post-text">
         ${text}

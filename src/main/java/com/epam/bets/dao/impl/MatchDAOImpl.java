@@ -50,6 +50,8 @@ public class MatchDAOImpl extends MatchDAO {
 
     private static final String CREATE_MATCH_INFO = "INSERT INTO match_bet_info (match_info_id, total_value, max_bet_value," +
             " football_match_id) VALUES(NULL, ?, ?, ?)";
+    private static final String CREATE_FOOTBALL_TEAM = "INSERT INTO football_team (team_id, team_name, country)" +
+            " VALUES(NULL, ?, ?)";
 
     private static final String UPDATE_MATCH = "UPDATE football_match SET first_team_id = (SELECT team_id FROM football_team WHERE team_name=?), " +
             "second_team_id = (SELECT team_id FROM football_team WHERE team_name=?), date_time=?, confederacy=? WHERE match_id=?";
@@ -152,6 +154,21 @@ public class MatchDAOImpl extends MatchDAO {
             return match;
         } catch (SQLException e) {
             throw new DaoException("Can't find match score", e);
+        }
+    }
+
+    @Override
+    public boolean createNewFootballTeam(String team, String country) throws DaoException {
+        try (PreparedStatement teamStatement = connection.prepareStatement(CREATE_FOOTBALL_TEAM)) {
+            teamStatement.setString(1, team);
+            teamStatement.setString(2, country);
+            teamStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            if (e.getErrorCode() == EXISTING_ENTITY_ERROR_CODE) {
+                return false;
+            }
+            throw new DaoException("Can't create match", e);
         }
     }
 

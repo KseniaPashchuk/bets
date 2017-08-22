@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.epam</groupId>
-    <artifactId>matchCoefficients</artifactId>
+    <artifactId>bets</artifactId>
     <packaging>war</packaging>
+    <name>bets</name>
     <version>1.0-SNAPSHOT</version>
-    <firstName>matchCoefficients Maven Webapp</firstName>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
@@ -63,8 +63,6 @@
             <artifactId>mail</artifactId>
             <version>1.4.7</version>
         </dependency>
-
-
     </dependencies>
     <build>
         <plugins>

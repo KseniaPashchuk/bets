@@ -28,6 +28,8 @@ public abstract class NewsDAO extends AbstractDAO<News> {
 
     public abstract List<News> findNewsByDate(LocalDate date) throws DaoException;
 
+    public abstract List<News> findLastNews() throws DaoException;
+
     public abstract boolean deleteByTitle(String title) throws DaoException;
 
     public abstract boolean updatePicture(int id, String pictureUrl) throws DaoException;

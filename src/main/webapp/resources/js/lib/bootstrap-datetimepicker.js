@@ -37,7 +37,7 @@
     'use strict';
     if (typeof define === 'function' && define.amd) {
         // AMD is used - Register as an anonymous module.
-        define(['jquery', 'moment'], factory);
+        define(['jquery', './moment'], factory);
     } else if (typeof exports === 'object') {
         module.exports = factory(require('jquery'), require('moment'));
     } else {

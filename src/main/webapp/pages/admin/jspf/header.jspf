@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <header class="header-wrap row clearfix">
     <div class="logo-wrap colored-block col-lg-3">
-        <a href="${pageContext.servletContext.contextPath}/pages/common/main.jsp"><img class="logo-img"
-                                                                                       src="../../../images/logo-1.png"
+        <a href="${pageContext.servletContext.contextPath}/controller?command=show_main_page"><img class="logo-img"
+                                                                                       src="../../resources/images/logo-1.png"
                                                                                        alt=" <fmt:message key="company_name"/>"></a>
     </div>
     <div class="menu-wrap colored-block ">
@@ -10,6 +10,7 @@
             <li class="item-main"><a href="${pageContext.servletContext.contextPath}/pages/common/news.jsp"
                                      class="main-link">
                 <fmt:message key="common.menu.news"/></a>
+            </li>
             </li>
             <li class="item-main"><a
                     href="${pageContext.servletContext.contextPath}/controller?command=create_matches_page"

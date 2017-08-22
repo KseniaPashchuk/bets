@@ -40,4 +40,6 @@ public abstract class UserDAO extends AbstractDAO<User> {
 
     public abstract boolean updateBalance(int userId, BigDecimal balance) throws DaoException;
 
+    public abstract BigDecimal findBalance(int userId) throws DaoException;
+
 }

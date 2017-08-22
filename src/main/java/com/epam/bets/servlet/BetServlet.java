@@ -1,9 +1,11 @@
 package com.epam.bets.servlet;
 
 
+import com.epam.bets.command.common.SignInCommand;
 import com.epam.bets.factory.CommandFactory;
 import com.epam.bets.command.AbstractCommand;
 import com.epam.bets.navigator.PageNavigator;
+import com.epam.bets.request.RequestContent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,7 +28,7 @@ import static com.epam.bets.constant.PageConstant.SERVER_ERROR_PAGE;
         // при его привышении данные начнут записываться на диск во временную директорию
         // устанавливаем один мегабайт
         maxFileSize = 1024 * 1024 * 10,
-        maxRequestSize = 1024 * 1024 * 50)//TODO add error page and runtime page
+        maxRequestSize = 1024 * 1024 * 50)
 public class BetServlet extends HttpServlet {
 
     private static final Logger LOGGER = LogManager.getLogger(BetServlet.class);
@@ -48,7 +50,10 @@ public class BetServlet extends HttpServlet {
             throws ServletException, IOException {
         String commandName = request.getParameter("command");
         AbstractCommand command = new CommandFactory().initCommand(commandName);
-        PageNavigator navigator = command.execute(request);
+        RequestContent content = new RequestContent();
+        content.extractValues(request);
+        PageNavigator navigator = command.execute(content);
+        content.insertValues(request);
         if (navigator != null) {
             switch (navigator.getType()) {
                 case FORWARD: {

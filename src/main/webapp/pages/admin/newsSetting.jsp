@@ -8,14 +8,14 @@
                   action="${pageContext.servletContext.contextPath}/controller"
                   method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="command" value="create_news"/>
-                <input class="input-text" type="text" name="news_title" value=""
+                <input class="input-text" type="text" name="title" value=""
                        placeholder="<fmt:message key="admin.news.create.title"/>">
                 <label class="file_upload">
                     <span class="button"><fmt:message key="common.btn.choose"/></span>
                     <mark id="news-pic">Choose picture</mark>
-                    <input type="file" name="news_picture" id="news_picture">
+                    <input type="file" name="picture" id="news_picture">
                 </label>
-                <textarea class="input-text text-area" name="news_text" cols="0" rows="0"
+                <textarea class="input-text text-area" name="text" cols="0" rows="0"
                           onfocus="if(this.value==this.defaultValue)this.value='';"
                           onblur="if(this.value=='')this.value=this.defaultValue;"><fmt:message key="admin.news.create.text"/></textarea>
                 <input class="input-btn" type="submit" value="<fmt:message key="common.btn.create"/>">
@@ -42,7 +42,7 @@
                       method="POST">
                     <input type="hidden" name="command" value="delete_news"/>
                     <h3><fmt:message key="admin.delete_question"/></h3>
-                    <input class="input-text" type="text" name="delete_title" id="delete-news-title" value=""
+                    <input class="input-text" type="text" name="title" id="delete-news-title" value=""
                            readonly="readonly">
                     <div class="btn-group">
                         <input type="submit" value='<fmt:message key="common.btn.delete"/>'>

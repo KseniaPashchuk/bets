@@ -142,7 +142,10 @@ footer ul {
     text-decoration: none;
     font-size: 16px;
 }
-
+.lang input[type="submit"]{
+    border: transparent;
+    margin: 0;
+}
 .lang-wrap .lang {
     align-items: center;
     display: flex;
@@ -260,7 +263,7 @@ footer ul {
 }
 .info-wrap{
     width: 100%;
-    height: 100%;
+    /*height: 100%;*/
 }
 
 .pic-wrap{
@@ -318,11 +321,11 @@ footer ul {
 .right-side-of-registration {
     margin-left: 36px;
 }
-.popup-holder .error-label, .popup-holder .error{
-    font-size: 13px;
+.error-label, .error{
+    font-size: 15px;
     line-height: 15px;
-    color:  red!important;
-    margin: 0 0 5px;
+    color: red!important;
+    margin: 15px 0 0px;
 }
 .popup-holder .shell-for-input {
     text-align: left;
@@ -355,6 +358,29 @@ footer ul {
 }
 .authorization-wrap a:hover{
     text-decoration: underline;
+}
+.enter-wrap.popup-holder, .register-wrap.popup-holder{
+    background: transparent;
+}
+.header-row{
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 1%;
+    position: relative;
+}
+.header-row .lang-wrap{
+    width:12.9%;
+    margin-right: 0;
+    height: 87px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+}
+.header-row .logo-img{
+    padding-top: 15px;
+}
+.header-row .logo-wrap{
+    margin-right: 0px;
 }
 
 input[type="button"], input[type="submit"], input[type="reset"],.btn-action, .sign-in-btn, .sign-up-btn{
@@ -416,13 +442,13 @@ input[type="search"]{
 
 .enter-wrap {
     left: 50%;
-    top: 80px;
+    /*top: 80px;*/
     text-align: center;
     margin-left: -172px;
 }
 .register-wrap{
     left: 50%;
-    top: 80px;
+    /*top: 80px;*/
     text-align: center;
     margin-left: -353px;
 }
@@ -686,6 +712,8 @@ input[type="submit"].news-title{
     padding-left: 0;
     font-size: 25px;
     text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 300px;
 }
 input[type="submit"].news-title:hover{
     text-decoration: underline;
@@ -705,6 +733,14 @@ button.news-title:hover{
     background: transparent;
     border: none;
     color: #ffa71b;
+}
+
+.news-picture .btn-group input[type="submit"], .news-picture .btn-group .btn-action {
+    float: left;
+    margin: 5px;
+    padding: 5px 15px;
+    font-size: 15px;
+    font-weight: normal;
 }
 
 /*-----------------FAQ------------------------------------------------------------------*/
@@ -730,7 +766,6 @@ button.news-title:hover{
     color: #ffa71b;
     font-size: 30px;
     margin-bottom: 10px;
-    float: left;
     margin-right: 30px;
 }
 .post{
@@ -741,6 +776,10 @@ button.news-title:hover{
 }
 .post-info .news-edit-btn-group{
     margin-top: 10px;
+}
+.news-pic{
+    max-height: 300px;
+    margin: 1% 10% 5%;
 }
 .input-text {
     padding: 15px 16px;
@@ -753,7 +792,7 @@ button.news-title:hover{
     color: #aaa;
     background: transparent;
 }
-.create-faq .input-text, .edit-faq-form .input-text{
+.create-faq .input-text, .edit-faq-form .input-text, .create-team .input-text{
     margin: 0 0 15px 0;
 }
 .input-text.text-area {
@@ -772,12 +811,12 @@ button.news-title:hover{
     padding: 20px 20px 1px 20px;
     text-align: center;
 }
-.create-faq, .create-news{
+.create-faq, .create-news, create-team{
     width: 70%;
     margin-left: 16%;
     margin-bottom: 3%;
 }
-.create-faq-title{
+.create-faq-title, .create-team-title{
     font-size: 23px;
     margin: 20px 0 30px 0px;
 }
@@ -944,6 +983,13 @@ button.news-title:hover{
     padding: 5px 15px;
     max-width: 140px;
 }
+
+.refill-cash select {
+    -webkit-appearance: none;
+    background: url(../images/arrow-down.png) no-repeat right #565656;
+    color: #fff;
+    width: 100%;
+}
 /*--------------------CHANGE PASSWORD--------------------------------------------------------*/
 .change-password .meta-label{
     margin-bottom: 29px;
@@ -1032,7 +1078,7 @@ th{
     text-decoration: none;
 }
 
-.matches-title{
+.matches-menu-item{
     padding-bottom: 10px;
 }
 

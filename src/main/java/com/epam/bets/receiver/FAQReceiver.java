@@ -2,13 +2,17 @@ package com.epam.bets.receiver;
 
 import com.epam.bets.entity.FAQ;
 import com.epam.bets.exception.ReceiverException;
+import com.epam.bets.request.RequestContent;
 
 import java.util.List;
 
-public interface FAQReceiver extends Receiver{
+public interface FAQReceiver extends Receiver {
 
-    List<FAQ> showAllFAQ()throws ReceiverException;
-    boolean createFAQ(FAQ faq)throws ReceiverException;
-    boolean deleteFAQ(String question)throws ReceiverException;
-    boolean editFAQ(FAQ faq)throws ReceiverException;
+    void showAllFAQ(RequestContent requestContent) throws ReceiverException;
+
+    void createFAQ(RequestContent requestContent) throws ReceiverException;
+
+    void deleteFAQ(RequestContent requestContent) throws ReceiverException;
+
+    void editFAQ(RequestContent requestContent) throws ReceiverException;
 }

@@ -6,28 +6,28 @@ import java.util.List;
 
 public class CreditCards extends Entity{
 
-    private List<String> creditCards;
+    private List<String> creditCardList;
     private int userId;
 
     public CreditCards() {
-        creditCards = new ArrayList<>(3);
+        creditCardList = new ArrayList<>(3);
     }
 
     public CreditCards(List<String> creditCards, int userId) {
-        this.creditCards = creditCards;
+        this.creditCardList = creditCards;
         this.userId = userId;
     }
 
     public void addCreditCard(String creditCard) {
-        creditCards.add(creditCard);
+        creditCardList.add(creditCard);
     }
 
     public String getCreditCard(int index) {
-        return creditCards.get(index);
+        return creditCardList.get(index);
     }
 
-    public List<String> getCreditCards() {
-        return Collections.unmodifiableList(creditCards);
+    public List<String> getCreditCardList() {
+        return Collections.unmodifiableList(creditCardList);
     }
 
     public int getUserId() {
@@ -39,7 +39,7 @@ public class CreditCards extends Entity{
     }
 
     public int getCreditCarsSize(){
-        return creditCards.size();
+        return creditCardList.size();
     }
 
 

@@ -1,5 +1,6 @@
-package com.epam.bets.command;
+package com.epam.bets.command.type;
 
+import com.epam.bets.command.AjaxCommand;
 import com.epam.bets.command.common.ShowMatchResultsCommand;
 import com.epam.bets.command.common.ShowMatchesCommand;
 import com.epam.bets.command.common.ShowNewsCommand;

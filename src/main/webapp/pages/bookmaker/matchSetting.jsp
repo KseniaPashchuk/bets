@@ -17,6 +17,7 @@
                 </div>
             </div>
             <div class="results"><a href="javascript://" id="match-results"><fmt:message key="common.bets.results"/></a></div>
+            <div class="add-team"><a href="${pageContext.servletContext.contextPath}/pages/bookmaker/addTeam.jsp" id="add-team"><fmt:message key="bookmaker.bets.add_team"/></a></div>
         </div>
     </div>
     <div class="games-table-wrap col-lg-9">
@@ -40,7 +41,7 @@
                     <th>T</th>
                     <th>M</th>
                     <th class="btn-ctrl-th"><fmt:message key="common.btn.edit"/></th>
-                    <th class="btn-ctrl-th"><fmt:message key="bookmaker.bets.score"/></th>
+                    <th class="btn-ctrl-th"><fmt:message key="common.bets.score"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -50,7 +51,7 @@
         <div class="row search-results-block colored-block" style="display:none;">
             <div class="column-12 results-filter clearfix">
                 <div class="col-lg-4">
-                    <p><fmt:message key="bookmaker.bets.results_for"/></p>
+                    <p><fmt:message key="common.bets.results_for"/></p>
                     <div class="select-results-date input-group date" id='select-results-date'>
                         <input type="text" class="form-control"/>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
@@ -79,7 +80,7 @@
                     <th>№</th>
                     <th><fmt:message key="common.bets.date"/></th>
                     <th><fmt:message key="common.bets.event"/></th>
-                    <th><fmt:message key="bookmaker.bets.score"/></th>
+                    <th><fmt:message key="common.bets.score"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -93,9 +94,9 @@
     <div class="popup-holder edit-games-holder" id="edit-games" style="display: none">
         <form class="edit-games-form clearfix" method="POST" action="${pageContext.servletContext.contextPath}/controller">
             <input type="hidden" name="command" value="edit_match" />
-            <input type="hidden" name="match_id" id="edit-match-id" value=""/>
-            <input type="hidden" name="first_team" id="edit-first-team" value=""/>
-            <input type="hidden" name="second_team" id="edit-second-team" value=""/>
+            <input type="hidden" name="matchId" id="edit-match-id" value=""/>
+            <input type="hidden" name="firstTeam" id="edit-first-team" value=""/>
+            <input type="hidden" name="secondTeam" id="edit-second-team" value=""/>
             <input type="hidden" name="confederacy" id="edit-confederacy" value=""/>
             <div class="table-responsive">
                 <div class="edit-match-info">
@@ -125,7 +126,7 @@
                 <div class="edit-match-info clearfix">
                     <label for="create-match-date"><fmt:message key="common.bets.date"/></label>
                     <div class="input-group date date-input" id='edit-match-date'>
-                        <input type="text" class="form-control" name="match_date" id='create-match-date-input'/>
+                        <input type="text" class="form-control" name="date" id='create-match-date-input'/>
                         <span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
@@ -158,7 +159,7 @@
                         <td><input class="coeff-input" type="text" name="TL" value=""></td>
                         <td><input class="coeff-input" type="text" name="T" value=""></td>
                         <td><input class="coeff-input" type="text" name="TM" value=""></td>
-                        <td><input class="coeff-input" type="text" name="max_bet" value=""></td>
+                        <td><input class="coeff-input" type="text" name="maxBet" value=""></td>
                     </tr>
                     </tbody>
                 </table>
@@ -175,16 +176,17 @@
     <div class="popup-holder set-score-holder" id="set-score" style="display: none">
         <form class="set-score-form clearfix" method="POST" action="${pageContext.servletContext.contextPath}/controller">
             <input type="hidden" name="command" value="set_score" />
-            <input type="hidden" name="match_id" id="set-score-match-id" value=""/>
+            <input type="hidden" name="matchId" id="set-score-match-id" value=""/>
+            <input type="hidden" name="date" id="set-score-match-date" value=""/>
             <table id="set-score-table">
                 <caption><fmt:message key="bookmaker.bets.set_score"/></caption>
                 <tr>
                     <td id="first-team"></td>
-                    <td><input class="score-input" type="text" name="first_team_score" value=""/></td>
+                    <td><input class="score-input" type="text" name="firstTeamScore" value=""/></td>
                 </tr>
                 <tr>
                     <td id="second-team"></td>
-                    <td><input class="score-input" type="text" name="second_team_score" value=""/></td>
+                    <td><input class="score-input" type="text" name="secondTeamScore" value=""/></td>
                 </tr>
             </table>
             <div class="btn-group">
@@ -199,8 +201,8 @@
     <div class="popup-holder create-game-holder" id="create-game" style="display: none">
         <form class="create-game-form clearfix"  method="POST" action="${pageContext.servletContext.contextPath}/controller">
             <input type="hidden" name="command" value="create_match" />
-            <input type="hidden" name="first_team" id="create-first-team" value=""/>
-            <input type="hidden" name="second_team" id="create-second-team" value=""/>
+            <input type="hidden" name="firstTeam" id="create-first-team" value=""/>
+            <input type="hidden" name="secondTeam" id="create-second-team" value=""/>
             <input type="hidden" name="confederacy" id="create-confederacy" value=""/>
 
             <div class="table-responsive">
@@ -231,7 +233,7 @@
                 <div class="edit-match-info clearfix">
                     <label for="create-match-date"><fmt:message key="common.bets.date"/></label>
                     <div class="input-group date date-input" id='create-match-date'>
-                        <input type="text" class="form-control" name="match_date"/>
+                        <input type="text" class="form-control" name="date"/>
                         <span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
@@ -264,7 +266,7 @@
                         <td><input class="coeff-input" type="text" name="TL" value=""></td>
                         <td><input class="coeff-input" type="text" name="T" value=""></td>
                         <td><input class="coeff-input" type="text" name="TM" value=""></td>
-                        <td><input class="coeff-input" type="text" name="max_bet" value=""></td>
+                        <td><input class="coeff-input" type="text" name="maxBet" value=""></td>
                     </tr>
                     </tbody>
                 </table>

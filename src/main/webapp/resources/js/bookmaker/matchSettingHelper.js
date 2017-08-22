@@ -88,7 +88,9 @@ $(document).ready(function () {
     $("body").on('click', ".btn-set-score", function (event) {
         var elRow = $(this).closest('tr').find('td');
         var id = $(elRow).eq(0).text();
+        var date = $(elRow).eq(2).text();
         $("input[id=set-score-match-id]").val(id);
+        $("input[id=set-score-match-date]").val(date);
         var ev = $(elRow).eq(1).text();
         var firstTeam = ev.split('-')[0].trim();
         var secondTeam = ev.split('-')[1].trim();
@@ -189,13 +191,13 @@ $(document).ready(function () {
                     });
                     dataContainer.html(html);
                 } else {
-                    console.log("The news is empty");
+                    console.log("The match list is empty");
+                    $('.games-table').html('<fmt:message key="common.bets.no_matches"/>');
                 }
-                //TODO проверка на пустоту
             },
             error: function (e) {
                 console.log("Failed to obtain matches", e);
-                //TODO add error message
+                $('.games-table').html('<fmt:message key="common.error.server_error"/>');
             }
         });
     }
@@ -248,13 +250,13 @@ $(document).ready(function () {
                     });
                     dataContainer.html(html);
                 } else {
-                    console.log("The news is empty");
+                    console.log("The results is empty");
+                    $('.games-table').html('<fmt:message key="common.bets.results.no_results"/>');
                 }
-                //TODO проверка на пустоту
             },
             error: function (e) {
-                console.log("Failed to obtain matches", e);
-                //TODO add error message
+                console.log("Failed to obtain match results", e);
+                $('.games-table').html('<fmt:message key="common.error.server_error"/>');
             }
         });
     });

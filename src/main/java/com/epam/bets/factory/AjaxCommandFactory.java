@@ -1,7 +1,7 @@
 package com.epam.bets.factory;
 
 import com.epam.bets.command.AjaxCommand;
-import com.epam.bets.command.AjaxCommandType;
+import com.epam.bets.command.type.AjaxCommandType;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -1,7 +1,7 @@
 package com.epam.bets.entity;
 
 public enum UserRole {
-    USER("user"), ADMIN("admin"), BOOKMAKER("bookmaker");
+    USER("user"), ADMIN("admin"), BOOKMAKER("bookmaker"), GUEST("guest");
     private String stringRepresentation;
 
     UserRole(String stringRepresentation) {

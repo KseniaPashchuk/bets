@@ -6,6 +6,7 @@ import com.epam.bets.exception.CommandException;
 import com.epam.bets.exception.ReceiverException;
 import com.epam.bets.receiver.NewsReceiver;
 import com.epam.bets.receiver.impl.NewsReceiverImpl;
+import com.epam.bets.request.RequestContent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,19 +18,14 @@ import java.util.List;
 
 public class ShowNewsCommand implements AjaxCommand<News> {
 
-    private static final String PARAM_NAME_DATE = "date";
-    private static final String DATE_PATTERN = "dd/MM/yyyy";
     private static final Logger LOGGER = LogManager.getLogger(ShowNewsCommand.class);
     private NewsReceiver receiver = new NewsReceiverImpl();
 
 
-    public List<News> execute(HttpServletRequest request) throws CommandException {
-
+    public List<News> execute(RequestContent requestContent) throws CommandException {
         List<News> newsList = null;
         try {
-            String dateString = request.getParameter(PARAM_NAME_DATE);
-            LocalDate date = LocalDate.parse(dateString, DateTimeFormatter.ofPattern(DATE_PATTERN));
-            newsList = receiver.showAllNews(date);
+            newsList = receiver.showAllNews(requestContent);
         } catch (ReceiverException e) {
             throw new CommandException(e);
         }
