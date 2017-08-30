@@ -146,6 +146,9 @@ footer ul {
     border: transparent;
     margin: 0;
 }
+.lang input[type="submit"]:hover {
+    background: transparent;
+}
 .lang-wrap .lang {
     align-items: center;
     display: flex;
@@ -223,6 +226,7 @@ footer ul {
 .menu-wrap{
     margin-right: 20px;
     text-align: center;
+    width: 48%;
 }
 .main-menu{
     padding: 0 0 0 20px;
@@ -236,7 +240,7 @@ footer ul {
 
 }
 .main-menu .item-main .main-link {
-    margin: 0 14px 0 0;
+    margin: 0 10px 0 0;
     padding: 3px;
     color: #845905;
 }
@@ -294,7 +298,6 @@ footer ul {
 }
 .popup-wrap{
     background: rgba(0, 0, 0, 0.7);
-    display: none;
     left: 0;
     position: absolute;
     top: 0;
@@ -321,10 +324,19 @@ footer ul {
 .right-side-of-registration {
     margin-left: 36px;
 }
-.error-label, .error{
+.error-label{
     font-size: 15px;
     line-height: 15px;
     color: red!important;
+    margin: 15px 0 0px;
+}
+.error{
+    border: solid 2px maroon;
+}
+.success-label{
+    font-size: 15px;
+    line-height: 15px;
+    color: greenyellow!important;
     margin: 15px 0 0px;
 }
 .popup-holder .shell-for-input {
@@ -608,6 +620,11 @@ option {
 .post-title{
     font-size: 21px;
 }
+
+.post-text{
+    word-break: break-all;
+}
+
 .select-news{
     padding: 30px 190px;
     margin-bottom: 20px;
@@ -1446,8 +1463,12 @@ table.dataTable thead>tr>th.sorting_asc, table.dataTable thead>tr>th.sorting_des
     color:black;
     cursor:pointer;
 }
-
-
+.active-th{
+    max-width:40px;
+}
+.table > thead > tr > th{
+    padding:5px;
+}
 .matches-table, .results-table, .bets-table{
     background: #fff;
     border-color: black;
@@ -1491,7 +1512,6 @@ span#betsCoeff,span#betsCount {
 }
 .user-coeff {
     padding: 5px 2px;
-    width: 80%;
 }
 .user-coeff button{
     float: left;
@@ -1525,13 +1545,13 @@ span#betsCoeff,span#betsCount {
     background: transparent;
 }
 
-.make-bet-form .bet-type-input{
+.make-bet-input{
     width: 40px;
     padding: 0;
     background: transparent;
     text-align: center;
 }
-.make-bet-form .bet-type-input:focus{
+.make-bet-form .make-bet-input:focus{
     border:none;
 }
 .make-bet-form .bet-money-input{
@@ -1674,4 +1694,13 @@ table.dataTable {
 }
 .user-meta .label-row{
     margin-right: 0;
+}
+.create-title, .edit-title{
+    font-size: 28px;
+    margin: 10px;
+    color: #eeeeee;
+}
+.show-message{
+    text-align: center;
+    margin-bottom: 10px;
 }

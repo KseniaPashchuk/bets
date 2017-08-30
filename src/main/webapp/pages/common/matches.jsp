@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ taglib uri="bettags" prefix="btg" %>
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en_EN'}"/>
 <fmt:setBundle basename="pagelocale"/>
 
@@ -46,11 +48,14 @@
 
     <section class="content clearfix">
         <c:choose>
+            <c:when test="${role == 'ADMIN'}">
+                <%@include file="../admin/matches.jsp" %>
+            </c:when>
             <c:when test="${role == 'BOOKMAKER'}">
                 <%@include file="../bookmaker/matchSetting.jsp" %>
             </c:when>
             <c:otherwise>
-                <%@include file="../user/match.jsp" %>
+                <%@include file="../user/matches.jsp" %>
             </c:otherwise>
         </c:choose>
     </section>

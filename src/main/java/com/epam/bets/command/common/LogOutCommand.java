@@ -22,6 +22,7 @@ public class LogOutCommand implements AbstractCommand {
     @Override
     public PageNavigator execute(RequestContent requestContent) {
         receiver.logout(requestContent);
+        requestContent.insertSessionAttribute(PREV_REQUEST, NEXT_PAGE);
         return new PageNavigator(NEXT_PAGE, PageType.REDIRECT);
     }
 }

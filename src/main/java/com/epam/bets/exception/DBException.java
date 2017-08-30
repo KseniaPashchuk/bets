@@ -1,6 +1,12 @@
 package com.epam.bets.exception;
 
-public class DBException extends Exception{
+/**
+ * The class provides custom database Exception to throw at  {@link com.epam.bets.pool.ConnectionPool}
+ *
+ * @author Pashchuk Ksenia
+ * @see Exception
+ */
+public class DBException extends Exception {
     public DBException() {
         super();
     }

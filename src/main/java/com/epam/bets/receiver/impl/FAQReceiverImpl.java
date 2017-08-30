@@ -9,12 +9,17 @@ import com.epam.bets.exception.DaoException;
 import com.epam.bets.exception.ReceiverException;
 import com.epam.bets.receiver.FAQReceiver;
 import com.epam.bets.request.RequestContent;
+import com.epam.bets.validator.FAQValidator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static com.epam.bets.constant.ErrorConstant.*;
+import static com.epam.bets.constant.ErrorConstant.CommonError.INVALID_CREATE_PARAMS;
+import static com.epam.bets.constant.ErrorConstant.CommonError.INVALID_EDIT_PARAMS;
+import static com.epam.bets.constant.ErrorConstant.FAQError.*;
 import static com.epam.bets.constant.RequestParamConstant.FAQParam.PARAM_NAME_ANSWER;
 import static com.epam.bets.constant.RequestParamConstant.FAQParam.PARAM_NAME_FAQ_LIST;
 import static com.epam.bets.constant.RequestParamConstant.FAQParam.PARAM_NAME_QUESTION;
@@ -24,13 +29,13 @@ public class FAQReceiverImpl implements FAQReceiver {
     @Override
     public void showAllFAQ(RequestContent requestContent) throws ReceiverException {
         List<FAQ> faqList;
-        Map<String, String> errors = new HashMap<>();
+        List<String> errors = new ArrayList<>();
         try (DaoFactory factory = new DaoFactory()) {
             FaqDAO faqDAO = factory.getFaqDao();
             faqList = faqDAO.findAllFAQ();
             if (faqList == null || faqList.isEmpty()) {
-                errors.put(ERROR, SHOW_FAQ_ERROR_MESSAGE);
-                requestContent.insertRequestAttribute(ERROR_MAP_NAME, errors);
+                errors.add(SHOW_FAQ_ERROR);
+                requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
             } else {
                 requestContent.insertRequestAttribute(PARAM_NAME_FAQ_LIST, faqList);
             }
@@ -45,8 +50,8 @@ public class FAQReceiverImpl implements FAQReceiver {
         FAQ faq = new FAQ();
         faq.setQuestion(requestContent.findParameterValue(PARAM_NAME_QUESTION));
         faq.setAnswer(requestContent.findParameterValue(PARAM_NAME_ANSWER));
-        Map<String, String> errors = new HashMap<>();
-        if (isValidFAQParams(faq, errors)) {
+        List<String> errors = new ArrayList<>();
+        if (new FAQValidator().validateFAQParams(faq, errors)) {
             FaqDAO faqDAO = new FaqDAOImpl();
             TransactionManager manager = new TransactionManager();
             manager.beginTransaction(faqDAO);
@@ -55,7 +60,7 @@ public class FAQReceiverImpl implements FAQReceiver {
                     manager.commit();
                 } else {
                     manager.rollback();
-                    errors.put(ERROR, CREATE_FAQ_ERROR_MESSAGE);
+                    errors.add(CREATE_FAQ_ERROR);
                 }
             } catch (DaoException e) {
                 manager.rollback();
@@ -63,17 +68,18 @@ public class FAQReceiverImpl implements FAQReceiver {
             } finally {
                 manager.close();
             }
+        } else {
+            errors.add(INVALID_CREATE_PARAMS);
         }
         if (!errors.isEmpty()) {
-            errors.put(CREATE_ERRORS, CREATE_ERRORS);
-            requestContent.insertRequestAttribute(ERROR_MAP_NAME, errors);
+            requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
         }
     }
 
     @Override
     public void deleteFAQ(RequestContent requestContent) throws ReceiverException {
         String question = requestContent.findParameterValue(PARAM_NAME_QUESTION);
-        Map<String, String> errors = new HashMap<>();
+        List<String> errors = new ArrayList<>();
         FaqDAO faqDAO = new FaqDAOImpl();
         TransactionManager manager = new TransactionManager();
         manager.beginTransaction(faqDAO);
@@ -82,8 +88,8 @@ public class FAQReceiverImpl implements FAQReceiver {
                 manager.commit();
             } else {
                 manager.rollback();
-                errors.put(ERROR, DELETE_FAQ_ERROR_MESSAGE);
-                requestContent.insertRequestAttribute(ERROR_MAP_NAME, errors);
+                errors.add(DELETE_FAQ_ERROR);
+                requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
             }
         } catch (DaoException e) {
             manager.rollback();
@@ -99,8 +105,8 @@ public class FAQReceiverImpl implements FAQReceiver {
         FAQ faq = new FAQ();
         faq.setQuestion(requestContent.findParameterValue(PARAM_NAME_QUESTION));
         faq.setAnswer(requestContent.findParameterValue(PARAM_NAME_ANSWER));
-        Map<String, String> errors = new HashMap<>();
-        if(isValidFAQParams(faq, errors)) {
+        List<String> errors = new ArrayList<>();
+        if (new FAQValidator().validateFAQParams(faq, errors)) {
             FaqDAO faqDAO = new FaqDAOImpl();
             TransactionManager manager = new TransactionManager();
             manager.beginTransaction(faqDAO);
@@ -109,7 +115,7 @@ public class FAQReceiverImpl implements FAQReceiver {
                     manager.commit();
                 } else {
                     manager.rollback();
-                    errors.put(ERROR, EDIT_FAQ_ERROR_MESSAGE);
+                    errors.add(EDIT_FAQ_ERROR);
                 }
             } catch (DaoException e) {
                 manager.rollback();
@@ -117,23 +123,13 @@ public class FAQReceiverImpl implements FAQReceiver {
             } finally {
                 manager.close();
             }
+        } else {
+            errors.add(INVALID_EDIT_PARAMS);
         }
         if (!errors.isEmpty()) {
-            errors.put(EDIT_ERRORS, EDIT_ERRORS);
-            requestContent.insertRequestAttribute(ERROR_MAP_NAME, errors);
+            requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
         }
     }
 
-    private boolean isValidFAQParams(FAQ faq, Map<String, String> errors) {
-        boolean isValid = true;
-        if (faq.getQuestion() == null || faq.getQuestion().isEmpty()) {
-            isValid = false;
-            errors.put(INVALID_FAQ_QUESTION_ERROR, INVALID_FAQ_QUESTION_MESSAGE);
-        }
-        if (faq.getAnswer() == null || faq.getAnswer().isEmpty()) {
-            isValid = false;
-            errors.put(INVALID_FAQ_ANSWER_ERROR, INVALID_FAQ_ANSWER_MESSAGE);
-        }
-        return isValid;
-    }
+
 }

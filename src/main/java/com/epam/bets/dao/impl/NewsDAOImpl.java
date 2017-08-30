@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -118,19 +119,23 @@ public class NewsDAOImpl extends NewsDAO {
 
     @Override
     public int create(News entity) throws DaoException {
-        try (PreparedStatement statementNews = connection.prepareStatement(CREATE_NEWS)) {
+        try (PreparedStatement statementNews = connection.prepareStatement(CREATE_NEWS, Statement.RETURN_GENERATED_KEYS)) {
             statementNews.setString(1, entity.getTitle());
             statementNews.setDate(2, java.sql.Date.valueOf(entity.getDate()));
             statementNews.setString(3, entity.getText());
             statementNews.setString(4, entity.getPictureUrl());
             statementNews.executeUpdate();
-            return 1;
+            ResultSet generatedKey = statementNews.getGeneratedKeys();
+            if (generatedKey.next()) {
+                return generatedKey.getInt(1);
+            }
         } catch (SQLException e) {
             if(e.getErrorCode() == EXISTING_ENTITY_ERROR_CODE){
                 return 0;
             }
             throw new DaoException("Can't create news", e);
         }
+        return 0;
     }
 
     @Override

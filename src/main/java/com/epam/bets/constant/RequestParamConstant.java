@@ -1,7 +1,11 @@
 package com.epam.bets.constant;
 
-
-public class RequestParamConstant {
+/**
+ * Class provides request param constants storage.
+ *
+ * @author Pashchuk Ksenia
+ */
+public final class RequestParamConstant {
 
     public final class CommonParam {
         public static final String DATE_PATTERN = "dd/MM/yyyy";

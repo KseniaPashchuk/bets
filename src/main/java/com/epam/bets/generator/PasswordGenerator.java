@@ -3,7 +3,11 @@ package com.epam.bets.generator;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * The class provides generating password operations for recovering user password.
+ *
+ * @author Pashchuk Ksenia
+ */
 public class PasswordGenerator {
 
     public static final int MIN_PASSWORD_LENGTH = 6;
@@ -18,6 +22,12 @@ public class PasswordGenerator {
             'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
     private static final char[] NUMERIC_CHARACTERS = {'0', '1', '2', '3', '4',
             '5', '6', '7', '8', '9'};
+
+    /**
+     * Generates random password.
+     *
+     * @return password
+     */
 
     public String generatePassword() {
         List<char[]> activeSets = new ArrayList<char[]>(3);

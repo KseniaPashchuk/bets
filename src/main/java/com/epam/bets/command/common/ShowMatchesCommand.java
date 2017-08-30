@@ -10,8 +10,10 @@ import com.epam.bets.request.RequestContent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+
+import static com.epam.bets.constant.PageConstant.SHOW_MATCHES_PAGE;
+import static com.epam.bets.constant.RequestParamConstant.MatchParam.PARAM_NAME_CONFEDERACY;
 
 public class ShowMatchesCommand implements AjaxCommand<Match> {
 
@@ -23,6 +25,8 @@ public class ShowMatchesCommand implements AjaxCommand<Match> {
         List<Match> matchList = null;
         try {
             matchList = receiver.showMatches(requestContent);
+            requestContent.insertSessionAttribute(PREV_REQUEST, SHOW_MATCHES_PAGE +
+                    requestContent.findParameterValue(PARAM_NAME_CONFEDERACY));
         } catch (ReceiverException e) {
             throw new CommandException(e);
         }

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="bettags" prefix="btg" %>
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en_EN'}"/>
 <fmt:setBundle basename="pagelocale"/>
 <html>
@@ -31,7 +33,7 @@
         <div class="info-wrap clearfix">
             <div class="info row">
                 <div class="pic-wrap col-lg-7">
-                    <img class="pic" src="../../resources/images/5.jpg" alt="football">
+                    <img class="pic" src="../../resources/images/main.jpg" alt="football">
                 </div>
                 <div class="info-text colored-block col-lg-5">
                     <article class="article-wrap">
@@ -47,6 +49,10 @@
                 <div class="news-wrap">
                     <div class="news-wrap">
                         <div class="news-row row">
+                            <p class="error-label"
+                               <c:if test="${!btg:contains(errors,'showLastNewsError' )}">style="display:none;"</c:if>>
+                                <fmt:message key="common.news.last_news.error"/>
+                            </p>
                             <c:forEach var="item" items="${lastNews}">
                                 <form class=" col-md-4 news-item  colored-block"
                                       action="${pageContext.servletContext.contextPath}/controller" method="POST">
@@ -59,7 +65,8 @@
                                     <time class="news-date entry-date published">
                                         <fmt:parseDate value="${item.date}" pattern="yyyy-MM-dd" var="parsedDate"
                                                        type="date"/>
-                                         <fmt:formatDate value="${parsedDate}" type="date" var="formattedDate" pattern="dd/MM/yy"/>
+                                         <fmt:formatDate value="${parsedDate}" type="date" var="formattedDate"
+                                                         pattern="dd/MM/yy"/>
                                    ${formattedDate}
                                     </time>
                                     </span>

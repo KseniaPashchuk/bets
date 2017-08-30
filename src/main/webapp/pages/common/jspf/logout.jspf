@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
-<div class="popup-wrap" id="logout-popup">
+<div class="popup-wrap" id="logout-popup" style="display: none">
     <div class="popup-holder logout-holder" id="logout-check" style="display: none">
         <form action="${pageContext.servletContext.contextPath}/controller" method="GET" class="logout-form clearfix" id="logout">
             <h3><fmt:message key="common.logout.want_to_logout"/></h3>

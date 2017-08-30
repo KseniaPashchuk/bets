@@ -40,3 +40,23 @@ $(function () {
         readURL(this);
     });
 });
+function validateEditNewsForm(){
+
+    $("#edit-invalid-title").hide();
+    $("#edit-title").css('border', 'transparent');
+    $("#edit-invalid-text").hide();
+    $("#edit-text").css('border', 'transparent');
+
+    var isFormValid = true;
+    if ($("#edit-title").val().trim() == '') {
+        isFormValid = false;
+        $("#edit-invalid-title").show();
+        $("#edit-title").css('border', 'solid 2px maroon');
+    }
+    if ($("#edit-text").val().trim() == '') {
+        isFormValid = false;
+        $("#edit-invalid-text").show();
+        $("#edit-text").css('border', 'solid 2px maroon');
+    }
+    return isFormValid;
+}

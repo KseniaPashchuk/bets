@@ -17,13 +17,11 @@ public class RequestContent {
     private static final String UPLOAD_DIR = "uploads.dir";
     private static final String UPLOADS = "uploadDir";
     private static final String MULTIPART = "multipart/form-data";
-    private static final String REFERER = "Referer";
     private HashMap<String, Object> requestAttributes;
     private HashMap<String, String[]> requestParameters;
     private HashMap<String, Object> sessionAttributes;
     private ArrayList<String> removedSessionAttributes;
     private Collection<Part> requestParts;
-    private String prevRequest;
     private static final Logger LOGGER = LogManager.getLogger(RequestContent.class);
 
     public RequestContent() {
@@ -66,7 +64,6 @@ public class RequestContent {
         } catch (ServletException | IOException e) {
             LOGGER.log(Level.ERROR, "Can't get multipart from request", e);
         }
-        prevRequest = request.getHeader(REFERER).substring(21);
     }
 
     public void insertValues(HttpServletRequest request) {
@@ -127,9 +124,5 @@ public class RequestContent {
             }
         }
         return requiredPart;
-    }
-
-    public String getPrevRequest() {
-        return prevRequest;
     }
 }

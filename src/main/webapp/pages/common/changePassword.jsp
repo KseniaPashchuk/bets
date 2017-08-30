@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="bettags" prefix="btg" %>
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en_EN'}"/>
 <fmt:setBundle basename="pagelocale"/>
 <html>
@@ -9,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="../../resources/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../../resources/css/bets-style.css">
     <script type="text/javascript" src="../../resources/js/lib/jquery-3.2.1.js"></script>
-    <script type="text/javascript" src="../../resources/js/index.js"></script>
+    <script type="text/javascript" src="../../resources/js/profileHelper.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,500&amp;subset=cyrillic" rel="stylesheet">
 
 </head>
@@ -31,7 +33,8 @@
                             style="color: #ffa71b"><fmt:message
                             key="common.profile.edit_password"/></a></div>
                     <div class="user-menu-item dropdown">
-                        <a href="${pageContext.servletContext.contextPath}/pages/common/userBets.jsp"  class="dropdown-toggle" data-toggle="dropdown"><fmt:message
+                        <a href="${pageContext.servletContext.contextPath}/pages/common/userBets.jsp"
+                           class="dropdown-toggle" data-toggle="dropdown"><fmt:message
                                 key="common.profile.my_bets"/>
                             <span
                                     class="caret"></span></a>
@@ -52,7 +55,29 @@
             </div>
             <div class="change-password-wrap col-lg-9 col-md-9 col-sm-9">
                 <div class="change-password colored-block clearfix">
-                    <form method="POST" action="${pageContext.servletContext.contextPath}/controller">
+                    <p class="error-label" id="invalid-current-password"
+                       <c:if test="${!btg:contains(errors,'invalidCurrentPasswordError' )}">style="display:none;"</c:if>>
+                        <fmt:message key="common.profile.change_password.invalid_current"/>
+                    </p>
+                    <p class="error-label"
+                       <c:if test="${!btg:contains(errors,'notEqualCurrentPasswordError' )}">style="display:none;"</c:if>>
+                        <fmt:message key="common.profile.change_password.current_not_match"/>
+                    </p>
+                    <p class="error-label" id="invalid-new-password"
+                       <c:if test="${!btg:contains(errors,'invalidNewPasswordError' )}">style="display:none;"</c:if>>
+                        <fmt:message key="common.profile.change_password.invalid_new"/>
+                    </p>
+                    <p class="error-label" id="invalid-conf-password" style="display:none;">
+                        <fmt:message key="signup.error.match_password"/>
+                    </p>
+                    <p class="error-label"  <c:if test="${!btg:contains(errors,'changePasswordError' )}">style="display:none;"</c:if>>
+                        <fmt:message key="common.profile.change_password.error"/>
+                    </p>
+                    <p class="success-label"  <c:if test="${!btg:contains(errors,'changeProfileSuccess' )}">style="display:none;"</c:if>>
+                        <fmt:message key="common.profile.change_password.success"/>
+                    </p>
+                    <form method="POST" action="${pageContext.servletContext.contextPath}/controller"
+                          onsubmit=" return validateChangePasswordForm()">
                         <input type="hidden" name="command" value="change_password">
                         <div class="label-row">
                             <div class="meta-label"><fmt:message
@@ -64,15 +89,15 @@
                         </div>
                         <div class="value-row">
                             <div class="meta-value" id="current_password">
-                                <input class="input-text" type="password" id="refill-amount" placeholder="" value=""
+                                <input class="input-text" type="password" id="current-password" placeholder="" value=""
                                        autocomplete="off" name="currentPassword">
                             </div>
                             <div class="meta-value">
-                                <input class="input-text" type="password" id="newPassword" name="newPassword"
+                                <input class="input-text" type="password" id="new-password" name="newPassword"
                                        placeholder="" value="" autocomplete="off">
                             </div>
                             <div class="meta-value">
-                                <input class="input-text" type="password" id="confirmPassword" name="confirmPassword"
+                                <input class="input-text" type="password" id="confirm-password" name="confirmPassword"
                                        placeholder="" value="" autocomplete="off">
                             </div>
                         </div>

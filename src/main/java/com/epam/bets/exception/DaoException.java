@@ -1,6 +1,12 @@
 package com.epam.bets.exception;
 
-public class DaoException extends Exception{
+/**
+ * The class provides custom DAO Exception to throw at  classes implementing {@link com.epam.bets.dao.AbstractDAO}
+ *
+ * @author Pashchuk Ksenia
+ * @see Exception
+ */
+public class DaoException extends Exception {
 
     public DaoException() {
         super();

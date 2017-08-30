@@ -1,13 +1,29 @@
 $(function () {
     $('#select-news-date').datetimepicker({
         format: 'DD/MM/YYYY',
-        defaultDate: new Date()
+        // defaultDate: new Date()
     });
 
 
     $('#select-news-btn').click(function (event) {
+        var newsDate;
         var selectDate = $('#select-news-date').data("DateTimePicker").date();
-        var newsDate = moment(selectDate).format("DD/MM/YYYY");
+        var prevDate = $('#prev-date').val();
+        if (selectDate == null) {
+            if (prevDate == null || prevDate.trim() == '') {
+                selectDate = new Date();
+                $('#prev-date').val(selectDate);
+                $('#select-news-date').data("DateTimePicker").date(selectDate);
+                newsDate = moment(selectDate).format("DD/MM/YYYY");
+            } else {
+                newsDate = moment(prevDate, "DD/MM/YYYY").format("DD/MM/YYYY");
+                $('#select-news-date').data("DateTimePicker").date(selectDate);
+            }
+            $('#select-news-date').data("DateTimePicker").date(prevDate);
+        } else {
+            newsDate = moment(selectDate).format("DD/MM/YYYY");
+            $('#prev-date').val(selectDate);
+        }
         $.ajax({
             url: "/ajax?command=show_news&date=" + newsDate,
             type: 'GET',
@@ -17,24 +33,26 @@ $(function () {
                 $('#news-wrap').empty();
                 $('#pagination').empty();
                 if (data.length != 0) {
+                    $('#no-news').hide();
+                    $('#news-error').hide();
                     display(data);
                 } else {
                     console.log("The news is empty");
-                    $('#news-wrap').html('<fmt:message key="common.news.no_news"/>');
+                    $('#no-news').show();
                 }
-
             },
             error: function (e) {
                 console.log("Failed to obtain news dated " + newsDate, e);
-                $('#news-wrap').html('<fmt:message key="common.error.server_error"/>');
+                $('#news-error').show();
             }
         });
     });
 
+    $('#select-news-btn').click();
 
     function display(data) {
 
-        $('#user-pagination').pagination({
+        $('#pagination').pagination({
             dataSource: data,
             pageSize: 9,
 

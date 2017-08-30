@@ -37,22 +37,35 @@ $(document).ready(function() {
 });
 
 function validateCreateFaqForm() {
+
+
+
+    $("#create-invalid-question").hide();
+    $("#create-question").css('border', 'transparent');
+    $("#create-invalid-answer").hide();
+    $("#create-answer").css('border', 'transparent');
+
     var isFormValid = true;
     if ($("#create-question").val().trim() == '') {
         isFormValid = false;
-        $("#create-invalid-question").innerHTML('<fmt:message key="admin.faq.create.invalid_question"/>');
+        $("#create-invalid-question").show();
+        $("#create-question").css('border', 'solid 2px maroon');
     }
     if ($("#create-answer").val().trim() == '') {
         isFormValid = false;
-        $("#create-invalid-answer").innerHTML('<fmt:message key="admin.faq.create.invalid_answer"/>');
+        $("#create-invalid-answer").show();
+        $("#create-answer").css('border', 'solid 2px maroon');
     }
     return isFormValid;
 }
 function validateEditFaqForm() {
+    $("#create-invalid-answer").hide();
+    $("#create-answer").css('border', 'transparent');
     var isFormValid = true;
     if ($("#edit-answer").val().trim() == '') {
         isFormValid = false;
-        $("#edit-invalid-answer").innerHTML('<fmt:message key="admin.faq.create.invalid_answer"/>');
+        $("#edit-invalid-answer").show();
+        $("#edit-answer").css('border', 'solid 2px maroon');
     }
     return isFormValid;
 }

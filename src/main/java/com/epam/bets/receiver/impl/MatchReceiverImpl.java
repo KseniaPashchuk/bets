@@ -13,24 +13,28 @@ import com.epam.bets.exception.DaoException;
 import com.epam.bets.exception.ReceiverException;
 import com.epam.bets.receiver.MatchReceiver;
 import com.epam.bets.request.RequestContent;
+import com.epam.bets.validator.MatchValidator;
 
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static com.epam.bets.constant.ErrorConstant.*;
+import static com.epam.bets.constant.ErrorConstant.CommonError.INVALID_CREATE_PARAMS;
+import static com.epam.bets.constant.ErrorConstant.CommonError.INVALID_EDIT_PARAMS;
+import static com.epam.bets.constant.ErrorConstant.MatchError.*;
 import static com.epam.bets.constant.RequestParamConstant.CommonParam.DATE_PATTERN;
 import static com.epam.bets.constant.RequestParamConstant.CommonParam.PARAM_NAME_DATE;
 import static com.epam.bets.constant.RequestParamConstant.MatchParam.*;
 
 
 public class MatchReceiverImpl implements MatchReceiver {
-
 
 
     @Override
@@ -76,15 +80,15 @@ public class MatchReceiverImpl implements MatchReceiver {
     @Override
     public void showAllConfederations(RequestContent requestContent) throws ReceiverException {
         List<String> confederations;
-        Map<String, String> errors = new HashMap<>();
+        List<String> errors = new ArrayList<>();
         try (DaoFactory factory = new DaoFactory()) {
             MatchDAO matchDAO = factory.getMatchDao();
             confederations = matchDAO.findAllConfederations();
             if (confederations != null && !confederations.isEmpty()) {
                 requestContent.insertRequestAttribute(PARAM_NAME_CONFEDERATION_LIST, confederations);
             } else {
-                errors.put(ERROR, SHOW_ALL_CONFEDERATIONS_ERROR_MESSAGE);
-                requestContent.insertRequestAttribute(ERROR_MAP_NAME, errors);
+                errors.add(SHOW_ALL_CONFEDERATIONS_ERROR);
+                requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
             }
         } catch (DaoException e) {
             throw new ReceiverException(e);
@@ -94,16 +98,16 @@ public class MatchReceiverImpl implements MatchReceiver {
     @Override
     public void showAllTeams(RequestContent requestContent) throws ReceiverException {
         List<String> teams;
-        Map<String, String> errors = new HashMap<>();
+        List<String> errors = new ArrayList<>();
         try (DaoFactory factory = new DaoFactory()) {
             MatchDAO matchDAO = factory.getMatchDao();
             teams = matchDAO.findAllTeams();
             if (teams != null && !teams.isEmpty()) {
                 requestContent.insertRequestAttribute(PARAM_NAME_TEAM_LIST, teams);
             } else {
-                if (requestContent.findRequestAttribute(ERROR_MAP_NAME) == null) {
-                    errors.put(ERROR, SHOW_ALL_TEAMS_ERROR_MESSAGE);
-                    requestContent.insertRequestAttribute(ERROR_MAP_NAME, errors);
+                if (requestContent.findRequestAttribute(ERROR_LIST_NAME) == null) {
+                    errors.add(SHOW_ALL_TEAMS_ERROR);
+                    requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
                 }
             }
         } catch (DaoException e) {
@@ -114,7 +118,7 @@ public class MatchReceiverImpl implements MatchReceiver {
     @Override
     public void createMatch(RequestContent requestContent) throws ReceiverException {
         Match match = new Match();
-        Map<String, String> errors = new HashMap<>();
+        List<String> errors = new ArrayList<>();
         match.setFirstTeam(requestContent.findParameterValue(PARAM_NAME_FIRST_TEAM));
         match.setSecondTeam(requestContent.findParameterValue(PARAM_NAME_SECOND_TEAM));
         match.setConfederacy(requestContent.findParameterValue(PARAM_NAME_CONFEDERACY));
@@ -129,8 +133,7 @@ public class MatchReceiverImpl implements MatchReceiver {
         match.addCoefficient(BetType.TM, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_TM)));
         match.setTotal(new BigDecimal(requestContent.findParameterValue(PARAM_NAME_T)));
         match.setMaxBet(new BigDecimal(requestContent.findParameterValue(PARAM_NAME_MAX_BET)));
-        boolean isValid = isValidMatchParams(match, errors);
-        if (isValid) {
+        if (new MatchValidator().validateMatchParams(match, errors)) {
             MatchDAO matchDAO = new MatchDAOImpl();
             GainCoefficientDAO coefficientDAO = new GainCoefficientDAOImpl();
             TransactionManager manager = new TransactionManager();
@@ -143,11 +146,11 @@ public class MatchReceiverImpl implements MatchReceiver {
                         manager.commit();
                     } else {
                         manager.rollback();
-                        errors.put(ERROR, CREATE_MATCH_ERROR_MESSAGE);
+                        errors.add(CREATE_MATCH_ERROR);
                     }
                 } else {
                     manager.rollback();
-                    errors.put(ERROR, CREATE_MATCH_ERROR_MESSAGE);
+                    errors.add(CREATE_MATCH_ERROR);
                 }
 
             } catch (DaoException e) {
@@ -156,16 +159,18 @@ public class MatchReceiverImpl implements MatchReceiver {
             } finally {
                 manager.close();
             }
+        } else {
+            errors.add(INVALID_CREATE_PARAMS);
         }
         if (!errors.isEmpty()) {
-            requestContent.insertRequestAttribute(ERROR_MAP_NAME, errors);
+            requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
         }
     }
 
     @Override
     public void editMatch(RequestContent requestContent) throws ReceiverException {
         Match match = new Match();
-        Map<String, String> errors = new HashMap<>();
+        List<String> errors = new ArrayList<>();
         match.setFirstTeam(requestContent.findParameterValue(PARAM_NAME_FIRST_TEAM));
         match.setSecondTeam(requestContent.findParameterValue(PARAM_NAME_SECOND_TEAM));
         match.setConfederacy(requestContent.findParameterValue(PARAM_NAME_CONFEDERACY));
@@ -180,8 +185,7 @@ public class MatchReceiverImpl implements MatchReceiver {
         match.addCoefficient(BetType.TM, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_TM)));
         match.setTotal(new BigDecimal(requestContent.findParameterValue(PARAM_NAME_T)));
         match.setMaxBet(new BigDecimal(requestContent.findParameterValue(PARAM_NAME_MAX_BET)));
-        boolean isValid = isValidMatchParams(match, errors);
-        if (isValid) {
+        if (new MatchValidator().validateMatchParams(match, errors)) {
             MatchDAO matchDAO = new MatchDAOImpl();
             GainCoefficientDAO coefficientDAO = new GainCoefficientDAOImpl();
             TransactionManager manager = new TransactionManager();
@@ -191,7 +195,7 @@ public class MatchReceiverImpl implements MatchReceiver {
                     manager.commit();
                 } else {
                     manager.rollback();
-                    errors.put(ERROR, EDIT_MATCH_ERROR_MESSAGE);
+                    errors.add(EDIT_MATCH_ERROR);
                 }
 
             } catch (DaoException e) {
@@ -200,9 +204,11 @@ public class MatchReceiverImpl implements MatchReceiver {
             } finally {
                 manager.close();
             }
+        } else {
+            errors.add(INVALID_EDIT_PARAMS);
         }
         if (!errors.isEmpty()) {
-            requestContent.insertRequestAttribute(ERROR_MAP_NAME, errors);
+            requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
         }
     }
 
@@ -210,21 +216,22 @@ public class MatchReceiverImpl implements MatchReceiver {
     @Override
     public void setMatchScore(RequestContent requestContent) throws
             ReceiverException {
-        Map<String, String> errors = new HashMap<>();
+        List<String> errors = new ArrayList<>();
         int matchId = Integer.parseInt(requestContent.findParameterValue(PARAM_NAME_MATCH_ID));
         BigDecimal firstTeamScore = new BigDecimal(requestContent.findParameterValue(PARAM_NAME_FIRST_TEAM_SCORE));
         BigDecimal secondTeamScore = new BigDecimal(requestContent.findParameterValue(PARAM_NAME_SECOND_TEAM_SCORE));
-        LocalDateTime dateTime = LocalDateTime.parse(requestContent.findParameterValue(PARAM_NAME_DATE), DateTimeFormatter.ofPattern(DATE_TIME_PATTERN));
+        LocalDateTime dateTime = LocalDateTime.parse(requestContent.findParameterValue(PARAM_NAME_DATE),
+                DateTimeFormatter.ofPattern(DATE_TIME_PATTERN));
         boolean isValid = true;
         if (dateTime.isAfter(LocalDateTime.now())) {
             isValid = false;
-            errors.put(SCORE_NOT_POSITIVE_ERROR, SCORE_NOT_POSITIVE_ERROR_MESSAGE);
+            errors.add(SET_SCORE_DATE_ERROR);
         }
         if (firstTeamScore.signum() == -1 || secondTeamScore.signum() == -1) {
             isValid = false;
-            errors.put(SET_SCORE_DATE_ERROR, SET_SCORE_DATE_ERROR_MESSAGE);
+            errors.add(SCORE_NOT_POSITIVE_ERROR);
         }
-        if(isValid) {
+        if (isValid) {
             MatchDAO matchDAO = new MatchDAOImpl();
             TransactionManager manager = new TransactionManager();
             manager.beginTransaction(matchDAO);
@@ -233,7 +240,7 @@ public class MatchReceiverImpl implements MatchReceiver {
                     manager.commit();
                 } else {
                     manager.rollback();
-                    errors.put(ERROR, SET_SCORE_ERROR);
+                    errors.add(SET_SCORE_ERROR);
                 }
             } catch (DaoException e) {
                 manager.rollback();
@@ -243,7 +250,7 @@ public class MatchReceiverImpl implements MatchReceiver {
             }
         }
         if (!errors.isEmpty()) {
-            requestContent.insertRequestAttribute(ERROR_MAP_NAME, errors);
+            requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
         }
     }
 
@@ -251,15 +258,15 @@ public class MatchReceiverImpl implements MatchReceiver {
     public void createFootballTeam(RequestContent requestContent) throws ReceiverException {
         String team = requestContent.findParameterValue(PARAM_NAME_TEAM);
         String country = requestContent.findParameterValue(PARAM_NAME_COUNTRY);
-        Map<String, String> errors = new HashMap<>();
+        List<String> errors = new ArrayList<>();
         boolean isValid = true;
         if (team == null || team.isEmpty()) {
             isValid = false;
-            errors.put(INVALID_PASSWORD_ERROR, INVALID_PASSWORD_MESSAGE);
+            errors.add(INVALID_TEAM_NAME_ERROR);
         }
         if (country == null || country.isEmpty()) {
             isValid = false;
-            errors.put(INVALID_PASSWORD_ERROR, INVALID_PASSWORD_MESSAGE);
+            errors.add(INVALID_COUNTRY_ERROR);
         }
         if (isValid) {
             MatchDAO matchDAO = new MatchDAOImpl();
@@ -270,7 +277,7 @@ public class MatchReceiverImpl implements MatchReceiver {
                     manager.commit();
                 } else {
                     manager.rollback();
-                    errors.put(ERROR, CREATE_FOOTBALL_TEAM_ERROR_MESSAGE);
+                    errors.add(CREATE_FOOTBALL_TEAM_ERROR);
                 }
             } catch (DaoException e) {
                 manager.rollback();
@@ -280,32 +287,9 @@ public class MatchReceiverImpl implements MatchReceiver {
             }
         }
         if (!errors.isEmpty()) {
-            requestContent.insertRequestAttribute(ERROR_MAP_NAME, errors);
+            requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
         }
     }
 
-    private boolean isValidMatchParams(Match match, Map<String, String> errors) {
-        boolean isValid = true;
-        if (match.getFirstTeam().equals(match.getSecondTeam())) {
-            isValid = false;
-            errors.put(INVALID_LOGIN_ERROR, INVALID_LOGIN_MESSAGE);
-        }
-        if (match.getDate().isAfter(LocalDateTime.now())) {
-            isValid = false;
-            errors.put(INVALID_PASSWORD_ERROR, INVALID_PASSWORD_MESSAGE);
-        }
-        if (match.getMaxBet() == null || match.getMaxBet().signum() == 0 ||
-                match.getMaxBet().signum() == -1) {
-            isValid = false;
-            errors.put(INVALID_BIRTH_DATE_ERROR, INVALID_BIRTH_DATE_MESSAGE);
-        }
-        for (Map.Entry<BetType, BigDecimal> coeff : match.getMatchCoefficients().getCoefficients().entrySet()) {
-            if (coeff.getValue() == null || coeff.getValue().signum() == 0 ||
-                    coeff.getValue().signum() == -1) {
-                isValid = false;
-                break;
-            }
-        }
-        return isValid;
-    }
+
 }

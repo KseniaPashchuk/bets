@@ -7,11 +7,20 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Created by ASUS on 25.07.2017.
+ * The factory of Commands suitable to use with {@link com.epam.bets.servlet.AjaxServlet}.
+ *
+ * @author Pashchuk Ksenia
+ * @see AjaxCommand
  */
 public class AjaxCommandFactory {
     private static final Logger LOGGER = LogManager.getLogger( AjaxCommandFactory.class);
-
+    /**
+     * Defines {@link AjaxCommand} due to {@link String} cmd (should be equal to
+     * {@link AjaxCommandType})
+     *
+     * @param cmd - name of the command
+     * @return defined {@link AjaxCommand} or  null
+     */
     public AjaxCommand initCommand(String cmd) {
         AjaxCommand command = null;
         try {

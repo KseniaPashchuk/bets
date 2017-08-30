@@ -2,11 +2,17 @@ package com.epam.bets.command.type;
 
 import com.epam.bets.command.*;
 import com.epam.bets.command.admin.*;
-import com.epam.bets.command.bookmaker.AddFootballTeamCommand;
+import com.epam.bets.command.admin.AddFootballTeamCommand;
 import com.epam.bets.command.bookmaker.CreateMatchCommand;
 import com.epam.bets.command.bookmaker.EditMatchCommand;
 import com.epam.bets.command.bookmaker.SetMatchScoreCommand;
 import com.epam.bets.command.common.*;
+
+/**
+ * Enumeration of all available commands
+ *
+ * @author Pashchuk Ksenia
+ */
 
 public enum CommandType {
     SIGN_IN(new SignInCommand()),
@@ -24,7 +30,7 @@ public enum CommandType {
     EDIT_NEWS(new EditNewsCommand()),
     EDIT_NEWS_PICTURE(new EditNewsPictureCommand()),
     DELETE_NEWS(new DeleteNewsCommand()),
-    CREATE_MATCHES_PAGE(new ShowMatchesPageCommand()),
+    SHOW_MATCHES_PAGE(new ShowMatchesPageCommand()),
     CREATE_MATCH(new CreateMatchCommand()),
     EDIT_MATCH(new EditMatchCommand()),
     SET_SCORE(new SetMatchScoreCommand()),
@@ -36,13 +42,19 @@ public enum CommandType {
     CREATE_REFILL_CASH_PAGE(new ShowRefillCashPageCommand()),
     SHOW_MAIN_PAGE(new ShowMainPageCommand()),
     ADD_TEAM(new AddFootballTeamCommand()),
-    CHANGE_LOCALE(new ChangeLocaleCommand());
+    CHANGE_LOCALE(new ChangeLocaleCommand()),
+    SHOW_NEWS_PAGE(new ShowNewsPageCommand()),
+    SHOW_MATCH_RESULTS_PAGE(new ShowMatchResultsPageCommand());
     private AbstractCommand command;
 
     CommandType(AbstractCommand command) {
         this.command = command;
     }
-
+    /**
+     * Getter of current {@link #command}
+     *
+     * @return {@link AbstractCommand}
+     */
     public AbstractCommand getCommand() {
         return command;
     }

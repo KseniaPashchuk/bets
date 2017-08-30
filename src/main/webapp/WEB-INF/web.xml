@@ -31,8 +31,8 @@
 
     <jsp-config>
         <taglib>
-            <taglib-uri>mtag</taglib-uri>
-            <taglib-location>/WEB-INF/tld/custom.tld</taglib-location>
+            <taglib-uri>bettags</taglib-uri>
+            <taglib-location>/WEB-INF/tld/bets.tld</taglib-location>
         </taglib>
     </jsp-config>
 

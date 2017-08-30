@@ -7,8 +7,6 @@ import com.epam.bets.receiver.UserReceiver;
 import com.epam.bets.receiver.impl.UserReceiverImpl;
 import com.epam.bets.request.RequestContent;
 
-import javax.servlet.http.HttpServletRequest;
-
 import static com.epam.bets.constant.PageConstant.INDEX_PAGE;
 
 public class ChangeLocaleCommand implements AbstractCommand {
@@ -17,8 +15,8 @@ public class ChangeLocaleCommand implements AbstractCommand {
 
     @Override
     public PageNavigator execute(RequestContent requestContent) {
-        String nextPage = requestContent.getPrevRequest();
-        if (nextPage.isEmpty() || nextPage.equals("/controller")) {
+        String nextPage = (String) requestContent.findSessionAttribute(PREV_REQUEST);
+        if (nextPage == null || nextPage.isEmpty() || nextPage.equals("/")) {
             nextPage = INDEX_PAGE;
         }
         receiver.changeLocale(requestContent);

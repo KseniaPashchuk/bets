@@ -41,12 +41,13 @@ $(document).ready(function () {
                         dataContainer.html(html);
                     } else {
                         console.log("The news is empty");
+                        $('#no-bets').show();
                     }
-                    //TODO проверка на пустоту
+
                 },
                 error: function (e) {
                     console.log("Failed to obtain matches", e);
-                    //TODO add error message
+                    $('#bets-error').show();
                 }
             }
         );

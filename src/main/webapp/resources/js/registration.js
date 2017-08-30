@@ -37,72 +37,104 @@ $(document).ready(function () {
 
 });
 function validateEnterForm() {
+    $("#invalid-params").hide();
+    $("#login").css('border', 'transparent');
+    $("#password").css('border', 'transparent');
     var REGEX_EMAIL = new RegExp("^.+@\\w+\\.\\w+$");
     var REGEX_PASSWORD = new RegExp("^(?=\\w{6,10}$)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\\d)");
     var isFormValid = true;
 
     if (!REGEX_EMAIL.test($("#login").val())) {
         isFormValid = false;
-        $("#invalid-params").innerHTML = '<fmt:message key="login.error.invalid_params"/>';
+        $("#invalid-params").show();
+        $("#login").css('border', 'solid 2px maroon');
     }
     if (!REGEX_PASSWORD.test($("#password").val())) {
         isFormValid = false;
-        $("#invalid-params").innerHTML = '<fmt:message key="login.error.invalid_params"/>';
+        $("#invalid-params").show();
+        $("#password").css('border', 'solid 2px maroon');
     }
     return isFormValid;
 }
 
 function validateRegisterForm() {
+    $("#invalid-login").hide();
+    $("#invalid-password").hide();
+    $("#invalid-conf-password").hide();
+    $("#invalid-first-name").hide();
+    $("#invalid-last-name").hide();
+    $("#invalid-credit-card").hide();
+    $("#invalid-birth-date").hide();
+    $("#rule_error").hide();
+    $("#reg_email").css('border', 'transparent');
+    $("#reg_password").css('border', 'transparent');
+    $("#conf_password").css('border', 'transparent');
+    $("#reg_name").css('border', 'transparent');
+    $("#reg_surname").css('border', 'transparent');
+    $("#reg_credit_card").css('border', 'transparent');
+    $("#select-birth-date").css('border', 'transparent');
 
     var REGEX_EMAIL = new RegExp("^.+@\\w+\\.\\w+$");
     var REGEX_PASSWORD = new RegExp("^(?=\\w{6,10}$)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\\d)");
+    var REGEX_CREDIT_CARD = new RegExp("^[0-9]{13,16}$");
+
     var isFormValid = true;
     if (!REGEX_EMAIL.test($("#reg_email").val())) {
         isFormValid = false;
-        $("#invalid-login").html('<fmt:message key="signup.error.invalid_login"/>');
+        $("#invalid-login").show();
+        $("#reg_email").css('border', 'solid 2px maroon');
     }
     if (!REGEX_PASSWORD.test($("#reg_password").val())) {
         isFormValid = false;
-        $("#invalid-password").html('<fmt:message key="signup.error.invalid_password"/>');
+        $("#invalid-password").show();
+        $("#reg_password").css('border', 'solid 2px maroon');
     }
 
     if ($("#reg_password").val().localeCompare($("#conf_password").val()) != 0) {
         isFormValid = false;
-        $("#invalid-conf-password").html('<fmt:message key="signup.error.match_password"/>');
+        $("#invalid-conf-password").show();
+        $("#conf_password").css('border', 'solid 2px maroon');
     }
 
     if ($("#reg_name").val().trim() == '') {
         isFormValid = false;
-        $("#invalid-first-name").html('<fmt:message key="signup.error.invalid_firstName"/>');
+        $("#invalid-first-name").show();
+        $("#reg_name").css('border', 'solid 2px maroon');
     }
     if ($("#reg_surname").val().trim() == '') {
         isFormValid = false;
-        $("#invalid-last-name").html('<fmt:message key="signup.error.invalid_lastName"/>');
+        $("#invalid-last-name").show();
+        $("#reg_surname").css('border', 'solid 2px maroon');
     }
-    if ($("#reg_credit_card").val().trim() == '') {
+    if (!REGEX_CREDIT_CARD.test($("#reg_credit_card").val())) {
         isFormValid = false;
-        $("#invalid-credit-card").html('<fmt:message key="signup.error.invalid_credit_card"/>');
+        $("#invalid-credit-card").show();
+        $("#reg_credit_card").css('border', 'solid 2px maroon');
     }
     var birthDate = $('#select-birth-date').data("DateTimePicker").date();
 
-    if (Date.now() - birthDate < 18) {
+    if (birthDate == null || (new Date()).getFullYear() - birthDate.year() < 18) {
         isFormValid = false;
-        $("#invalid-birth-date").html('<fmt:message key="signup.error.invalid_birth_date"/>');
+        $("#invalid-birth-date").show();
+        $("#select-birth-date").css('border', 'solid 2px maroon');
     }
-
-    if (!$("#rule").checked()) {
+    if (!$("#rule").is(':checked')) {
         isFormValid = false;
-        $("#rule_error").html('<fmt:message key="signup.error.read_rules"/>');
+        $("#rule_error").show();
     }
 
     return isFormValid;
 }
-function validateRegisterForm() {
+function validateRecoverPasswordForm() {
+
+    $("#invalid-email").hide();
+    $("#pass-recover-email").css('border', 'transparent');
     var REGEX_EMAIL = new RegExp("^.+@\\w+\\.\\w+$");
     var isFormValid = true;
     if (!REGEX_EMAIL.test($("#pass-recover-email").val())) {
         isFormValid = false;
-        $("#invalid-email").html('<fmt:message key="signup.error.invalid_login"/>');
+        $("#invalid-email").show();
+        $("#pass-recover-email").css('border', 'solid 2px maroon');
     }
     return isFormValid;
 }

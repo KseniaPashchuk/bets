@@ -1,5 +1,11 @@
 package com.epam.bets.exception;
 
+/**
+ * The class provides custom receiver Exception to throw at  classes implementing {@link com.epam.bets.receiver.Receiver}
+ *
+ * @author Pashchuk Ksenia
+ * @see Exception
+ */
 public class ReceiverException extends Exception {
     public ReceiverException() {
         super();

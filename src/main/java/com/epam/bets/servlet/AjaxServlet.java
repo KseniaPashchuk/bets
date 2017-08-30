@@ -37,6 +37,7 @@ public class AjaxServlet extends HttpServlet {
         response.setContentType("application/json");
         try {
             response.getWriter().write(new Gson().toJson(command.execute(content)));
+            content.insertValues(request);
         } catch (CommandException e) {
             response.sendRedirect(SERVER_ERROR_PAGE);
         }

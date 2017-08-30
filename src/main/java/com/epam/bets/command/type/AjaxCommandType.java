@@ -6,6 +6,11 @@ import com.epam.bets.command.common.ShowMatchesCommand;
 import com.epam.bets.command.common.ShowNewsCommand;
 import com.epam.bets.command.common.ShowUserBetsCommand;
 
+/**
+ * Enumeration of all available ajax commands
+ *
+ * @author Pashchuk Ksenia
+ */
 public enum AjaxCommandType {
     SHOW_NEWS(new ShowNewsCommand()),
     SHOW_MATCHES(new ShowMatchesCommand()),
@@ -16,7 +21,11 @@ public enum AjaxCommandType {
     AjaxCommandType(AjaxCommand command) {
         this.command = command;
     }
-
+    /**
+     * Getter of current {@link #command}
+     *
+     * @return {@link AjaxCommand}
+     */
     public AjaxCommand getCommand() {
         return command;
     }

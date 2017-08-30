@@ -10,10 +10,11 @@ import com.epam.bets.request.RequestContent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import static com.epam.bets.constant.PageConstant.SHOW_MATCH_RESULTS_PAGE;
+import static com.epam.bets.constant.RequestParamConstant.CommonParam.PARAM_NAME_DATE;
+import static com.epam.bets.constant.RequestParamConstant.MatchParam.PARAM_NAME_CONFEDERACY;
 
 public class ShowMatchResultsCommand implements AjaxCommand<Match> {
 
@@ -25,6 +26,9 @@ public class ShowMatchResultsCommand implements AjaxCommand<Match> {
         List<Match> matchList = null;
         try {
             matchList = receiver.showMatchResults(requestContent);
+            requestContent.insertSessionAttribute(PREV_REQUEST, SHOW_MATCH_RESULTS_PAGE +
+                    "&date="+requestContent.findParameterValue(PARAM_NAME_DATE)+
+                    "&confederacy="+requestContent.findParameterValue(PARAM_NAME_CONFEDERACY));
         } catch (ReceiverException e) {
             throw new CommandException(e);
         }

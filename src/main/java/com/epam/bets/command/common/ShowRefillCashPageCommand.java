@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static com.epam.bets.constant.PageConstant.SHOW_REFILL_CASH_PAGE;
 import static com.epam.bets.constant.PageConstant.REFILL_CASH_PAGE;
 import static com.epam.bets.constant.PageConstant.SERVER_ERROR_PAGE;
 
@@ -29,6 +30,7 @@ public class ShowRefillCashPageCommand implements AbstractCommand {
             receiver.findAllCreditCards(requestContent);
             receiver.findUserBalance(requestContent);
             navigator = new PageNavigator(NEXT_PAGE, PageType.FORWARD);
+            requestContent.insertSessionAttribute(PREV_REQUEST, SHOW_REFILL_CASH_PAGE);
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e, e);
             navigator = new PageNavigator(SERVER_ERROR_PAGE, PageType.REDIRECT);
