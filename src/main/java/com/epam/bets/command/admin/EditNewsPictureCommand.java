@@ -3,7 +3,6 @@ package com.epam.bets.command.admin;
 import com.epam.bets.command.AbstractCommand;
 import com.epam.bets.command.common.EditUserAvatarCommand;
 import com.epam.bets.navigator.PageNavigator;
-import com.epam.bets.navigator.PageType;
 import com.epam.bets.exception.ReceiverException;
 import com.epam.bets.receiver.LoadReceiver;
 import com.epam.bets.receiver.impl.LoadReceiverImpl;
@@ -53,19 +52,19 @@ public class EditNewsPictureCommand implements AbstractCommand {
             loadReceiver.updateNewsPicture(requestContent);
             if (requestContent.findRequestAttribute(ERROR_LIST_NAME) == null) {
                 if (new NewsValidator().validateTitle(newsTitle)) {
-                    navigator = new PageNavigator(NEXT_PAGE_AFTER_CREATE, PageType.REDIRECT);
+                    navigator = new PageNavigator(NEXT_PAGE_AFTER_CREATE, PageNavigator.PageType.REDIRECT);
                     requestContent.insertSessionAttribute(PREV_REQUEST, NEXT_PAGE_AFTER_CREATE);
                 } else {
-                    navigator = new PageNavigator(NEXT_PAGE_AFTER_EDIT + newsTitle, PageType.REDIRECT);
+                    navigator = new PageNavigator(NEXT_PAGE_AFTER_EDIT + newsTitle, PageNavigator.PageType.REDIRECT);
                     requestContent.insertSessionAttribute(PREV_REQUEST, NEXT_PAGE_AFTER_EDIT + newsTitle);
                 }
             } else {
-                navigator = new PageNavigator(ERROR_PAGE, PageType.FORWARD);
+                navigator = new PageNavigator(ERROR_PAGE, PageNavigator.PageType.FORWARD);
                 requestContent.insertSessionAttribute(PREV_REQUEST, ERROR_PAGE);
             }
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e, e);
-            navigator = new PageNavigator(SERVER_ERROR_PAGE, PageType.REDIRECT);
+            navigator = new PageNavigator(SERVER_ERROR_PAGE, PageNavigator.PageType.REDIRECT);
         }
         return navigator;
     }

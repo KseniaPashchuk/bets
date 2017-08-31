@@ -45,7 +45,7 @@
                 <div class="matches-list">
                     <form id="show-matches-page" method="POST" action="${pageContext.servletContext.contextPath}/controller">
                         <input type="hidden" name="command" value="show_matches_page"/>
-                        <input type="hidden" name="confederacy" id="confederacy" value=""/>
+                        <input type="hidden" name="confederation" id="confederation" value=""/>
                     <div class="matches-title">
                         <a href="javascript://" id="matches-title"><fmt:message key="common.bets.matches"/></a> <span
                             class="glyphicon glyphicon-chevron-down dropdown" style="color: #ffa71b"
@@ -78,8 +78,8 @@
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <p><fmt:message key="common.bets.confederacy"/></p>
-                        <input type="hidden" id="prev-confederacy" value="${param.confederacy}"/>
+                        <p><fmt:message key="common.bets.confederation"/></p>
+                        <input type="hidden" id="prev-confederation" value="${param.confederation}"/>
                         <div class="common-select">
                             <select id="results-confederations" class="dark-select">
                                 <option value="" disabled selected="selected"></option>

@@ -44,7 +44,10 @@ public enum CommandType {
     ADD_TEAM(new AddFootballTeamCommand()),
     CHANGE_LOCALE(new ChangeLocaleCommand()),
     SHOW_NEWS_PAGE(new ShowNewsPageCommand()),
-    SHOW_MATCH_RESULTS_PAGE(new ShowMatchResultsPageCommand());
+    SHOW_MATCH_RESULTS_PAGE(new ShowMatchResultsPageCommand()),
+    ADD_CONFEDERATION(new AddConfederationCommand()),
+    SHOW_SUPPORT_PAGE(new ShowSupportPageCommand()),
+    SHOW_SUPPORT_CHAT(new ShowSupportChatCommand());
     private AbstractCommand command;
 
     CommandType(AbstractCommand command) {

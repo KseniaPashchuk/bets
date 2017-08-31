@@ -42,5 +42,29 @@ public class CreditCards extends Entity{
         return creditCardList.size();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        CreditCards that = (CreditCards) o;
+
+        if (userId != that.userId) return false;
+        return creditCardList != null ? creditCardList.equals(that.creditCardList) : that.creditCardList == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = creditCardList != null ? creditCardList.hashCode() : 0;
+        result = 31 * result + userId;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "CreditCards{" +
+                "creditCardList=" + creditCardList +
+                ", userId=" + userId +
+                '}';
+    }
 }

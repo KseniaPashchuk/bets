@@ -106,5 +106,53 @@ public class User extends Entity {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        User user = (User) o;
+
+        if (id != user.id) return false;
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
+        if (login != null ? !login.equals(user.login) : user.login != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        if (balance != null ? !balance.equals(user.balance) : user.balance != null) return false;
+        if (creditCards != null ? !creditCards.equals(user.creditCards) : user.creditCards != null) return false;
+        if (role != user.role) return false;
+        if (birthDate != null ? !birthDate.equals(user.birthDate) : user.birthDate != null) return false;
+        return avatarUrl != null ? avatarUrl.equals(user.avatarUrl) : user.avatarUrl == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (balance != null ? balance.hashCode() : 0);
+        result = 31 * result + (creditCards != null ? creditCards.hashCode() : 0);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (birthDate != null ? birthDate.hashCode() : 0);
+        result = 31 * result + (avatarUrl != null ? avatarUrl.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", balance=" + balance +
+                ", creditCards=" + creditCards +
+                ", role=" + role +
+                ", birthDate=" + birthDate +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                '}';
+    }
 }

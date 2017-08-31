@@ -25,30 +25,30 @@ $(document).ready(function () {
         $('a[id=matches-title]').click();
     }
 
-    function findMatches(confederacy) {
-        $("#prev-confederacy").val(confederacy);
+    function findMatches(confederation) {
+        $("#prev-confederacy").val(confederation);
         $.ajax({
-            url: "/ajax?command=show_matches&confederacy=" + confederacy,
+            url: "/ajax?command=show_matches&confederation=" + confederation,
             type: 'GET',
             dataType: 'json',
             success: function (data) {
-                console.log("The matches with confederation " + confederacy + " was successfully received");
+                console.log("The matches with confederation " + confederation + " was successfully received");
                 console.log(data);
                 $('.matches-table tbody').empty();
 
                 if (data.length != 0) {
                     data.sort(function (item1, item2) {
-                        return item1.confederacy > item2.confederacy ? 1 : -1;
+                        return item1.confederation > item2.confederation ? 1 : -1;
                     });
                     var dataContainer = $('.matches-table tbody');
                     var html = '';
-                    var confederacy = '';
+                    var confederation = '';
                     $.each(data, function (key, item) {
                         var date = new Date(item.date.date.year, item.date.date.month - 1, item.date.date.day,
                             item.date.time.hour, item.date.time.minute);
-                        if (item.confederacy != confederacy) {
+                        if (item.confederation != confederation) {
                             html += '<tr>' +
-                                '<td colspan="12" style="background: #ffa71b">' + item.confederacy + '</td>' +
+                                '<td colspan="12" style="background: #ffa71b">' + item.confederation + '</td>' +
                                 '<td style="display: none;"></td>' +
                                 '<td style="display: none;"></td>' +
                                 '<td style="display: none;"></td>' +
@@ -61,23 +61,41 @@ $(document).ready(function () {
                                 '<td style="display: none;"></td>' +
                                 '<td style="display: none;"></td>' +
                                 '</tr>';
-                            confederacy = item.confederacy;
+                            confederation = item.confederation;
                         }
-                        html += '<tr id="' + item.id + '">' +
-                            '<td>' + item.id + '</td>' +
-                            '<td>' + item.firstTeam + '-' + item.secondTeam + '</td>' +
-                            '<td>' + moment(date).format("DD/MM/YY HH:mm") + '</td>' +
-                            '<td class="active">' + item.matchCoefficients.coefficients['FW'] + '</td>' +
-                            '<td class="active">' + item.matchCoefficients.coefficients['SW'] + '</td>' +
-                            '<td class="active">' + item.matchCoefficients.coefficients['X'] + '</td>' +
-                            '<td class="active">' + item.matchCoefficients.coefficients['FWX'] + '</td>' +
-                            '<td class="active">' + item.matchCoefficients.coefficients['FS'] + '</td>' +
-                            '<td class="active">' + item.matchCoefficients.coefficients['XSW'] + '</td>' +
-                            '<td class="active">' + item.matchCoefficients.coefficients['TL'] + '</td>' +
-                            '<td>' + item.total + '</td>' +
-                            '<td class="active">' + item.matchCoefficients.coefficients['TM'] + '</td>' +
-                            '<td class="hidden">' + item.maxBet + '</td>' +
-                            '</tr>';
+                        if(moment().isAfter(moment(date))) {
+                            html += '<tr id="' + item.id + '">' +
+                                '<td>' + item.id + '</td>' +
+                                '<td>' + item.firstTeam + '-' + item.secondTeam + '</td>' +
+                                '<td>' + moment(date).format("DD/MM/YY HH:mm") + '</td>' +
+                                '<td>' + item.matchCoefficients.coefficients['FW'] + '</td>' +
+                                '<td>' + item.matchCoefficients.coefficients['SW'] + '</td>' +
+                                '<td>' + item.matchCoefficients.coefficients['X'] + '</td>' +
+                                '<td>' + item.matchCoefficients.coefficients['FWX'] + '</td>' +
+                                '<td>' + item.matchCoefficients.coefficients['FS'] + '</td>' +
+                                '<td>' + item.matchCoefficients.coefficients['XSW'] + '</td>' +
+                                '<td>' + item.matchCoefficients.coefficients['TL'] + '</td>' +
+                                '<td>' + item.total + '</td>' +
+                                '<td>' + item.matchCoefficients.coefficients['TM'] + '</td>' +
+                                '<td class="hidden">' + item.maxBet + '</td>' +
+                                '</tr>';
+                        }else{
+                            html += '<tr id="' + item.id + '">' +
+                                '<td>' + item.id + '</td>' +
+                                '<td>' + item.firstTeam + '-' + item.secondTeam + '</td>' +
+                                '<td>' + moment(date).format("DD/MM/YY HH:mm") + '</td>' +
+                                '<td class="active">' + item.matchCoefficients.coefficients['FW'] + '</td>' +
+                                '<td class="active">' + item.matchCoefficients.coefficients['SW'] + '</td>' +
+                                '<td class="active">' + item.matchCoefficients.coefficients['X'] + '</td>' +
+                                '<td class="active">' + item.matchCoefficients.coefficients['FWX'] + '</td>' +
+                                '<td class="active">' + item.matchCoefficients.coefficients['FS'] + '</td>' +
+                                '<td class="active">' + item.matchCoefficients.coefficients['XSW'] + '</td>' +
+                                '<td class="active">' + item.matchCoefficients.coefficients['TL'] + '</td>' +
+                                '<td>' + item.total + '</td>' +
+                                '<td class="active">' + item.matchCoefficients.coefficients['TM'] + '</td>' +
+                                '<td class="hidden">' + item.maxBet + '</td>' +
+                                '</tr>';
+                        }
 
                     });
                     dataContainer.html(html);

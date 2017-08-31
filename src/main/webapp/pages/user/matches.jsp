@@ -2,13 +2,13 @@
 <div class="games-wrap row">
     <div class="games-menu-wrap col-lg-3">
         <div class="games-menu colored-block">
-            <div class="matches-list">
+            <div class="matches-list matches-menu-item">
                 <div class="matches-title">
                     <a href="javascript://" id="matches-title"><fmt:message key="common.bets.matches"/></a> <span
                         class="glyphicon glyphicon-chevron-down dropdown" style="color: #ffa71b"
                         aria-hidden="true"></span>
                 </div>
-                <input type="hidden" id="prev-confederacy" value="${param.confederacy}"/>
+                <input type="hidden" id="prev-confederation" value="${param.confederation}"/>
                 <div class="league-list" id="league-list" style="display: none">
                     <div class="btn-group">
                         <c:forEach var="item" items="${confederationList}">
@@ -17,7 +17,7 @@
                     </div>
                 </div>
             </div>
-            <div class="results"><a href="${pageContext.servletContext.contextPath}/controller?command=show_match_results_page"
+            <div class="results matches-menu-item"><a href="${pageContext.servletContext.contextPath}/controller?command=show_match_results_page"
                                     id="match-results"><fmt:message key="common.bets.results"/></a>
             </div>
         </div>
@@ -28,6 +28,9 @@
                <c:if test="${!btg:contains(errors,'makeBetError' )}">style="display:none;"</c:if>>
                 <fmt:message key="common.bets.make_bet.error"/>
             </p>
+        </div>
+        <div class="colored-block bet-not-accepted" style="text-align: center">
+            <div class="bet-not-accepted-title"><fmt:message key="common.match.bet_message"/></div>
         </div>
         <div class="coupon colored-block" id="coupon">
             <div class="coupon-title"><fmt:message key="common.bets.your_bets"/></div>
@@ -77,7 +80,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <p><fmt:message key="common.bets.confederacy"/></p>
+                    <p><fmt:message key="common.bets.confederation"/></p>
                     <div class="common-select">
                         <select id="results-confederations" class="dark-select">
                             <c:forEach var="item" items="${confederationList}">
@@ -134,7 +137,6 @@
                <c:if test="${!btg:contains(errors,'summNotPositiveError' )}">style="display:none;"</c:if>>
                 <fmt:message key="common.bets.make_bet.sum_not_positive"/>
             </p>
-
             <table id="make-bet-table">
                 <thead>
                 <tr>

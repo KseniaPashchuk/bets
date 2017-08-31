@@ -3,7 +3,7 @@
     <div class="games-menu-wrap col-lg-3">
         <div class="games-menu colored-block">
             <div class="matches-list">
-                <div class="matches-title">
+                <div class="matches-title matches-menu-item">
                     <a href="javascript://" id="matches-title"><fmt:message key="common.bets.matches"/></a> <span
                         class="glyphicon glyphicon-chevron-down dropdown" style="color: #ffa71b"
                         aria-hidden="true"></span>
@@ -16,15 +16,17 @@
                     </div>
                 </div>
             </div>
-            <div class="results"><a href="${pageContext.servletContext.contextPath}/controller?command=show_match_results_page"
+            <div class="results matches-menu-item"><a href="${pageContext.servletContext.contextPath}/controller?command=show_match_results_page"
                                     id="match-results"><fmt:message key="common.bets.results"/></a>
             </div>
-            <div class="add-team"><a href="${pageContext.servletContext.contextPath}/pages/admin/addTeam.jsp"
-                                     id="add-team"><fmt:message key="bookmaker.bets.add_team"/></a></div>
+            <div class="add-team matches-menu-item"><a href="${pageContext.servletContext.contextPath}/pages/admin/addTeam.jsp"
+                                    ><fmt:message key="admin.match.add_team"/></a></div>
+            <div class="add-team matches-menu-item"><a href="${pageContext.servletContext.contextPath}/pages/admin/addConfederation.jsp"
+                                     ><fmt:message key="admin.match.add_confederation"/></a></div>
         </div>
     </div>
     <div class="games-table-wrap col-lg-9">
-        <div class="games-table colored-block" style="display:none;">
+        <div class="games-table colored-block">
             <table id="games" class="table table-bordered matches-table" cellspacing="0" width="100%">
                 <thead>
                 <tr>
@@ -63,7 +65,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <p><fmt:message key="common.bets.confederacy"/></p>
+                    <p><fmt:message key="common.bets.confederation"/></p>
                     <div class="common-select">
                         <select id="results-confederations" class="dark-select">
                             <c:forEach var="item" items="${confederationList}">

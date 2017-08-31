@@ -1,8 +1,22 @@
 package com.epam.bets.navigator;
 
+/**
+ * The class provides navigation type and page url storage.
+ *
+ * @author Pashchuk Ksenia
+ */
+
+
 public class PageNavigator {
     private String pageUrl;
     private PageType type;
+
+    /**
+     * Enumeration class provides navigation types storage,that are used in the application navigation system.
+     */
+    public enum PageType {
+        REDIRECT, FORWARD
+    }
 
     public PageNavigator() {
     }

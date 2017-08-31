@@ -18,7 +18,7 @@ public abstract class MatchDAO extends AbstractDAO<Match> {
     protected static final String PARAM_NAME_SECOND_TEAM_SCORE = "second_team_score";
     protected static final String PARAM_NAME_MAX_BET = "max_bet_value";
     protected static final String PARAM_NAME_TOTAL = "total_value";
-    protected static final String PARAM_NAME_CONFEDERACY = "confederacy";
+    protected static final String PARAM_NAME_CONFEDERATION = "confederation_name";
     protected static final String PARAM_NAME_DATE = "date_time";
     protected static final String PARAM_NAME_TEAM_NAME = "team_name";
     protected static final String PARAM_NAME_TEAM_COUNTRY = "country";
@@ -48,4 +48,5 @@ public abstract class MatchDAO extends AbstractDAO<Match> {
     public abstract Match findFinishedMatchInfo(int matchId) throws DaoException;
 
     public abstract boolean createNewFootballTeam(String team, String country) throws DaoException;
+    public abstract boolean createNewConfederation(String confederation) throws DaoException;
 }

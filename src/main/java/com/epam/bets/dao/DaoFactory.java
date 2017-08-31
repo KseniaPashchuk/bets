@@ -46,6 +46,10 @@ public class DaoFactory implements AutoCloseable {
         return new BetDAOImpl(connection);
     }
 
+    public MailDAO getMailDao(){
+        return new MailDAOImpl(connection);
+    }
+
     @Override
     public void close() {
         try {

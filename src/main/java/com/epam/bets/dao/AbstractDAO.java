@@ -29,7 +29,7 @@ public abstract class AbstractDAO<T extends Entity> implements AutoCloseable {
 
     public abstract boolean update(T entity) throws DaoException;
 
-    public void close() {//TODO AKS
+    public void close() {
         try {
             if (connection != null) {
                 connection.close();

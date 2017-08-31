@@ -4,9 +4,15 @@ import java.util.Properties;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 
+/**
+ * The class provides configuration of email session.
+ *
+ * @author Pashchuk Ksenia
+ */
+
 public class EmailSessionCreator {
 
-    private final String USERNAME = "ina.pashchuk@gmail.com";
+    private final String USER_NAME = "ina.pashchuk@gmail.com";
     private final String USER_PASSWORD = "tomoe127";
     private Properties sessionProperties;
 
@@ -25,7 +31,7 @@ public class EmailSessionCreator {
         return Session.getDefaultInstance(sessionProperties,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(USERNAME, USER_PASSWORD);
+                        return new PasswordAuthentication(USER_NAME, USER_PASSWORD);
                     }
                 });
     }

@@ -6,11 +6,7 @@
     <tlib-version>1.0</tlib-version>
     <short-name>btg</short-name>
     <uri>bettags</uri>
-    <tag>
-        <name>info-time</name>
-        <tag-class>com.epam.bets.tag.InfoTimeTag</tag-class>
-        <body-content>empty</body-content>
-    </tag>
+
     <function>
         <name>contains</name>
         <function-class>com.epam.bets.tag.ContainsTag</function-class>

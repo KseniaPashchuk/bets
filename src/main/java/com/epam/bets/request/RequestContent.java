@@ -12,6 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+/**
+ * Class provides request parameters, parts, attributes and session attributes storage.
+ *
+ * @author Pashchuk Ksenia
+ */
 public class RequestContent {
 
     private static final String UPLOAD_DIR = "uploads.dir";
@@ -30,6 +35,12 @@ public class RequestContent {
         this.sessionAttributes = new HashMap<>();
         this.removedSessionAttributes = new ArrayList<>();
     }
+
+    /**
+     * Provides extracting request params from {@link HttpServletRequest] to this object.
+     *
+     * @param request from user
+     */
 
     public void extractValues(HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -66,6 +77,11 @@ public class RequestContent {
         }
     }
 
+    /**
+     * Provides inserting request params from this object to {@link HttpServletRequest]
+     *
+     * @param request to return to controller
+     */
     public void insertValues(HttpServletRequest request) {
         HttpSession session = request.getSession();
 
@@ -87,35 +103,77 @@ public class RequestContent {
         }
     }
 
+    /**
+     * Provides inserting request attribute.
+     *
+     * @param key   - attribute key
+     * @param value - attribute value
+     */
     public void insertRequestAttribute(String key, Object value) {
         this.requestAttributes.put(key, value);
     }
 
+    /**
+     * Provides inserting session attribute
+     *
+     * @param key   - attribute key
+     * @param value - attribute value
+     */
     public void insertSessionAttribute(String key, Object value) {
         this.sessionAttributes.put(key, value);
     }
 
+    /**
+     * Provides taking request attribute
+     *
+     * @param key - attribute key
+     */
     public Object findRequestAttribute(String key) {
         return this.requestAttributes.get(key);
     }
 
+    /**
+     * Provides taking session attribute
+     *
+     * @param key - attribute key
+     */
     public Object findSessionAttribute(String key) {
         return this.sessionAttributes.get(key);
     }
 
+    /**
+     * Provides removing session attribute
+     *
+     * @param key - attribute key
+     */
     public void removeSessionAttribute(String key) {
         this.sessionAttributes.remove(key);
         this.removedSessionAttributes.add(key);
     }
 
+    /**
+     * Provides taking parameter values
+     *
+     * @param paramName - parameter name
+     */
     public String[] findParameterValues(String paramName) {
         return this.requestParameters.get(paramName);
     }
 
+    /**
+     * Provides taking parameter value
+     *
+     * @param paramName - parameter name
+     */
     public String findParameterValue(String paramName) {
         return this.requestParameters.get(paramName)[0];
     }
 
+    /**
+     * Provides taking request parts. Only for multipart/form-data requests.
+     *
+     * @param partName - part name
+     */
     public Part findPart(String partName) {
         Part requiredPart = null;
         for (Part part : this.requestParts) {

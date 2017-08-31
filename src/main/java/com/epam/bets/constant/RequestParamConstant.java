@@ -31,14 +31,19 @@ public final class RequestParamConstant {
         public static final String PARAM_NAME_BET_TYPE = "betType";
         public static final String PARAM_NAME_USER_BETS_TYPE = "type";
         public static final String PARAM_NAME_LOCALE = "locale";
-        public static final String EMAIL_SUBJECT = "Password Recovery";
-        public static final String EMAIL_TEXT_START = "We've received a request to reset your password. Your new password: ";
-        public static final String EMAIL_TEXT_END = "\n The BETS Team.";
+        public static final String PASSWORD_RECOVER_MAIL_SUBJECT = "Password Recovery";
+        public static final String PASSWORD_RECOVER_MAIL_TEXT_START = "We've received a request to reset your password. Your new password: ";
+        public static final String PASSWORD_RECOVER_MAIL_TEXT_END = "\n The BETS Team.";
+        public static final String PARAM_NAME_MAIL_SUBJECT = "subject";
+        public static final String PARAM_NAME_MAIL_TEXT = "text";
+        public static final String PARAM_NAME_USER_EMAILS = "userEmails";
+        public static final String PARAM_NAME_ALL_MAIL= "allMail";
+
     }
 
     public final class MatchParam {
         public static final String PARAM_NAME_ALL_CONFEDERATIONS = "all";
-        public static final String PARAM_NAME_CONFEDERACY = "confederacy";
+        public static final String PARAM_NAME_CONFEDERATION = "confederation";
         public static final String PARAM_NAME_TEAM_LIST = "teamList";
         public static final String PARAM_NAME_CONFEDERATION_LIST = "confederationList";
         public static final String PARAM_NAME_FIRST_TEAM = "firstTeam";

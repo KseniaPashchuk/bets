@@ -29,14 +29,19 @@ public final class PageConstant {
 
     public static final String MATCHES_PAGE = "/pages/common/matches.jsp";
     public static final String MATCH_RESULTS_PAGE = "/pages/common/matchResults.jsp";
-    public static final String SHOW_MATCHES_PAGE = "/controller?command=show_matches_page&confederacy=";
+    public static final String SHOW_MATCHES_PAGE = "/controller?command=show_matches_page&confederation=";
     public static final String SHOW_MATCH_RESULTS_PAGE = "/controller?command=show_match_results_page";
     public static final String AFTER_SETTING_MATCH_SCORE = "/controller?command=calculate_gain&match_id=";
     public static final String CREATE_TEAM_PAGE = "/pages/admin/addTeam.jsp";
+    public static final String CREATE_CONFEDERATION_PAGE = "/pages/admin/addConfederation.jsp";
 
     public static final String SERVER_ERROR_PAGE = "/pages/error/error500.jsp";
 
     public static final String REFILL_CASH_PAGE = "/pages/common/refillCash.jsp";
     public static final String SHOW_REFILL_CASH_PAGE = "/controller?command=create_refill_cash_page";
 
+    public static final String SUPPORT_PAGE = "/pages/common/support.jsp";
+    public static final String SHOW_SUPPORT_PAGE = "/controller?command=show_support_page";
+    public static final String SUPPORT_CHAT_PAGE = "/pages/common/supportChat.jsp";
+    public static final String SHOW_SUPPORT_CHAT_PAGE = "/controller?command=show_support_chat&email=";
 }

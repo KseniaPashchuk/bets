@@ -2,13 +2,13 @@
 <div class="games-wrap row">
     <div class="games-menu-wrap col-lg-3">
         <div class="games-menu colored-block">
-            <div class="matches-list">
+            <div class="matches-list matches-menu-item">
                 <div class="matches-title">
                     <a href="javascript://" id="matches-title"><fmt:message key="common.bets.matches"/></a> <span
                         class="glyphicon glyphicon-chevron-down dropdown" style="color: #ffa71b"
                         aria-hidden="true"></span>
                 </div>
-                <input type="hidden" id="prev-confederacy" value="${param.confederacy}"/>
+                <input type="hidden" id="prev-confederation" value="${param.confederation}"/>
                 <div class="league-list" id="league-list" style="display: none">
                     <div class="btn-group">
                         <c:forEach var="item" items="${confederationList}">
@@ -17,7 +17,7 @@
                     </div>
                 </div>
             </div>
-            <div class="results"><a href="${pageContext.servletContext.contextPath}/controller?command=show_match_results_page"
+            <div class="results matches-menu-item"><a href="${pageContext.servletContext.contextPath}/controller?command=show_match_results_page"
                                     id="match-results"><fmt:message key="common.bets.results"/></a>
             </div>
         </div>
@@ -81,7 +81,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <p><fmt:message key="common.bets.confederacy"/></p>
+                    <p><fmt:message key="common.bets.confederation"/></p>
                     <div class="common-select">
                         <select id="results-confederations" class="dark-select">
                             <c:forEach var="item" items="${confederationList}">
@@ -130,7 +130,7 @@
             <input type="hidden" name="matchId" id="edit-match-id" value=""/>
             <input type="hidden" name="firstTeam" id="edit-first-team" value=""/>
             <input type="hidden" name="secondTeam" id="edit-second-team" value=""/>
-            <input type="hidden" name="confederacy" id="edit-confederacy" value=""/>
+            <input type="hidden" name="confederation" id="edit-confederation" value=""/>
             <div class="edit-title">Edit</div>
             <p class="error-label" id="edit-same-team"
                <c:if test="${(!btg:contains(errors,'invalidEditParams'))&&
@@ -170,8 +170,8 @@
                     </select>
                 </div>
                 <div class="edit-match-info">
-                    <label for="confederacy-edit"><fmt:message key="common.bets.confederacy"/></label>
-                    <select id="confederacy-edit" class="dark-select">
+                    <label for="confederation-edit"><fmt:message key="common.bets.confederation"/></label>
+                    <select id="confederation-edit" class="dark-select">
                         <c:forEach var="item" items="${confederationList}">
                             <option value="${item}">${item}</option>
                         </c:forEach>
@@ -277,7 +277,7 @@
             <input type="hidden" name="command" value="create_match"/>
             <input type="hidden" name="firstTeam" id="create-first-team" value=""/>
             <input type="hidden" name="secondTeam" id="create-second-team" value=""/>
-            <input type="hidden" name="confederacy" id="create-confederacy" value=""/>
+            <input type="hidden" name="confederation" id="create-confederation" value=""/>
             <div class="create-title">Create</div>
             <p class="error-label" id="create-same-team"
                <c:if test="${(!btg:contains(errors,'invalidCreateParams'))&&
@@ -317,8 +317,8 @@
                     </select>
                 </div>
                 <div class="edit-match-info">
-                    <label for="confederacy-create"><fmt:message key="common.bets.confederacy"/></label>
-                    <select id="confederacy-create" class="dark-select">
+                    <label for="confederation-create"><fmt:message key="common.bets.confederation"/></label>
+                    <select id="confederation-create" class="dark-select">
                         <c:forEach var="item" items="${confederationList}">
                             <option value="${item}">${item}</option>
                         </c:forEach>

@@ -87,4 +87,48 @@ public class Bet extends Entity {
     public void setCoefficient(BigDecimal coefficient) {
         this.coefficient = coefficient;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Bet bet = (Bet) o;
+
+        if (id != bet.id) return false;
+        if (isWon != bet.isWon) return false;
+        if (footballMatchId != bet.footballMatchId) return false;
+        if (userId != bet.userId) return false;
+        if (money != null ? !money.equals(bet.money) : bet.money != null) return false;
+        if (coefficient != null ? !coefficient.equals(bet.coefficient) : bet.coefficient != null) return false;
+        if (footballMatch != null ? !footballMatch.equals(bet.footballMatch) : bet.footballMatch != null) return false;
+        return betType == bet.betType;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (money != null ? money.hashCode() : 0);
+        result = 31 * result + (coefficient != null ? coefficient.hashCode() : 0);
+        result = 31 * result + (isWon ? 1 : 0);
+        result = 31 * result + footballMatchId;
+        result = 31 * result + (footballMatch != null ? footballMatch.hashCode() : 0);
+        result = 31 * result + (betType != null ? betType.hashCode() : 0);
+        result = 31 * result + userId;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Bet{" +
+                "id=" + id +
+                ", money=" + money +
+                ", coefficient=" + coefficient +
+                ", isWon=" + isWon +
+                ", footballMatchId=" + footballMatchId +
+                ", footballMatch='" + footballMatch + '\'' +
+                ", betType=" + betType +
+                ", userId=" + userId +
+                '}';
+    }
 }

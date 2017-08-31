@@ -25,4 +25,6 @@ public interface MatchReceiver extends Receiver {
 
     void createFootballTeam(RequestContent requestContent) throws ReceiverException;
 
+    void createConfederation(RequestContent requestContent) throws ReceiverException;
+
 }

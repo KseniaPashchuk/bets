@@ -7,19 +7,11 @@ import java.util.Map;
 
 public class GainCoefficient extends Entity {
     private int footballMatchId;
-//    private BetType betType;
-//    private BigDecimal coefficient;
-    Map <BetType, BigDecimal> coefficients;
+    Map<BetType, BigDecimal> coefficients;
 
     public GainCoefficient() {
         coefficients = new HashMap<>();
     }
-
-
-//    public GainCoefficient(BetType betType, BigDecimal coefficient) {
-//        this.betType = betType;
-//        this.coefficient = coefficient;
-//    }
 
     public int getFootballMatchId() {
         return footballMatchId;
@@ -36,23 +28,34 @@ public class GainCoefficient extends Entity {
     public void setCoefficients(Map<BetType, BigDecimal> coefficients) {
         this.coefficients = coefficients;
     }
+
     public void addCoefficient(BetType type, BigDecimal coeff) {
         coefficients.put(type, coeff);
     }
 
-    //    public BetType getBetType() {
-//        return betType;
-//    }
-//
-//    public void setBetType(BetType betType) {
-//        this.betType = betType;
-//    }
-//
-//    public BigDecimal getCoefficient() {
-//        return coefficient;
-//    }
-//
-//    public void setCoefficient(BigDecimal coefficient) {
-//        this.coefficient = coefficient;
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GainCoefficient that = (GainCoefficient) o;
+
+        if (footballMatchId != that.footballMatchId) return false;
+        return coefficients != null ? coefficients.equals(that.coefficients) : that.coefficients == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = footballMatchId;
+        result = 31 * result + (coefficients != null ? coefficients.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "GainCoefficient{" +
+                "footballMatchId=" + footballMatchId +
+                ", coefficients=" + coefficients +
+                '}';
+    }
 }

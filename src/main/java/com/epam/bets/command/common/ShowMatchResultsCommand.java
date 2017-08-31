@@ -14,7 +14,7 @@ import java.util.List;
 
 import static com.epam.bets.constant.PageConstant.SHOW_MATCH_RESULTS_PAGE;
 import static com.epam.bets.constant.RequestParamConstant.CommonParam.PARAM_NAME_DATE;
-import static com.epam.bets.constant.RequestParamConstant.MatchParam.PARAM_NAME_CONFEDERACY;
+import static com.epam.bets.constant.RequestParamConstant.MatchParam.PARAM_NAME_CONFEDERATION;
 
 public class ShowMatchResultsCommand implements AjaxCommand<Match> {
 
@@ -28,7 +28,7 @@ public class ShowMatchResultsCommand implements AjaxCommand<Match> {
             matchList = receiver.showMatchResults(requestContent);
             requestContent.insertSessionAttribute(PREV_REQUEST, SHOW_MATCH_RESULTS_PAGE +
                     "&date="+requestContent.findParameterValue(PARAM_NAME_DATE)+
-                    "&confederacy="+requestContent.findParameterValue(PARAM_NAME_CONFEDERACY));
+                    "&confederation="+requestContent.findParameterValue(PARAM_NAME_CONFEDERATION));
         } catch (ReceiverException e) {
             throw new CommandException(e);
         }

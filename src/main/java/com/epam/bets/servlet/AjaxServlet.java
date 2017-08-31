@@ -16,17 +16,65 @@ import com.google.gson.Gson;
 
 import static com.epam.bets.constant.PageConstant.SERVER_ERROR_PAGE;
 
+/**
+ * The class provides controller for ajax requests at MVC pattern of application.
+ *
+ * @author Pashchuk Ksenia
+ * @see HttpServlet
+ */
+
 @WebServlet(name = "AjaxServlet", urlPatterns = {"/ajax"})
 public class AjaxServlet extends HttpServlet {
+
+
+    /**
+     * Processes request sent by GET method.
+     *
+     * @param request  request from client to get parameters
+     * @param response response to client with parameters to work with on client side
+     * @throws IOException      if an input or output error is detected when the servlet handles the request
+     * @throws ServletException if the request could not be handled
+     * @see HttpServletRequest
+     * @see HttpServletResponse
+     * @see #processRequest(HttpServletRequest, HttpServletResponse)
+     */
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 
+    /**
+     * Processes request sent by POST method.
+     *
+     * @param request  request from client to get parameters
+     * @param response response to client with parameters to work with on client side
+     * @throws IOException      if an input or output error is detected when the servlet handles the request
+     * @throws ServletException if the request could not be handled
+     * @see HttpServletRequest
+     * @see HttpServletResponse
+     * @see #processRequest(HttpServletRequest, HttpServletResponse)
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
+
+    /**
+     * Processes requests.
+     * Defines command by getting command name in {@link HttpServletRequest#getAttribute(String)} and send it to
+     * {@link AjaxCommandFactory}.
+     * Creates new {@link RequestContent} and send it as param to defined command.
+     * Writes object list, returned from {@link AjaxCommand#execute(RequestContent)}, to {@link HttpServletResponse}
+     * in JSON format using {@link Gson#toJson(Object)}
+     *
+     * @param request  request from client to get parameters to work with
+     * @param response response to client with parameters to work with on client side
+     * @throws IOException      if an input or output error is detected when the servlet handles the request
+     * @throws ServletException if the request could not be handled
+     * @see com.epam.bets.factory.AjaxCommandFactory
+     * @see com.epam.bets.command.type.AjaxCommandType
+     */
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

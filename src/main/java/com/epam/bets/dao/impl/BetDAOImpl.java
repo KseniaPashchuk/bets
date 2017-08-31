@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +53,21 @@ public class BetDAOImpl extends BetDAO {
 
     @Override
     public int create(Bet entity) throws DaoException {
-        throw new UnsupportedOperationException();
+        try (PreparedStatement statementBet = connection.prepareStatement(CREATE_BET, Statement.RETURN_GENERATED_KEYS)) {
+            statementBet.setBigDecimal(1, entity.getMoney());
+            statementBet.setInt(2, entity.getUserId());
+            statementBet.setInt(3, entity.getFootballMatchId());
+            statementBet.setString(4, entity.getBetType().toString());
+            statementBet.executeUpdate();
+            ResultSet generatedKey = statementBet.getGeneratedKeys();
+            if (generatedKey.next()) {
+                return generatedKey.getInt(1);
+            }
+            return 0;
+        } catch (SQLException e) {
+            throw new DaoException("Can't create bets", e);
+        }
+
     }
 
     @Override

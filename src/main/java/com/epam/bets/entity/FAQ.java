@@ -32,4 +32,33 @@ public class FAQ extends Entity{
     public void setAnswer(String answer) {
         this.answer = answer;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FAQ faq = (FAQ) o;
+
+        if (id != faq.id) return false;
+        if (question != null ? !question.equals(faq.question) : faq.question != null) return false;
+        return answer != null ? answer.equals(faq.answer) : faq.answer == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (question != null ? question.hashCode() : 0);
+        result = 31 * result + (answer != null ? answer.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "FAQ{" +
+                "id=" + id +
+                ", question='" + question + '\'' +
+                ", answer='" + answer + '\'' +
+                '}';
+    }
 }

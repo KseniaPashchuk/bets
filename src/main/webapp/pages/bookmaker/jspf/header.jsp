@@ -2,8 +2,8 @@
 <header class="header-wrap row clearfix">
     <div class="logo-wrap colored-block col-lg-3">
         <a href="${pageContext.servletContext.contextPath}/controller?command=show_main_page"><img class="logo-img"
-                                                                                       src="../../resources/images/logo-1.png"
-                                                                                       alt="<fmt:message key="company_name"/>"></a>
+                                                                                                   src="../../resources/images/logo-1.png"
+                                                                                                   alt="<fmt:message key="company_name"/>"></a>
     </div>
     <div class="menu-wrap colored-block ">
         <ul class="main-menu clearfix">
@@ -16,7 +16,8 @@
                    class="main-link"><fmt:message key="common.menu.profile"/></a>
             </li>
             <li class="item-main">
-                <a href="" class="main-link"><fmt:message key="common.menu.support"/></a>
+                <a href="${pageContext.servletContext.contextPath}/pages/common/support.jsp"
+                   class="main-link"><fmt:message key="common.menu.support"/></a>
             </li>
         </ul>
     </div>
@@ -24,8 +25,8 @@
         <form method="POST"
               action="${pageContext.servletContext.contextPath}/controller">
             <input type="hidden" name="command" value="change_locale"/>
-            <c:set var = "lang" value = "${fn:substring(sessionScope.locale, 3, 5)}" />
-            <a href="#" class="lang"><input type="submit" name = "locale" value="${lang}"/></a>
+            <c:set var="lang" value="${fn:substring(sessionScope.locale, 3, 5)}"/>
+            <a href="#" class="lang"><input type="submit" name="locale" value="${lang}"/></a>
         </form>
 
     </div>

@@ -24,9 +24,7 @@
                 <a href="${pageContext.servletContext.contextPath}/pages/admin/userSetting.jsp"
                    class="main-link"><fmt:message key="common.menu.users"/></a>
             </li>
-            <li class="item-main">
-                <a href="" class="main-link"><fmt:message key="common.menu.support"/></a>
-            </li>
+
         </ul>
     </div>
     <div class="lang-wrap colored-block ">

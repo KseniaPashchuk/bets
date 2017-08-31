@@ -1,7 +1,6 @@
 package com.epam.bets.servlet;
 
 
-import com.epam.bets.command.common.SignInCommand;
 import com.epam.bets.factory.CommandFactory;
 import com.epam.bets.command.AbstractCommand;
 import com.epam.bets.navigator.PageNavigator;
@@ -21,7 +20,10 @@ import java.io.IOException;
 import static com.epam.bets.constant.PageConstant.SERVER_ERROR_PAGE;
 
 /**
+ * The class provides controller for client requests at MVC pattern of application.
  *
+ * @author Pashchuk Ksenia
+ * @see HttpServlet
  */
 @WebServlet(name = "BetServlet", urlPatterns = {"/controller"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 5,// Максимальный буфера данных в байтах,
@@ -33,18 +35,56 @@ public class BetServlet extends HttpServlet {
 
     private static final Logger LOGGER = LogManager.getLogger(BetServlet.class);
 
+    /**
+     * Processes request sent by GET method.
+     *
+     * @param request  request from client to get parameters
+     * @param response response to client with parameters to work with on client side
+     * @throws IOException      if an input or output error is detected when the servlet handles the request
+     * @throws ServletException if the request could not be handled
+     * @see HttpServletRequest
+     * @see HttpServletResponse
+     * @see #processRequest(HttpServletRequest, HttpServletResponse)
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
+    /**
+     * Processes request sent by POST method.
+     *
+     * @param request  request from client to get parameters
+     * @param response response to client with parameters to work with on client side
+     * @throws IOException      if an input or output error is detected when the servlet handles the request
+     * @throws ServletException if the request could not be handled
+     * @see HttpServletRequest
+     * @see HttpServletResponse
+     * @see #processRequest(HttpServletRequest, HttpServletResponse)
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
+    /**
+     * Processes requests.
+     * Defines command by getting command name in {@link HttpServletRequest#getAttribute(String)} and send it to
+     * {@link CommandFactory}.
+     * Creates new {@link RequestContent} and send it as param to defined command.
+     * {@link AbstractCommand#execute(RequestContent)} returns {@link PageNavigator} object and controller
+     * navigates to page according to the returned value.
+     * If error occurs user navigates to server error page.
+     *
+     * @param request  request from client to get parameters to work with
+     * @param response response to client with parameters to work with on client side
+     * @throws IOException      if an input or output error is detected when the servlet handles the request
+     * @throws ServletException if the request could not be handled
+     * @see com.epam.bets.factory.CommandFactory
+     * @see com.epam.bets.command.type.CommandType
+     */
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

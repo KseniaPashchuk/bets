@@ -100,7 +100,7 @@ public class UserDAOImpl extends UserDAO {
             statementUser.setString(3, entity.getFirstName());
             statementUser.setString(4, entity.getLastName());
             statementUser.setDate(5, java.sql.Date.valueOf(entity.getBirthDate()));
-            statementUser.setString(6, entity.getRole().getStringRepresentation());
+            statementUser.setString(6, entity.getRole().toString());
             statementUser.setString(7, entity.getAvatarUrl());
             statementUser.setBigDecimal(8, entity.getBalance());
             statementUser.executeUpdate();
@@ -213,7 +213,7 @@ public class UserDAOImpl extends UserDAO {
         user.setFirstName(resultSet.getString(PARAM_NAME_FIRST_NAME));
         user.setLastName(resultSet.getString(PARAM_NAME_LAST_NAME));
         user.setBirthDate(resultSet.getDate(PARAM_NAME_BIRTH_DATE).toLocalDate());
-        user.setRole(UserRole.valueOf(resultSet.getString(PARAM_NAME_ROLE).toUpperCase()));
+        user.setRole(UserRole.valueOf(resultSet.getString(PARAM_NAME_ROLE)));
         user.setBalance(resultSet.getBigDecimal(PARAM_NAME_BALANCE));
         user.setAvatarUrl(resultSet.getString(PARAM_NAME_AVATAR));
         return user;

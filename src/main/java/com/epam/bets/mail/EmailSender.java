@@ -11,11 +11,29 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * The class provides actions of email sending to definite e-mail address.
+ *
+ * @author Pashchuk Ksenia
+ */
+
 public class EmailSender {
+
     private static final Logger LOGGER = LogManager.getLogger(EmailSender.class);
+
 
     public EmailSender() {
     }
+
+    /**
+     * Sends email to definite e-mail address.
+     *
+     * @param sendToEmail e-mail address
+     * @param mailSubject name of subject
+     * @param mailText    text of e-mail message
+     *
+     * @return true if operation proceeded successfully, else return false.
+     */
 
     public static boolean sendMail(String sendToEmail, String mailSubject, String mailText) {
         Session mailSession = (new EmailSessionCreator()).createSession();
@@ -29,8 +47,9 @@ public class EmailSender {
             Transport.send(message);
             return true;
         } catch (MessagingException e) {
-            LOGGER.log(Level.ERROR, "Can not send an email: " + e, e);
+            LOGGER.log(Level.ERROR, "Cannot send an email: " + e, e);
         }
         return false;
     }
+
 }

@@ -1703,4 +1703,31 @@ table.dataTable {
 .show-message{
     text-align: center;
     margin-bottom: 10px;
+    color: #fff;
+    padding: 15px;
+    font-size: 17px;
+
+}
+.send-mail{
+    padding: 15px 125px;
+}
+.send-mail .input-text{
+    margin-bottom:20px;
+    background: transparent;
+    border: 1px solid #ccc;
+}
+.send-mail .text-center{
+    color:#ffa71b;
+}
+.bet-not-accepted{
+    margin-bottom: 10px;
+    padding: 15px;
+
+}
+.bet-not-accepted-title{
+    font-size: 17px;
+    color:#fff;
+}
+.matches-menu-item {
+    padding-bottom: 10px;
 }

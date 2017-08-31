@@ -4,6 +4,7 @@ import com.epam.bets.dao.FaqDAO;
 import com.epam.bets.entity.FAQ;
 import com.epam.bets.exception.DaoException;
 import com.epam.bets.pool.ProxyConnection;
+import com.mysql.jdbc.Statement;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -60,11 +61,15 @@ public class FaqDAOImpl extends FaqDAO {
 
     @Override
     public int create(FAQ entity) throws DaoException {
-        try (PreparedStatement statementFAQ = connection.prepareStatement(CREATE_FAQ)) {
+        try (PreparedStatement statementFAQ = connection.prepareStatement(CREATE_FAQ, Statement.RETURN_GENERATED_KEYS)) {
             statementFAQ.setString(1, entity.getQuestion());
             statementFAQ.setString(2, entity.getAnswer());
             statementFAQ.executeUpdate();
-            return 1;
+            ResultSet generatedKey = statementFAQ.getGeneratedKeys();
+            if (generatedKey.next()) {
+                return generatedKey.getInt(1);
+            }
+            return 0;
         } catch (SQLException e) {
             if (e.getErrorCode() == EXISTING_ENTITY_ERROR_CODE) {
                 return 0;
