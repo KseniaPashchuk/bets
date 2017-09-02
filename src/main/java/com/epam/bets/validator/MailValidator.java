@@ -32,24 +32,17 @@ public class MailValidator extends BaseValidator {
     }
 
     /**
-     * Checks if mail params(subject, text) is valid.
+     * Checks if mail text is valid.
      *
-     * @param subject - mail subject
      * @param text    - mail text
      * @param errors  - for validation errors storage
-     * @return true if subject and text are valid
+     * @return true if text are valid
      */
 
-    public boolean validateMailParams(String subject, String text, List<String> errors) {
-        boolean isValid = true;
-        if (!validateStringParam(subject)) {
-            isValid = false;
-            errors.add(INVALID_SUBJECT_ERROR);
-        }
+    public boolean validateMailText(String text, List<String> errors) {
         if (!validateStringParam(text)) {
-            isValid = false;
             errors.add(INVALID_MAIL_TEXT_ERROR);
         }
-        return isValid;
+        return validateStringParam(text);
     }
 }

@@ -1,6 +1,5 @@
 package com.epam.bets.entity;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -9,7 +8,6 @@ public class SupportMail extends Entity {
     private int mailId;
     private String userEmail;
     private String mailText;
-    private String mailSubject;
     private LocalDateTime mailDate;
     private MailType type;
 
@@ -39,14 +37,6 @@ public class SupportMail extends Entity {
 
     public void setMailText(String mailText) {
         this.mailText = mailText;
-    }
-
-    public String getMailSubject() {
-        return mailSubject;
-    }
-
-    public void setMailSubject(String mailSubject) {
-        this.mailSubject = mailSubject;
     }
 
     public LocalDateTime getMailDate() {

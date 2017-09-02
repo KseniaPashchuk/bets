@@ -12,8 +12,6 @@
     <link rel="stylesheet" type="text/css" href="../../resources/css/bets-style.css">
     <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,500&amp;subset=cyrillic" rel="stylesheet">
     <script type="text/javascript" src="../../resources/js/lib/jquery-3.2.1.js"></script>
-    <script type="text/javascript" src="../../resources/js/index.js"></script>
-
 
     <c:choose>
         <c:when test="${role == 'ADMIN'}">

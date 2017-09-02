@@ -21,7 +21,6 @@ public class ShowUserBetsCommand implements AjaxCommand<Bet> {
     @Override
     public List<Bet> execute(RequestContent requestContent) throws CommandException {
         List<Bet> bets = null;
-
         try {
             bets = receiver.showBets(requestContent);
         } catch (ReceiverException e) {

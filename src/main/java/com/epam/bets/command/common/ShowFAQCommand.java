@@ -2,7 +2,6 @@ package com.epam.bets.command.common;
 
 import com.epam.bets.command.AbstractCommand;
 import com.epam.bets.navigator.PageNavigator;
-import com.epam.bets.navigator.PageType;
 import com.epam.bets.exception.ReceiverException;
 import com.epam.bets.receiver.FAQReceiver;
 import com.epam.bets.receiver.impl.FAQReceiverImpl;
@@ -30,14 +29,14 @@ public class ShowFAQCommand implements AbstractCommand {
         try {
             receiver.showAllFAQ(requestContent);
             if (requestContent.findRequestAttribute(ERROR_LIST_NAME) == null) {
-                navigator = new PageNavigator(NEXT_PAGE, PageType.FORWARD);
+                navigator = new PageNavigator(NEXT_PAGE, PageNavigator.PageType.FORWARD);
             } else {
-                navigator = new PageNavigator(NEXT_PAGE, PageType.FORWARD);
+                navigator = new PageNavigator(NEXT_PAGE, PageNavigator.PageType.FORWARD);
             }
             requestContent.insertSessionAttribute(PREV_REQUEST, SHOW_FAQ_PAGE);
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e, e);
-            navigator = new PageNavigator(SERVER_ERROR_PAGE, PageType.REDIRECT);
+            navigator = new PageNavigator(SERVER_ERROR_PAGE, PageNavigator.PageType.REDIRECT);
         }
         return navigator;
     }

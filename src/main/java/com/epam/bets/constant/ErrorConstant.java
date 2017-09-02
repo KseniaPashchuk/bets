@@ -50,7 +50,8 @@ public final class ErrorConstant {
         public static final String CHANGE_PASSWORD_ERROR = "changePasswordError";
         public static final String CHANGE_PROFILE_SUCCESS = "changeProfileSuccess";
         public static final String CHANGE_PROFILE_ERROR = "changeProfileError";
-        public static final String REFILL_CASH_ERROR = "";//TODO
+        public static final String REFILL_CASH_ERROR = "refillCashError";
+        public static final String INVALID_REFILL_AMOUNT = "invalidRefillAmount";
         public static final String UPDATE_USER_AVATAR_ERROR = "updateUserAvatarError";
         public static final String NOT_EQUAL_CURRENT_PASSWORD_ERROR = "notEqualCurrentPasswordError";
         public static final String MAKE_BET_ERROR = "makeBetError";
@@ -62,7 +63,7 @@ public final class ErrorConstant {
         public static final String INVALID_EMAIL_ERROR = "sendSupportQuestionError";
         public static final String INVALID_SUBJECT_ERROR = "recoverPasswordError";
         public static final String INVALID_MAIL_TEXT_ERROR = "recoverPasswordError";
-        public static final String MAKE_BET_DATE_ERROR = "makeBetDateError";
+
     }
 
     public final class NewsError{

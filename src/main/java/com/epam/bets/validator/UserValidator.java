@@ -96,6 +96,15 @@ public class UserValidator extends BaseValidator {
         return isValid;
     }
 
+    public boolean validateRefillAmount(BigDecimal amount, List<String> errors) {
+        if (!validateBigDecimalParam(amount)) {
+            errors.add(INVALID_REFILL_AMOUNT);
+        }
+        return validateBigDecimalParam(amount);
+    }
+
+
+
     /**
      * Checks if sign up params(login, password, birth date, first name, last name and credit card numbers)is valid.
      *
@@ -113,6 +122,9 @@ public class UserValidator extends BaseValidator {
         }
         return isValid;
     }
+
+
+
 
     /**
      * Checks if user personal information(birth date, first name, last name and credit card numbers) is valid.

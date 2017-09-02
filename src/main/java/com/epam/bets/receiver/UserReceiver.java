@@ -2,6 +2,7 @@ package com.epam.bets.receiver;
 
 import com.epam.bets.entity.Bet;
 import com.epam.bets.entity.CreditCards;
+import com.epam.bets.entity.SupportMail;
 import com.epam.bets.entity.User;
 import com.epam.bets.exception.ReceiverException;
 import com.epam.bets.request.RequestContent;
@@ -27,6 +28,8 @@ public interface UserReceiver extends Receiver {
 
     List<Bet> showBets(RequestContent requestContent) throws ReceiverException;
 
+    void refillCash(RequestContent requestContent) throws ReceiverException;
+
     void recoverPassword(RequestContent requestContent) throws ReceiverException;
 
     void calculateGain(RequestContent requestContent) throws ReceiverException;
@@ -39,7 +42,7 @@ public interface UserReceiver extends Receiver {
 
     void sendSupportMail(RequestContent requestContent) throws ReceiverException;
 
-    void showSupportMail(RequestContent requestContent) throws ReceiverException;
+    void showSupportMailChat(RequestContent requestContent) throws ReceiverException;
 
-    void showSupportUserEmails(RequestContent requestContent) throws ReceiverException;
+    List<SupportMail> showLastUsersMail(RequestContent requestContent) throws ReceiverException;
 }

@@ -40,7 +40,7 @@ public final class PageConstant {
     public static final String REFILL_CASH_PAGE = "/pages/common/refillCash.jsp";
     public static final String SHOW_REFILL_CASH_PAGE = "/controller?command=create_refill_cash_page";
 
-    public static final String SUPPORT_PAGE = "/pages/common/support.jsp";
+    public static final String SUPPORT_PAGE = "/pages/admin/support.jsp";
     public static final String SHOW_SUPPORT_PAGE = "/controller?command=show_support_page";
     public static final String SUPPORT_CHAT_PAGE = "/pages/common/supportChat.jsp";
     public static final String SHOW_SUPPORT_CHAT_PAGE = "/controller?command=show_support_chat&email=";

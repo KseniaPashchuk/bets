@@ -46,8 +46,8 @@ public enum CommandType {
     SHOW_NEWS_PAGE(new ShowNewsPageCommand()),
     SHOW_MATCH_RESULTS_PAGE(new ShowMatchResultsPageCommand()),
     ADD_CONFEDERATION(new AddConfederationCommand()),
-    SHOW_SUPPORT_PAGE(new ShowSupportPageCommand()),
-    SHOW_SUPPORT_CHAT(new ShowSupportChatCommand());
+    SHOW_SUPPORT_CHAT(new ShowSupportChatCommand()),
+    SEND_SUPPORT_MAIL(new SendSupportCommand());
     private AbstractCommand command;
 
     CommandType(AbstractCommand command) {

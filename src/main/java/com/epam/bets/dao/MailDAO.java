@@ -10,7 +10,6 @@ public abstract class MailDAO extends AbstractDAO<SupportMail> {
 
     protected static final String PARAM_NAME_ID = "mail_id";
     protected static final String PARAM_NAME_TEXT = "mail_text";
-    protected static final String PARAM_NAME_SUBJECT = "mail_subject";
     protected static final String PARAM_NAME_TYPE = "mail_type";
     protected static final String PARAM_NAME_USER_EMAIL = "user_email";
     protected static final String PARAM_NAME_MAIL_DATE = "mail_date_time";
@@ -23,7 +22,7 @@ public abstract class MailDAO extends AbstractDAO<SupportMail> {
         super(connection);
     }
 
-    public abstract List<String> findAllUserEmails() throws DaoException;
+    public abstract List<SupportMail> findLastUsersMail() throws DaoException;
 
     public abstract List<SupportMail> findAllUserMail(String email) throws DaoException;
 }

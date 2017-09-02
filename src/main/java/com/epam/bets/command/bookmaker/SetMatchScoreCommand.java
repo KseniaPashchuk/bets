@@ -2,7 +2,6 @@ package com.epam.bets.command.bookmaker;
 
 import com.epam.bets.command.AbstractCommand;
 import com.epam.bets.navigator.PageNavigator;
-import com.epam.bets.navigator.PageType;
 import com.epam.bets.exception.ReceiverException;
 import com.epam.bets.receiver.MatchReceiver;
 import com.epam.bets.receiver.impl.MatchReceiverImpl;
@@ -46,15 +45,15 @@ public class SetMatchScoreCommand implements AbstractCommand {
         try {
             receiver.setMatchScore(requestContent);
             if (requestContent.findRequestAttribute(ERROR_LIST_NAME) == null) {
-                navigator = new PageNavigator(NEXT_PAGE, PageType.REDIRECT);
+                navigator = new PageNavigator(NEXT_PAGE, PageNavigator.PageType.REDIRECT);
             } else {
-                navigator = new PageNavigator(ERROR_PAGE, PageType.FORWARD);
+                navigator = new PageNavigator(ERROR_PAGE, PageNavigator.PageType.FORWARD);
                 requestContent.insertSessionAttribute(PREV_REQUEST, NEXT_PAGE);
             }
 
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e, e);
-            navigator = new PageNavigator(SERVER_ERROR_PAGE, PageType.REDIRECT);
+            navigator = new PageNavigator(SERVER_ERROR_PAGE, PageNavigator.PageType.REDIRECT);
         }
         return navigator;
 

@@ -2,21 +2,13 @@ package com.epam.bets.command.admin;
 
 import com.epam.bets.command.AbstractCommand;
 import com.epam.bets.navigator.PageNavigator;
-import com.epam.bets.navigator.PageType;
 import com.epam.bets.exception.ReceiverException;
 import com.epam.bets.receiver.NewsReceiver;
-import com.epam.bets.receiver.impl.LoadReceiverImpl;
 import com.epam.bets.receiver.impl.NewsReceiverImpl;
 import com.epam.bets.request.RequestContent;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.Part;
-
-import java.io.IOException;
-import java.time.LocalDate;
 
 import static com.epam.bets.constant.ErrorConstant.*;
 import static com.epam.bets.constant.PageConstant.*;
@@ -54,15 +46,15 @@ public class CreateNewsCommand implements AbstractCommand {
         try {
             receiver.createNews(requestContent);
             if (requestContent.findRequestAttribute(ERROR_LIST_NAME) == null) {
-                navigator = new PageNavigator(NEXT_PAGE, PageType.FORWARD);
+                navigator = new PageNavigator(NEXT_PAGE, PageNavigator.PageType.FORWARD);
             } else {
-                navigator = new PageNavigator(ERROR_PAGE, PageType.FORWARD);
+                navigator = new PageNavigator(ERROR_PAGE, PageNavigator.PageType.FORWARD);
                 requestContent.insertSessionAttribute(PREV_REQUEST, ERROR_PAGE);
             }
             requestContent.insertSessionAttribute(PREV_REQUEST, NEXT_PAGE);
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e, e);
-            navigator = new PageNavigator(SERVER_ERROR_PAGE, PageType.REDIRECT);
+            navigator = new PageNavigator(SERVER_ERROR_PAGE, PageNavigator.PageType.REDIRECT);
         }
         return navigator;
     }

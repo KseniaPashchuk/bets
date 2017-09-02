@@ -16,7 +16,7 @@
                    class="main-link"><fmt:message key="common.menu.profile"/></a>
             </li>
             <li class="item-main">
-                <a href="${pageContext.servletContext.contextPath}/pages/common/support.jsp"
+                <a href="${pageContext.servletContext.contextPath}/controller?command=show_support_chat"
                    class="main-link"><fmt:message key="common.menu.support"/></a>
             </li>
         </ul>

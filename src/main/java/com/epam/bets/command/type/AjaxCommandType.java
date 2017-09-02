@@ -1,6 +1,7 @@
 package com.epam.bets.command.type;
 
 import com.epam.bets.command.AjaxCommand;
+import com.epam.bets.command.admin.ShowSupportPageCommand;
 import com.epam.bets.command.common.ShowMatchResultsCommand;
 import com.epam.bets.command.common.ShowMatchesCommand;
 import com.epam.bets.command.common.ShowNewsCommand;
@@ -15,6 +16,7 @@ public enum AjaxCommandType {
     SHOW_NEWS(new ShowNewsCommand()),
     SHOW_MATCHES(new ShowMatchesCommand()),
     SHOW_MATCH_RESULTS(new ShowMatchResultsCommand()),
+    SHOW_SUPPORT_PAGE(new ShowSupportPageCommand()),
     SHOW_BETS(new ShowUserBetsCommand());
     private AjaxCommand command;
 

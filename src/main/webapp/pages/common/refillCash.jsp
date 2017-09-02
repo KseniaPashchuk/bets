@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="bettags" prefix="btg" %>
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en_EN'}"/>
 <fmt:setBundle basename="pagelocale"/>
@@ -33,7 +33,8 @@
                     ><fmt:message
                             key="common.profile.edit_password"/></a></div>
                     <div class="user-menu-item dropdown">
-                        <a href="${pageContext.servletContext.contextPath}/pages/common/userBets.jsp"" class="dropdown-toggle" data-toggle="dropdown"><fmt:message
+                        <a href="${pageContext.servletContext.contextPath}/pages/common/userBets.jsp"
+                           class="dropdown-toggle" data-toggle="dropdown"><fmt:message
                                 key="common.profile.my_bets"/>
                             <span
                                     class="caret"></span></a>
@@ -54,20 +55,33 @@
                 </div>
             </div>
 
-                <div class="refill-cash-wrap col-lg-9 col-md-9 col-sm-9" id="refill-user-cash">
-                    <div class="refill-cash colored-block clearfix">
-                        <div class="label-row">
-                            <div class="meta-label"><fmt:message
-                                    key="common.profile.refill_cash.current_balance"/></div>
-                            <div class="meta-label"><fmt:message
-                                    key="common.profile.refill_cash.refill_summ"/></div>
-                            <div class="meta-label"><fmt:message
-                                    key="common.profile.refill_cash.choose_card"/></div>
-                        </div>
-                        <div class="value-row">
+            <div class="refill-cash-wrap col-lg-9 col-md-9 col-sm-9" id="refill-user-cash">
+                <div class="colored-block">
+                    <p class="error-label"
+                       <c:if test="${!btg:contains(errors,'refillCashError' )}">style="display:none;"</c:if>>
+                        <fmt:message key="common.profile.refill_cash.error"/>
+                    </p>
+                </div>
+                <div class="refill-cash colored-block clearfix">
+                    <div class="label-row">
+                        <div class="meta-label"><fmt:message
+                                key="common.profile.refill_cash.current_balance"/></div>
+                        <div class="meta-label"><fmt:message
+                                key="common.profile.refill_cash.refill_summ"/></div>
+                        <div class="meta-label"><fmt:message
+                                key="common.profile.refill_cash.choose_card"/></div>
+                    </div>
+                    <form action="${pageContext.servletContext.contextPath}/controller?command=refill_cash">
+                    <div class="value-row">
                             <div class="meta-value" id="current-amount">${balance}</div>
                             <div class="meta-value">
-                                <input type="text" id="refill-amount" placeholder="" value="" autocomplete="off">
+                                <input class="<c:if test="${!btg:contains(errors,'invalidRefillAmount' )}">error</c:if>"
+                                       type="text" name="amount" id="refill-amount"
+                                       placeholder="" value="" autocomplete="off">
+                                <p class="error-label"
+                                   <c:if test="${!btg:contains(errors,'invalidRefillAmount' )}">style="display:none;"</c:if>>
+                                    <fmt:message key="common.profile.refill_cash.invalid_amount"/>
+                                </p>
                             </div>
                             <div class="meta-value">
                                 <div class="common-select clearfix">
@@ -78,18 +92,19 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div class="btn-group">
-                                <input type="submit" id="refill-cash-btn" value="<fmt:message
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="btn-group">
+                            <input type="submit" id="refill-cash-btn" value="<fmt:message
                                     key="common.profile.refill_cash.refill"/>">
-                                <input type="reset" class="cancel-refill-cash-btn" value="<fmt:message
+                            <input type="reset" class="cancel-refill-cash-btn" value="<fmt:message
                                     key="common.btn.cancel"/>">
-                            </div>
                         </div>
                     </div>
+                    </form>
                 </div>
             </div>
+        </div>
 
     </section>
 

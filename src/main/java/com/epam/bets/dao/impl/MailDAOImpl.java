@@ -15,14 +15,20 @@ import java.util.List;
 
 public class MailDAOImpl extends MailDAO {
     private static final String SELECT_ALL_USER_MAIL =
-            "SELECT mail_id, mail_text, mail_subject, mail_date_time, mail_type, login AS user_email FROM support_mail JOIN " +
+            "SELECT mail_id, mail_text, mail_date_time, mail_type, login AS user_email FROM support_mail JOIN " +
                     "user ON support_mail.user_id = user.user_id WHERE login=? ORDER BY mail_date_time ASC";
     private static final String SELECT_ALL_USER_EMAILS =
-            "SELECT login AS user_email FROM support_mail JOIN user ON support_mail.user_id = user.user_id";
+            " SELECT mail_id, mail_text, mail_date_time, mail_type, login AS user_email" +
+                    " FROM support_mail AS m1" +
+                    " JOIN user ON m1.user_id = user.user_id " +
+                    " JOIN(SELECT user_id, MAX(mail_date_time) MaxDate" +
+                    " FROM support_mail" +
+                    " GROUP BY user_id) AS m2 ON m1.user_id = m2.user_id AND m1.mail_date_time  = m2.maxdate" +
+                    " ORDER BY mail_date_time ASC";
 
-    private static final String CREATE_MAIL = "INSERT INTO support_mail (mail_id, mail_text, mail_subject," +
+    private static final String CREATE_MAIL = "INSERT INTO support_mail (mail_id, mail_text, " +
             " mail_date_time, mail_type, user_id)" +
-            " VALUES( NULL, ?, ?, ?, ?, (SELECT user_id FROM user WHERE login=?))";
+            " VALUES( NULL, ?, ?, ?, (SELECT user_id FROM user WHERE login=?))";
 
     public MailDAOImpl() {
     }
@@ -32,17 +38,15 @@ public class MailDAOImpl extends MailDAO {
     }
 
     @Override
-    public List<String> findAllUserEmails() throws DaoException {
-        List<String> emailList = new ArrayList<>();
+    public List<SupportMail> findLastUsersMail() throws DaoException {//TODO !!!!!!!!!!!!!
+        List<SupportMail> mailList;
         try (PreparedStatement statementMail = connection.prepareStatement(SELECT_ALL_USER_EMAILS)) {
             ResultSet resultSet = statementMail.executeQuery();
-            while (resultSet.next()) {
-                emailList.add(resultSet.getString(PARAM_NAME_USER_EMAIL));
-            }
+            mailList = buildMailList(resultSet);
         } catch (SQLException e) {
-            throw new DaoException("Can't find all user emails", e);
+            throw new DaoException("Can't find last users mail", e);
         }
-        return emailList;
+        return mailList;
     }
 
     @Override
@@ -62,10 +66,9 @@ public class MailDAOImpl extends MailDAO {
     public int create(SupportMail entity) throws DaoException {
         try (PreparedStatement statementMail = connection.prepareStatement(CREATE_MAIL)) {
             statementMail.setString(1, entity.getMailText());
-            statementMail.setString(2, entity.getMailSubject());
-            statementMail.setTimestamp(3, Timestamp.valueOf(entity.getMailDate()));
-            statementMail.setString(4, entity.getType().toString());
-            statementMail.setString(5, entity.getUserEmail());
+            statementMail.setTimestamp(2, Timestamp.valueOf(entity.getMailDate()));
+            statementMail.setString(3, entity.getType().toString());
+            statementMail.setString(4, entity.getUserEmail());
             statementMail.executeUpdate();
             return 1;
         } catch (SQLException e) {
@@ -81,7 +84,6 @@ public class MailDAOImpl extends MailDAO {
     private SupportMail buildMail(ResultSet resultSet) throws SQLException {
         SupportMail mail = new SupportMail();
         mail.setMailId(resultSet.getInt(PARAM_NAME_ID));
-        mail.setMailSubject(resultSet.getString(PARAM_NAME_SUBJECT));
         mail.setMailText(resultSet.getString(PARAM_NAME_TEXT));
         mail.setType(SupportMail.MailType.valueOf(resultSet.getString(PARAM_NAME_TYPE)));
         mail.setMailDate((resultSet.getTimestamp(PARAM_NAME_MAIL_DATE).toLocalDateTime()));

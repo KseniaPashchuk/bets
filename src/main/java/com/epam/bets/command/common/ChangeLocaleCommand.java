@@ -2,7 +2,6 @@ package com.epam.bets.command.common;
 
 import com.epam.bets.command.AbstractCommand;
 import com.epam.bets.navigator.PageNavigator;
-import com.epam.bets.navigator.PageType;
 import com.epam.bets.receiver.UserReceiver;
 import com.epam.bets.receiver.impl.UserReceiverImpl;
 import com.epam.bets.request.RequestContent;
@@ -20,6 +19,6 @@ public class ChangeLocaleCommand implements AbstractCommand {
             nextPage = INDEX_PAGE;
         }
         receiver.changeLocale(requestContent);
-        return new PageNavigator(nextPage, PageType.REDIRECT);
+        return new PageNavigator(nextPage, PageNavigator.PageType.REDIRECT);
     }
 }

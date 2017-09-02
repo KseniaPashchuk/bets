@@ -2,7 +2,6 @@ package com.epam.bets.command.common;
 
 import com.epam.bets.command.AbstractCommand;
 import com.epam.bets.navigator.PageNavigator;
-import com.epam.bets.navigator.PageType;
 import com.epam.bets.exception.ReceiverException;
 import com.epam.bets.receiver.UserReceiver;
 import com.epam.bets.receiver.impl.UserReceiverImpl;
@@ -25,11 +24,11 @@ public class CalculateUserGainCommand implements AbstractCommand {
 
         try {
             receiver.calculateGain(requestContent);
-            navigator = new PageNavigator(NEXT_PAGE, PageType.REDIRECT);
+            navigator = new PageNavigator(NEXT_PAGE, PageNavigator.PageType.REDIRECT);
             requestContent.insertSessionAttribute(PREV_REQUEST, NEXT_PAGE);
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e, e);
-            navigator = new PageNavigator(SERVER_ERROR_PAGE, PageType.REDIRECT);
+            navigator = new PageNavigator(SERVER_ERROR_PAGE, PageNavigator.PageType.REDIRECT);
         }
         return navigator;
     }
