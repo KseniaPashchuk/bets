@@ -2048,8 +2048,16 @@ table.dataTable {
     margin-right: 30px;
 }
 
+.user-mail-img {
+    width: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+
+}
+
 .chat-box {
     margin: auto;
+    float: none;
 }
 
 .panel-info > .panel-heading {
@@ -2072,3 +2080,34 @@ table.dataTable {
     resize: none;
     height: 100px;
 }
+
+.search-user-wrap {
+    padding: 30px 190px;
+    margin-bottom: 20px;
+}
+
+.search-user input[type="text"] {
+    float: left;
+    width: 70%;
+    margin-right: 20px;
+}
+
+.search-user input[type="submit"] {
+    font-size: 14px;
+    transition: all 0.5s ease 0s;
+    padding: 5px 15px;
+    margin: 5px 0 0 0;
+}
+
+.found-user-wrap {
+    height: 370px;
+}
+
+.user-bets-btn{
+    margin-top: 45px;
+    background: transparent;
+    color: #ffa71b;
+    border: 1px solid;
+    padding: 5px 10px;
+}
+

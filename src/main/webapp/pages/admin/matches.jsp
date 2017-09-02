@@ -19,9 +19,9 @@
             <div class="results matches-menu-item"><a href="${pageContext.servletContext.contextPath}/controller?command=show_match_results_page"
                                     id="match-results"><fmt:message key="common.bets.results"/></a>
             </div>
-            <div class="add-team matches-menu-item"><a href="${pageContext.servletContext.contextPath}/pages/admin/addTeam.jsp"
+            <div class="add-team matches-menu-item"><a href="${pageContext.servletContext.contextPath}/controller?command=show_add_team_page"
                                     ><fmt:message key="admin.match.add_team"/></a></div>
-            <div class="add-team matches-menu-item"><a href="${pageContext.servletContext.contextPath}/pages/admin/addConfederation.jsp"
+            <div class="add-team matches-menu-item"><a href="${pageContext.servletContext.contextPath}/controller?command=show_add_confederation_page"
                                      ><fmt:message key="admin.match.add_confederation"/></a></div>
         </div>
     </div>

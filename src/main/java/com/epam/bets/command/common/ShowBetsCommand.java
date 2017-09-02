@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public class ShowUserBetsCommand implements AjaxCommand<Bet> {
+public class ShowBetsCommand implements AjaxCommand<Bet> {
 
     private static final Logger LOGGER = LogManager.getLogger(ShowNewsCommand.class);
     private UserReceiver receiver = new UserReceiverImpl();

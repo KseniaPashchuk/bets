@@ -30,7 +30,11 @@
     </c:choose>
 
     <div class="container">
-        <div class="row " style="padding-top:40px;">
+        <div class="row ">
+            <p class="error-label show-message"
+               <c:if test="${!btg:contains(errors,'showSupportChatError' )}">style="display:none;"</c:if>>
+                <fmt:message key="common.support.show_chat.error"/>
+            </p>
             <div class=" chat-box col-md-10">
                 <div class="panel panel-info">
                     <div class="panel-heading">
@@ -60,10 +64,10 @@
                                                 <small class="text-muted">
                                                     <c:choose>
                                                         <c:when test="${item.type eq 'OUT'}">
-                                                            ${item.userEmail} | ${item.mailDate}
+                                                            ${item.userEmail} | ${btg:formatLocalDateTime(item.mailDate, 'dd/MM/yyyy HH:mm')}
                                                         </c:when>
                                                         <c:otherwise>
-                                                            techSupport | ${item.mailDate}
+                                                            techSupport | ${btg:formatLocalDateTime(item.mailDate, 'dd/MM/yyyy HH:mm')}
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </small>
@@ -79,8 +83,15 @@
                     <div class="panel-footer">
                         <form action="${pageContext.servletContext.contextPath}/controller" method="POST">
                             <input type="hidden" name="command" value="send_support_mail">
-                            <input type="hidden" name="email" value="${param.email != null ? param.email : sessionScope.login}">
-                            <textarea name="text" class="form-control"></textarea>
+                            <input type="hidden" name="email"
+                                   value="${param.email != null ? param.email : sessionScope.login}">
+                            <p class="error-label show-message"
+                               <c:if test="${!btg:contains(errors,'invalidMailTextError' )}">style="display:none;"</c:if>>
+                                <fmt:message key="common.support.invalid_mail_text"/>
+                            </p>
+                            <textarea name="text"
+                                      class="<c:if test="${btg:contains(errors,'invalidMailTextError' )}">error</c:if>
+                                      form-control"></textarea>
                             <input type="submit" value="<fmt:message key="common.btn.send"/>"/>
                         </form>
                     </div>

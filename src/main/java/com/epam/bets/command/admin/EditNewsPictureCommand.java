@@ -51,7 +51,7 @@ public class EditNewsPictureCommand implements AbstractCommand {
             String newsTitle = requestContent.findParameterValue(PARAM_NAME_TITLE);
             loadReceiver.updateNewsPicture(requestContent);
             if (requestContent.findRequestAttribute(ERROR_LIST_NAME) == null) {
-                if (new NewsValidator().validateTitle(newsTitle)) {
+                if (newsTitle != null) {
                     navigator = new PageNavigator(NEXT_PAGE_AFTER_CREATE, PageNavigator.PageType.REDIRECT);
                     requestContent.insertSessionAttribute(PREV_REQUEST, NEXT_PAGE_AFTER_CREATE);
                 } else {

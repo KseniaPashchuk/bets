@@ -12,10 +12,23 @@ public abstract class BaseValidator {
      * Checks if any string param is valid
      *
      * @param param - any string param
-     * @return true if param is not null or empty
+     * @return true if param is not null and not empty
      */
     public boolean validateStringParam(String param) {
         return param != null && !param.trim().isEmpty();
+    }
+
+
+    /**
+     * Checks if any string param is valid
+     *
+     * @param param - any string param
+     * @param limit - string param length limit
+     * @return true if param is not null, not empty, not longer than max lenght
+     */
+
+    public boolean validateStringParamWithLimit(String param, int limit) {
+        return param != null && !param.trim().isEmpty() && param.length() <= limit;
     }
 
 

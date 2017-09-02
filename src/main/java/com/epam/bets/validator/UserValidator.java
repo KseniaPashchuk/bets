@@ -31,9 +31,12 @@ public class UserValidator extends BaseValidator {
      * @param login - login, entered by user
      * @return true if login matches to the regular expression.
      */
-    public boolean validateLogin(String login) {
+    public boolean validateLogin(String login, List<String> errors) {
         Pattern loginPattern = Pattern.compile(LOGIN_REGEX);
         Matcher loginMatcher = loginPattern.matcher(login);
+        if(!loginMatcher.matches()){
+            errors.add(INVALID_LOGIN_ERROR);
+        }
         return loginMatcher.matches();
     }
 
@@ -85,9 +88,8 @@ public class UserValidator extends BaseValidator {
     public boolean validateSignInParams(String login, String password, List<String> errors) {
 
         boolean isValid = true;
-        if (!validateLogin(login)) {
+        if (!validateLogin(login, errors)) {
             isValid = false;
-            errors.add(INVALID_LOGIN_ERROR);
         }
         if (!validatePassword(password)) {
             isValid = false;

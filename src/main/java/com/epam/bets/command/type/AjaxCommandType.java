@@ -5,7 +5,7 @@ import com.epam.bets.command.admin.ShowSupportPageCommand;
 import com.epam.bets.command.common.ShowMatchResultsCommand;
 import com.epam.bets.command.common.ShowMatchesCommand;
 import com.epam.bets.command.common.ShowNewsCommand;
-import com.epam.bets.command.common.ShowUserBetsCommand;
+import com.epam.bets.command.common.ShowBetsCommand;
 
 /**
  * Enumeration of all available ajax commands
@@ -17,7 +17,7 @@ public enum AjaxCommandType {
     SHOW_MATCHES(new ShowMatchesCommand()),
     SHOW_MATCH_RESULTS(new ShowMatchResultsCommand()),
     SHOW_SUPPORT_PAGE(new ShowSupportPageCommand()),
-    SHOW_BETS(new ShowUserBetsCommand());
+    SHOW_BETS(new ShowBetsCommand());
     private AjaxCommand command;
 
     AjaxCommandType(AjaxCommand command) {

@@ -71,7 +71,8 @@
                         <div class="meta-label"><fmt:message
                                 key="common.profile.refill_cash.choose_card"/></div>
                     </div>
-                    <form action="${pageContext.servletContext.contextPath}/controller?command=refill_cash">
+                    <form action="${pageContext.servletContext.contextPath}/controller" method="POST">
+                        <input type="hidden" name="command" value="refill_cash">
                     <div class="value-row">
                             <div class="meta-value" id="current-amount">${balance}</div>
                             <div class="meta-value">
@@ -86,7 +87,7 @@
                             <div class="meta-value">
                                 <div class="common-select clearfix">
                                     <select class="creditcard-choice" id="creditcard-choice">
-                                        <c:forEach var="item" items="${cardsList.creditCards}">
+                                        <c:forEach var="item" items="${creditCards.creditCardList}">
                                             <option value="${item}">${item}</option>
                                         </c:forEach>
                                     </select>

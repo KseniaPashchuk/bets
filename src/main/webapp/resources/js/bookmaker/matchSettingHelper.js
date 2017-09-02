@@ -96,7 +96,7 @@ $(document).ready(function () {
     $(".save-create-game").click(function (event) {
         $("input[id=create-first-team]").val($("#first-team-create").val());
         $("input[id=create-second-team]").val($("#second-team-create").val());
-        $("input[id=create-confederacy]").val($("#confederacy-create").val());
+        $("input[id=create-confederation]").val($("#confederation-create").val());
         $(".create-game-form").submit();
     });
 

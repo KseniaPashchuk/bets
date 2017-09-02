@@ -43,9 +43,15 @@ $(function () {
                         '<input type="hidden" name="email" value="' + item.userEmail + '"/>' +
                         '<input type="submit" value="' + item.userEmail + '"/>' +
                         '</form>' +
-                        '</td>' +
-                        '<td class="view-message">' + item.mailText.substring(0, 15) + '</td>' +
-                        '<td class="view-message inbox-small-cells"></td>' +
+                        '</td>';
+                    if (item.type.localeCompare('IN')){
+                        html += '<td class="view-message"><img class="user-mail-img" src="../../images/techSupport.jpg"/>' +
+                            item.mailText.substring(0, 15) + '</td>';
+                    }else{
+                        html += '<td class="view-message"><img class="user-mail-img" src="../../images/user.jpg"/>' +
+                            item.mailText.substring(0, 15) + '</td>';
+                    }
+                    html +='<td class="view-message inbox-small-cells"></td>' +
                         '<td class="view-message text-right">' + moment(date).format("DD/MM/YY HH:mm") + '</td>' +
                         '</form>' +
                         '</tr>';

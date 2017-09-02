@@ -215,7 +215,7 @@ public class UserReceiverImpl implements UserReceiver {
         String newPassword = requestContent.findParameterValue(PARAM_NAME_NEW_PASSWORD);
         boolean isValid = true;
         List<String> errors = new ArrayList<>();
-        if (!new UserValidator().validatePassword(oldPassword)) {
+        if (!new UserValidator().validatePassword(oldPassword)) {//TODO
             isValid = false;
             errors.add(INVALID_CURRENT_PASSWORD_ERROR);
         }
@@ -331,13 +331,18 @@ public class UserReceiverImpl implements UserReceiver {
         List<String> errors = new ArrayList<>();
         int userId = (int)requestContent.findSessionAttribute(PARAM_NAME_USER_ID);
         BigDecimal amount = new BigDecimal(requestContent.findParameterValue(PARAM_NAME_REFILL_AMOUNT));
-        if(new UserValidator().validateRefillAmount(amount,errors)) {
+        if(new UserValidator().validateRefillAmount(amount, errors)) {
             UserDAO userDAO = new UserDAOImpl();
             TransactionManager manager = new TransactionManager();
             try {
                 manager.beginTransaction(userDAO);
-                userDAO.updateBalance(userId, amount);
-                manager.commit();
+                if(userDAO.updateBalance(userId, amount)){
+                    manager.commit();
+                }else{
+                    manager.rollback();
+                    errors.add(REFILL_CASH_ERROR);
+                }
+
             } catch (DaoException e) {
                 manager.rollback();
                 throw new ReceiverException(e);
@@ -435,7 +440,7 @@ public class UserReceiverImpl implements UserReceiver {
             CreditCardDAO creditCardDAO = factory.gerCreditCardDao();
             cards = creditCardDAO.findCardsByUserId(userId);
             if (cards == null) {
-                errors.add(RECOVER_PASSWORD_ERROR);//TODO
+                errors.add(SHOW_CREDIT_CARD_ERROR);
                 requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
             }
             requestContent.insertRequestAttribute(PARAM_NAME_CREDIT_CARDS, cards);
@@ -499,7 +504,7 @@ public class UserReceiverImpl implements UserReceiver {
                     manager.commit();
                 } else {
                     manager.rollback();
-                    errors.add(RECOVER_PASSWORD_ERROR);//TODO
+                    errors.add(SEND_SUPPORT_MAIL_ERROR);
                 }
                 manager.commit();
             } catch (DaoException e) {
@@ -517,13 +522,46 @@ public class UserReceiverImpl implements UserReceiver {
     @Override
     public List<SupportMail> showLastUsersMail(RequestContent requestContent) throws ReceiverException {
         List<SupportMail> userEmails;
-        List<String> errors = new ArrayList<>();
         try (DaoFactory factory = new DaoFactory()) {
             MailDAO mailDAO = factory.getMailDao();
             userEmails = mailDAO.findLastUsersMail();
             return userEmails;
         } catch (DaoException e) {
             throw new ReceiverException(e);
+        }
+    }
+
+    @Override
+    public void showUserInfo(RequestContent requestContent) throws ReceiverException {
+        User user;
+        List<String> errors = new ArrayList<>();
+        String userLogin = requestContent.findParameterValue(PARAM_NAME_EMAIL);
+        if(new UserValidator().validateLogin(userLogin, errors)) {
+            try (DaoFactory factory = new DaoFactory()) {
+                UserDAO userDAO = factory.getUserDao();
+                CreditCardDAO cardDAO = factory.gerCreditCardDao();
+                user = userDAO.findUserByLogin(userLogin);
+                if (user != null) {
+                    requestContent.insertRequestAttribute(PARAM_NAME_LOGIN, user.getLogin());
+                    requestContent.insertRequestAttribute(PARAM_NAME_FIRST_NAME, user.getFirstName());
+                    requestContent.insertRequestAttribute(PARAM_NAME_LAST_NAME, user.getLastName());
+                    requestContent.insertRequestAttribute(PARAM_NAME_CREDIT_CARDS, cardDAO.findCardsByUserId(user.getId()));
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
+                    requestContent.insertRequestAttribute(PARAM_NAME_BIRTH_DATE, user.getBirthDate().format(formatter));
+                    requestContent.insertRequestAttribute(PARAM_NAME_AVATAR_URL, user.getAvatarUrl());
+                    requestContent.insertRequestAttribute(PARAM_NAME_BALANCE, user.getBalance());
+                } else {
+                    errors.add(NO_SUCH_USER_ERROR);
+                }
+                if (!errors.isEmpty()) {
+                    requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
+                }
+            } catch (DaoException e) {
+                throw new ReceiverException(e);
+            }
+        }
+        if (!errors.isEmpty()) {
+            requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
         }
     }
 
@@ -544,7 +582,7 @@ public class UserReceiverImpl implements UserReceiver {
             if (mail != null && !mail.isEmpty()) {
                 requestContent.insertRequestAttribute(PARAM_NAME_ALL_MAIL, mail);
             } else {
-                //errors.add();//TODO
+                errors.add(SHOW_SUPPORT_CHAT_ERROR);
                 requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
             }
         } catch (DaoException e) {

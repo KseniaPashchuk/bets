@@ -63,6 +63,12 @@
                 <div class="results"><a href="javascript://" id="match-results"><fmt:message
                         key="common.bets.results"/></a>
                 </div>
+                <c:if test="${role == 'ADMIN'}">
+                    <div class="add-team matches-menu-item" ><a href="${pageContext.servletContext.contextPath}/pages/admin/addTeam.jsp"
+                    ><fmt:message key="admin.match.add_team"/></a></div>
+                    <div class="add-team matches-menu-item"><a href="${pageContext.servletContext.contextPath}/pages/admin/addConfederation.jsp"
+                    ><fmt:message key="admin.match.add_confederation"/></a></div>
+                </c:if>
             </div>
         </div>
         <div class="games-table-wrap col-lg-9">

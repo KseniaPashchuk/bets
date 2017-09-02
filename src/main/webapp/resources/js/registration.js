@@ -48,10 +48,12 @@ function validateEnterForm() {
         isFormValid = false;
         $("#invalid-params").show();
         $("#login").css('border', 'solid 2px maroon');
+        $("#password").css('border', 'solid 2px maroon');
     }
     if (!REGEX_PASSWORD.test($("#password").val())) {
         isFormValid = false;
         $("#invalid-params").show();
+        $("#login").css('border', 'solid 2px maroon');
         $("#password").css('border', 'solid 2px maroon');
     }
     return isFormValid;

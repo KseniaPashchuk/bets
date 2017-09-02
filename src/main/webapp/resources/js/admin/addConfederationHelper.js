@@ -1,3 +1,9 @@
+
+$(document).ready(function() {
+    $('.dropdown').click(function () {
+        $('#league-list').slideToggle(500);
+    });
+});
 function validateCreateConfedeartionForm() {
 
     $("#invalid-confederation").hide();

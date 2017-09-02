@@ -25,11 +25,7 @@ public class ShowMatchResultsPageCommand implements AbstractCommand {
         PageNavigator navigator;
         try {
             receiver.showAllConfederations(requestContent);
-            if (requestContent.findRequestAttribute(ERROR_LIST_NAME) == null) {
-                navigator = new PageNavigator(NEXT_PAGE, PageNavigator.PageType.FORWARD);
-            } else {
-                navigator = new PageNavigator(NEXT_PAGE, PageNavigator.PageType.FORWARD);
-            }
+            navigator = new PageNavigator(NEXT_PAGE, PageNavigator.PageType.FORWARD);
             requestContent.insertSessionAttribute(PREV_REQUEST, SHOW_MATCH_RESULTS_PAGE);
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e, e);

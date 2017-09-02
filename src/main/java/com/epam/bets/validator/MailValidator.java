@@ -14,7 +14,8 @@ import static com.epam.bets.constant.ErrorConstant.UserError.*;
  */
 public class MailValidator extends BaseValidator {
 
-    private final String MAIL_REGEX = "^.+@\\w+\\.\\w{2,6}$";
+    private final String EMAIL_REGEX = "^.+@\\w+\\.\\w{2,6}$";
+    private static final int MAX_MAIL_TEXT_LENGTH = 600;
 
     /**
      * Checks if email is valid
@@ -23,7 +24,7 @@ public class MailValidator extends BaseValidator {
      * @return true if email matches to the regular expression.
      */
     public boolean validateEmail(String email, List<String> errors) {
-        Pattern loginPattern = Pattern.compile(MAIL_REGEX);
+        Pattern loginPattern = Pattern.compile(EMAIL_REGEX);
         Matcher loginMatcher = loginPattern.matcher(email);
         if (!loginMatcher.matches()) {
             errors.add(INVALID_EMAIL_ERROR);
@@ -40,7 +41,7 @@ public class MailValidator extends BaseValidator {
      */
 
     public boolean validateMailText(String text, List<String> errors) {
-        if (!validateStringParam(text)) {
+        if (!validateStringParamWithLimit(text, MAX_MAIL_TEXT_LENGTH)) {
             errors.add(INVALID_MAIL_TEXT_ERROR);
         }
         return validateStringParam(text);

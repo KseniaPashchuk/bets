@@ -47,7 +47,10 @@ public enum CommandType {
     SHOW_MATCH_RESULTS_PAGE(new ShowMatchResultsPageCommand()),
     ADD_CONFEDERATION(new AddConfederationCommand()),
     SHOW_SUPPORT_CHAT(new ShowSupportChatCommand()),
-    SEND_SUPPORT_MAIL(new SendSupportCommand());
+    SEND_SUPPORT_MAIL(new SendSupportCommand()),
+    SHOW_ADD_TEAM_PAGE(new ShowAddTeamPageCommand()),
+    SHOW_ADD_CONFEDERATION_PAGE(new ShowAddConfederationPage()),
+    SHOW_USER_INFO(new ShowUserInfoCommand());
     private AbstractCommand command;
 
     CommandType(AbstractCommand command) {

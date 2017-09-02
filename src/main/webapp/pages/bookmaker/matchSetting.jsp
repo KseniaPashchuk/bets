@@ -360,7 +360,8 @@
                         <td><input class="coeff-input" type="text" name="TL" value=""></td>
                         <td><input class="coeff-input" type="text" name="T" value=""></td>
                         <td><input class="coeff-input" type="text" name="TM" value=""></td>
-                        <td><input class="coeff-input" type="text" id="max-bet-create" name="maxBet" value=""></td>
+                        <td><input class="coeff-input" type="text" id="max-bet-create" name="maxBet" value=""
+                                   pattern="^[0-9]{1,5}\.?[0-9]{0,2}$" required></td>
                     </tr>
                     </tbody>
                 </table>

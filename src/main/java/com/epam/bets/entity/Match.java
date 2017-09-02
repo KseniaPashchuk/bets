@@ -8,7 +8,6 @@ public class Match extends Entity {
     private String firstTeam;
     private String secondTeam;
     private String confederation;
-    private String country;
     private BigDecimal total;
     private BigDecimal maxBet;
     private LocalDateTime date;
@@ -50,14 +49,6 @@ public class Match extends Entity {
 
     public void setConfederation(String confederation) {
         this.confederation = confederation;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public BigDecimal getTotal() {
@@ -125,7 +116,6 @@ public class Match extends Entity {
         if (secondTeam != null ? !secondTeam.equals(match.secondTeam) : match.secondTeam != null) return false;
         if (confederation != null ? !confederation.equals(match.confederation) : match.confederation != null)
             return false;
-        if (country != null ? !country.equals(match.country) : match.country != null) return false;
         if (total != null ? !total.equals(match.total) : match.total != null) return false;
         if (maxBet != null ? !maxBet.equals(match.maxBet) : match.maxBet != null) return false;
         if (date != null ? !date.equals(match.date) : match.date != null) return false;
@@ -142,7 +132,6 @@ public class Match extends Entity {
         result = 31 * result + (firstTeam != null ? firstTeam.hashCode() : 0);
         result = 31 * result + (secondTeam != null ? secondTeam.hashCode() : 0);
         result = 31 * result + (confederation != null ? confederation.hashCode() : 0);
-        result = 31 * result + (country != null ? country.hashCode() : 0);
         result = 31 * result + (total != null ? total.hashCode() : 0);
         result = 31 * result + (maxBet != null ? maxBet.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
@@ -159,7 +148,6 @@ public class Match extends Entity {
                 ", firstTeam='" + firstTeam + '\'' +
                 ", secondTeam='" + secondTeam + '\'' +
                 ", confederation='" + confederation + '\'' +
-                ", country='" + country + '\'' +
                 ", total=" + total +
                 ", maxBet=" + maxBet +
                 ", date=" + date +

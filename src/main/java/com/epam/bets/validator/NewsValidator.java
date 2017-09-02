@@ -14,30 +14,11 @@ import static com.epam.bets.constant.ErrorConstant.NewsError.INVALID_NEWS_TITLE_
  * @author Pashchuk Ksenia
  */
 
-public class NewsValidator extends BaseValidator{
+public class NewsValidator extends BaseValidator {
 
     private static final int MAX_NEWS_TITLE_LENGTH = 45;
     private static final int MAX_NEWS_TEXT_LENGTH = 1000;
 
-    /**
-     * Checks if news title is valid
-     *
-     * @param title - news title
-     * @return true if title is not null or empty or longer than max lenght
-     */
-    public boolean validateTitle(String title) {
-        return validateStringParam(title) && title.length() <= MAX_NEWS_TITLE_LENGTH;
-    }
-
-    /**
-     * Checks if login is valid
-     *
-     * @param text - news text
-     * @return true if text is not null or empty or longer than max lenght
-     */
-    public boolean validateText(String text) {
-        return validateStringParam(text) && text.length() <= MAX_NEWS_TEXT_LENGTH;
-    }
 
     /**
      * Checks if news params(title and text) are valid.
@@ -48,11 +29,11 @@ public class NewsValidator extends BaseValidator{
      */
     public boolean validateNewsParams(News news, List<String> errors) {
         boolean isValid = true;
-        if (!validateTitle(news.getTitle())) {
+        if (!validateStringParamWithLimit(news.getTitle(), MAX_NEWS_TITLE_LENGTH)) {
             isValid = false;
             errors.add(INVALID_NEWS_TITLE_ERROR);
         }
-        if (!validateText(news.getText())) {
+        if (!validateStringParamWithLimit(news.getText(), MAX_NEWS_TEXT_LENGTH)) {
             isValid = false;
             errors.add(INVALID_NEWS_TEXT_ERROR);
         }

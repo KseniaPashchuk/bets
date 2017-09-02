@@ -1,3 +1,10 @@
+
+$(document).ready(function() {
+    $('.dropdown').click(function () {
+        $('#league-list').slideToggle(500);
+    });
+});
+
 function validateCreateTeamForm() {
 
     $("#invalid-team-name").hide();

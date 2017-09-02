@@ -32,25 +32,27 @@
                             href="${pageContext.servletContext.contextPath}/pages/common/changePassword.jsp"
                             style="color: #ffa71b"><fmt:message
                             key="common.profile.edit_password"/></a></div>
-                    <div class="user-menu-item dropdown">
-                        <a href="${pageContext.servletContext.contextPath}/pages/common/userBets.jsp"
-                           class="dropdown-toggle" data-toggle="dropdown"><fmt:message
-                                key="common.profile.my_bets"/>
-                            <span
-                                    class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#" id="open-bets"><fmt:message
-                                    key="common.profile.open"/></a></li>
-                            <li><a href="#" id="winned-bets"><fmt:message
-                                    key="common.profile.winned"/></a></li>
-                            <li><a href="#" id="lost-bets"><fmt:message
-                                    key="common.profile.lost"/></a></li>
-                        </ul>
-                    </div>
-                    <div class="user-menu-item"><a
-                            href="${pageContext.servletContext.contextPath}/controller?command=create_refill_cash_page">
-                        <fmt:message key="common.profile.refill_cash"/></a></div>
+                    <c:if test="${role == 'USER'}">
+                        <div class="user-menu-item dropdown">
+                            <a href="${pageContext.servletContext.contextPath}/pages/common/userBets.jsp"
+                               class="dropdown-toggle" data-toggle="dropdown"><fmt:message
+                                    key="common.profile.my_bets"/>
+                                <span
+                                        class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" id="open-bets"><fmt:message
+                                        key="common.profile.open"/></a></li>
+                                <li><a href="#" id="winned-bets"><fmt:message
+                                        key="common.profile.winned"/></a></li>
+                                <li><a href="#" id="lost-bets"><fmt:message
+                                        key="common.profile.lost"/></a></li>
+                            </ul>
+                        </div>
 
+                        <div class="user-menu-item"><a
+                                href="${pageContext.servletContext.contextPath}/controller?command=create_refill_cash_page">
+                            <fmt:message key="common.profile.refill_cash"/></a></div>
+                    </c:if>
                 </div>
             </div>
             <div class="change-password-wrap col-lg-9 col-md-9 col-sm-9">
@@ -70,10 +72,12 @@
                     <p class="error-label" id="invalid-conf-password" style="display:none;">
                         <fmt:message key="signup.error.match_password"/>
                     </p>
-                    <p class="error-label"  <c:if test="${!btg:contains(errors,'changePasswordError' )}">style="display:none;"</c:if>>
+                    <p class="error-label"
+                       <c:if test="${!btg:contains(errors,'changePasswordError' )}">style="display:none;"</c:if>>
                         <fmt:message key="common.profile.change_password.error"/>
                     </p>
-                    <p class="success-label"  <c:if test="${!btg:contains(errors,'changeProfileSuccess' )}">style="display:none;"</c:if>>
+                    <p class="success-label"
+                       <c:if test="${!btg:contains(errors,'changeProfileSuccess' )}">style="display:none;"</c:if>>
                         <fmt:message key="common.profile.change_password.success"/>
                     </p>
                     <form method="POST" action="${pageContext.servletContext.contextPath}/controller"

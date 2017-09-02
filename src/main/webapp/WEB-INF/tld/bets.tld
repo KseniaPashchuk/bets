@@ -12,4 +12,10 @@
         <function-class>com.epam.bets.tag.ContainsTag</function-class>
         <function-signature>boolean contains(java.util.List,java.lang.String)</function-signature>
     </function>
+
+    <function>
+        <name>formatLocalDateTime</name>
+        <function-class>com.epam.bets.tag.LocalDateTimeFormatTag</function-class>
+        <function-signature>java.lang.String formatLocalDateTime(java.time.LocalDateTime, java.lang.String)</function-signature>
+    </function>
 </taglib>

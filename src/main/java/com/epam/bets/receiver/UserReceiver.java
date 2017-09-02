@@ -45,4 +45,6 @@ public interface UserReceiver extends Receiver {
     void showSupportMailChat(RequestContent requestContent) throws ReceiverException;
 
     List<SupportMail> showLastUsersMail(RequestContent requestContent) throws ReceiverException;
+
+    void showUserInfo(RequestContent requestContent) throws ReceiverException;
 }

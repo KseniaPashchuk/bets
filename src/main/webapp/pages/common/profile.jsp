@@ -33,8 +33,8 @@
                     </div>
                     <div class="user-menu-item"><a
                             href="${pageContext.servletContext.contextPath}/pages/common/changePassword.jsp"
-                    ><fmt:message
-                            key="common.profile.edit_password"/></a></div>
+                    ><fmt:message key="common.profile.edit_password"/></a></div>
+                    <c:if test="${role == 'USER'}">
                     <div class="user-menu-item dropdown">
                         <a href="${pageContext.servletContext.contextPath}/pages/common/userBets.jsp"
                            class="dropdown-toggle" data-toggle="dropdown"><fmt:message
@@ -53,7 +53,7 @@
                     <div class="user-menu-item"><a
                             href="${pageContext.servletContext.contextPath}/controller?command=create_refill_cash_page"><fmt:message
                             key="common.profile.refill_cash"/></a></div>
-
+                    </c:if>
                 </div>
             </div>
             <div class="user-info-wrap col-lg-9 col-md-9 col-sm-9"
