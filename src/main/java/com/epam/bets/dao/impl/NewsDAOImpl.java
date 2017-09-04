@@ -14,7 +14,11 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * The class provides {@link NewsDAO} implementation.
+ *
+ * @author Pashchuk Ksenia
+ */
 public class NewsDAOImpl extends NewsDAO {
 
     private static final String SELECT_ALL_NEWS =
@@ -42,6 +46,14 @@ public class NewsDAOImpl extends NewsDAO {
         super(connection);
     }
 
+    /**
+     * Takes  {@link List} of all {@link News}
+     *
+     * @return taken {@link List} of all {@link News} object or empty {@link List}
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public List<News> findAllNews() throws DaoException {
         List<News> newsList;
@@ -53,7 +65,14 @@ public class NewsDAOImpl extends NewsDAO {
         }
         return newsList;
     }
-
+    /**
+     * Takes {@link News} object by title
+     *
+     * @return taken {@link News} object
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public News findNewsByTitle(String title) throws DaoException {
         News news = null;
@@ -69,6 +88,15 @@ public class NewsDAOImpl extends NewsDAO {
         return news;
     }
 
+    /**
+     * Takes  {@link List} of {@link News} by news date
+     *
+     * @param date - news date
+     * @return taken {@link List} of  {@link News} object or empty {@link List}
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public List<News> findNewsByDate(LocalDate date) throws DaoException {
         List<News> newsList;
@@ -82,6 +110,14 @@ public class NewsDAOImpl extends NewsDAO {
         return newsList;
     }
 
+    /**
+     * Takes  {@link List} of last {@link News}
+     *
+     * @return taken {@link List} of last {@link News} object or empty {@link List}
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public List<News> findLastNews() throws DaoException {
         List<News> newsList;
@@ -93,7 +129,15 @@ public class NewsDAOImpl extends NewsDAO {
         }
         return newsList;
     }
-
+    /**
+     * Deletes {@link News} by news title.
+     *
+     * @param title - news title
+     * @return true if successfully deleted
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public boolean deleteByTitle(String title) throws DaoException {
         try (PreparedStatement statementNews = connection.prepareStatement(DELETE_NEWS_BY_TITLE)) {
@@ -104,7 +148,16 @@ public class NewsDAOImpl extends NewsDAO {
             throw new DaoException("Can't delete news", e);
         }
     }
-
+    /**
+     * Update {@link News} picture
+     *
+     * @param id         -   news id
+     * @param pictureUrl - new picture url
+     * @return true if successfully updates
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public boolean updatePicture(int id, String pictureUrl) throws DaoException {
         try (PreparedStatement statementUser = connection.prepareStatement(UPDATE_PICTURE)) {
@@ -116,7 +169,15 @@ public class NewsDAOImpl extends NewsDAO {
             throw new DaoException("Can't update picture", e);
         }
     }
-
+    /**
+     * Create user {@link News}
+     *
+     * @param entity news info
+     * @return id of created news
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public int create(News entity) throws DaoException {
         try (PreparedStatement statementNews = connection.prepareStatement(CREATE_NEWS, Statement.RETURN_GENERATED_KEYS)) {
@@ -137,7 +198,15 @@ public class NewsDAOImpl extends NewsDAO {
         }
         return 0;
     }
-
+    /**
+     * Updates user {@link News}
+     *
+     * @param news news info
+     * @return true if successfully updated
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public boolean update(News news) throws DaoException {
         try (PreparedStatement statementNews = connection.prepareStatement(UPDATE_NEWS)) {
@@ -150,7 +219,14 @@ public class NewsDAOImpl extends NewsDAO {
             throw new DaoException("Can't update news", e);
         }
     }
-
+    /**
+     * Builds {@link News} object by parsing {@link ResultSet} object.
+     *
+     * @param resultSet {@link ResultSet} object to parse
+     * @return parsed {@link News} object or null
+     * @throws SQLException if the columnLabel is not valid; if a database access error occurs or this method is called
+     *                      on a closed result set
+     */
     private News buildNews(ResultSet resultSet) throws SQLException {
         News news = new News();
         news.setId(resultSet.getInt(PARAM_NAME_ID));
@@ -160,7 +236,15 @@ public class NewsDAOImpl extends NewsDAO {
         news.setPictureUrl(resultSet.getString(PARAM_NAME_PICTURE));
         return news;
     }
-
+    /**
+     * Builds {@link List} object filled by {@link News} objects by parsing {@link ResultSet} object.
+     *
+     * @param resultSet {@link ResultSet} object to parse
+     * @return parsed {@link List} object or null
+     * @throws SQLException if the columnLabel is not valid; if a database access error occurs or this method is called
+     *                      on a closed result set
+     * @see #buildNews(ResultSet)
+     */
     private List<News> buildNewsList(ResultSet resultSet) throws SQLException {
         List<News> newsList = new ArrayList<>();
         while (resultSet.next()) {

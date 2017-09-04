@@ -47,15 +47,15 @@
                     <th>№</th>
                     <th><fmt:message key="common.bets.event"/></th>
                     <th><fmt:message key="common.bets.date"/></th>
-                    <th>1</th>
-                    <th>X</th>
-                    <th>2</th>
-                    <th>1X</th>
-                    <th>12</th>
-                    <th>X2</th>
-                    <th>L</th>
+                    <th class="active-th">1</th>
+                    <th class="active-th">X</th>
+                    <th class="active-th">2</th>
+                    <th class="active-th">1X</th>
+                    <th class="active-th">12</th>
+                    <th class="active-th">X2</th>
+                    <th class="active-th">L</th>
                     <th>T</th>
-                    <th>M</th>
+                    <th class="active-th">M</th>
                     <th class="btn-ctrl-th"><fmt:message key="bookmaker.match.btn.edit"/></th>
                     <th class="btn-ctrl-th"><fmt:message key="common.bets.score"/></th>
                 </tr>

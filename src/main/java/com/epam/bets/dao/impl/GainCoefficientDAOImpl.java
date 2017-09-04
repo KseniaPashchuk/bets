@@ -16,7 +16,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * The class provides {@link GainCoefficientDAO} implementation.
+ *
+ * @author Pashchuk Ksenia
+ */
 public class GainCoefficientDAOImpl extends GainCoefficientDAO {
 
     private static final String SELECT_GAIN_COEFFICIENTS_BY_MATCH_ID = "SELECT football_match_id, coefficient, bet_type FROM" +
@@ -41,11 +45,19 @@ public class GainCoefficientDAOImpl extends GainCoefficientDAO {
         super(connection);
     }
 
-
+    /**
+     * Create {@link GainCoefficient}
+     *
+     * @param entity gain coefficients
+     * @return id of created {@link GainCoefficient}
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public int create(GainCoefficient entity) throws DaoException {
         try (PreparedStatement statementCoefficients = connection.prepareStatement(CREATE_GAIN_COEFFICIENT)) {
-            for(Map.Entry<BetType, BigDecimal> coefficient: entity.getCoefficients().entrySet()) {
+            for (Map.Entry<BetType, BigDecimal> coefficient : entity.getCoefficients().entrySet()) {
                 statementCoefficients.setInt(1, entity.getFootballMatchId());
                 statementCoefficients.setBigDecimal(2, coefficient.getValue());
                 statementCoefficients.setString(3, coefficient.getKey().toString());
@@ -57,10 +69,19 @@ public class GainCoefficientDAOImpl extends GainCoefficientDAO {
         }
     }
 
+    /**
+     * Update {@link GainCoefficient}
+     *
+     * @param entity gain coefficients
+     * @return true if successfully updated
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public boolean update(GainCoefficient entity) throws DaoException {
         try (PreparedStatement statementCoefficients = connection.prepareStatement(UPDATE_GAIN_COEFFICIENT)) {
-            for(Map.Entry<BetType, BigDecimal> coefficient: entity.getCoefficients().entrySet()) {
+            for (Map.Entry<BetType, BigDecimal> coefficient : entity.getCoefficients().entrySet()) {
                 statementCoefficients.setBigDecimal(1, coefficient.getValue());
                 statementCoefficients.setString(2, coefficient.getKey().toString());
                 statementCoefficients.setInt(3, entity.getFootballMatchId());
@@ -72,6 +93,15 @@ public class GainCoefficientDAOImpl extends GainCoefficientDAO {
         }
     }
 
+    /**
+     * Takes {@link GainCoefficient}  by match id.
+     *
+     * @param matchId match id
+     * @return Takes {@link GainCoefficient} object
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public GainCoefficient findCoefficientsByMatchId(int matchId) throws DaoException {
         GainCoefficient coefficients;
@@ -86,6 +116,14 @@ public class GainCoefficientDAOImpl extends GainCoefficientDAO {
         return coefficients;
     }
 
+    /**
+     * Builds {@link GainCoefficient} object by parsing {@link ResultSet} object.
+     *
+     * @param resultSet {@link ResultSet} object to parse
+     * @return parsed {@link List} object or null
+     * @throws SQLException if the columnLabel is not valid; if a database access error occurs or this method is called
+     *                      on a closed result set
+     */
     private GainCoefficient buildCoefficientList(ResultSet resultSet) throws SQLException {
         GainCoefficient coefficients = new GainCoefficient();
         while (resultSet.next()) {

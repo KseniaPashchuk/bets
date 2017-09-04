@@ -64,8 +64,8 @@
                             <th style="min-width: 300px"><fmt:message key="common.bets.event"/></th>
                             <th><fmt:message key="common.bets.bet_type"/></th>
                             <th><fmt:message key="common.bets.coefficient"/></th>
-                            <th><fmt:message key="common.bets.summ"/></th>
-                            <th><fmt:message key="common.bets.gain"/></th>
+                            <th><fmt:message key="common.bets.summ"/>(BYN)</th>
+                            <th><fmt:message key="common.bets.gain"/>(BYN)</th>
                         </tr>
                         </thead>
                         <tbody>

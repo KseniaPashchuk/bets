@@ -10,7 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-
+/**
+ * The class provides {@link CreditCardDAO} implementation.
+ *
+ * @author Pashchuk Ksenia
+ */
 public class CreditCardDAOImpl extends CreditCardDAO {
 
     private static final String SELECT_CREDIT_CARDS_BY_USER_ID =
@@ -25,7 +29,15 @@ public class CreditCardDAOImpl extends CreditCardDAO {
         super(connection);
     }
 
-
+    /**
+     * Takes {@link CreditCards}  by user id.
+     *
+     * @param userId user id
+     * @return  Takes {@link CreditCards} object
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public CreditCards findCardsByUserId(int userId) throws DaoException {
         CreditCards creditCards = new CreditCards();
@@ -41,7 +53,15 @@ public class CreditCardDAOImpl extends CreditCardDAO {
         }
         return creditCards;
     }
-
+    /**
+     * Deletes {@link CreditCards}  by user id.
+     *
+     * @param userId user id
+     * @return true if successfully deleted
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public boolean deleteByUserId(int userId) throws DaoException {
         try (PreparedStatement statementCreditCard = connection.prepareStatement(DELETE_CREDIT_CARDS_BY_USER_ID)) {
@@ -52,7 +72,15 @@ public class CreditCardDAOImpl extends CreditCardDAO {
             throw new DaoException("Can't delete credit crads by user id", e);
         }
     }
-
+    /**
+     *  Creates {@link CreditCards}.
+     *
+     * @param entity credit cards
+     * @return true if successfully created
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public int create(CreditCards entity) throws DaoException {
         try (PreparedStatement statementCreditCard = connection.prepareStatement(CREATE_CREDIT_CARD)) {
@@ -66,7 +94,15 @@ public class CreditCardDAOImpl extends CreditCardDAO {
             throw new DaoException("Can't create credit cards", e);
         }
     }
-
+    /**
+     * Updates {@link CreditCards}.
+     *
+     * @param entity credit cards
+     * @return true if successfully updated
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see #create(CreditCards)
+     * @see #deleteByUserId(int)
+     */
     @Override
     public boolean update(CreditCards entity) throws DaoException {
         boolean isDeleted = deleteByUserId(entity.getUserId());
@@ -74,9 +110,6 @@ public class CreditCardDAOImpl extends CreditCardDAO {
         if (isDeleted) {
             isCreated = create(entity);
         }
-        if (isDeleted && isCreated != 0) {
-            return true;
-        }
-        return false;
+        return isDeleted && isCreated != 0;
     }
 }

@@ -14,7 +14,9 @@ import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.CopyOption;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,9 +34,22 @@ import static com.epam.bets.constant.RequestParamConstant.NewsParam.PARAM_NAME_P
 import static com.epam.bets.constant.RequestParamConstant.UserParam.PARAM_NAME_AVATAR_URL;
 import static com.epam.bets.constant.RequestParamConstant.UserParam.PARAM_NAME_USER_ID;
 
-
+/**
+ * The class provides {@link LoadReceiver} implementation.
+ *
+ * @author Pashchuk Ksenia
+ */
 public class LoadReceiverImpl implements LoadReceiver {
 
+    /**
+     * Provides loading user avatar operation
+     *
+     * @param requestContent - load info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see UserDAO
+     * @see TransactionManager
+     * @see Files#copy(InputStream, Path, CopyOption...)
+     */
     @Override
     public void updateAvatar(RequestContent requestContent) throws ReceiverException {
 
@@ -75,6 +90,15 @@ public class LoadReceiverImpl implements LoadReceiver {
         }
     }
 
+    /**
+     * Provides loading news picture operation
+     *
+     * @param requestContent - load info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see NewsDAO
+     * @see TransactionManager
+     * @see Files#copy(InputStream, Path, CopyOption...)
+     */
     @Override
     public void updateNewsPicture(RequestContent requestContent) throws ReceiverException {
         String uploadDir = requestContent.findParameterValue(UPLOADS) + NEWS_UPLOAD_DIR;

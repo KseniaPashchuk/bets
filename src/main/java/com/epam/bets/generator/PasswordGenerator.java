@@ -29,7 +29,7 @@ public class PasswordGenerator {
      * @return password
      */
 
-    public String generatePassword() {
+    public static String generatePassword() {
         List<char[]> activeSets = new ArrayList<char[]>(3);
         List<char[]> inactiveSets = new ArrayList<char[]>(3);
 

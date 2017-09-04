@@ -24,13 +24,16 @@
         <div class="games-menu-wrap col-lg-3">
             <div class="games-menu colored-block">
                 <div class="matches-list matches-menu-item">
-                    <form id="show-matches-page" method="POST" action="${pageContext.servletContext.contextPath}/controller">
+                    <form id="show-matches-page" method="POST"
+                          action="${pageContext.servletContext.contextPath}/controller">
                         <input type="hidden" name="command" value="show_matches_page"/>
                         <input type="hidden" name="confederation" id="confederation" value=""/>
                         <div class="matches-title">
-                            <a href="javascript://" id="matches-title"><fmt:message key="common.bets.matches"/></a> <span
-                                class="glyphicon glyphicon-chevron-down dropdown" id="dropdown" style="color: #ffa71b"
-                                aria-hidden="true"></span>
+                            <a href="javascript://" id="matches-title"><fmt:message key="common.bets.matches"/></a>
+                            <span
+                                    class="glyphicon glyphicon-chevron-down dropdown" id="dropdown"
+                                    style="color: #ffa71b"
+                                    aria-hidden="true"></span>
                         </div>
                         <div class="league-list" id="league-list" style="display: none">
                             <div class="btn-group">
@@ -41,10 +44,12 @@
                         </div>
                     </form>
                 </div>
-                <div class="results matches-menu-item"><a href="${pageContext.servletContext.contextPath}/controller?command=show_match_results_page"
-                                        id="match-results"><fmt:message
+                <div class="results matches-menu-item"><a
+                        href="${pageContext.servletContext.contextPath}/controller?command=show_match_results_page"
+                        id="match-results"><fmt:message
                         key="common.bets.results"/></a></div>
-                <div class="add-team matches-menu-item"><a href="${pageContext.servletContext.contextPath}/controller?command=show_add_team_page"
+                <div class="add-team matches-menu-item"><a
+                        href="${pageContext.servletContext.contextPath}/controller?command=show_add_team_page"
                 ><fmt:message key="admin.match.add_team"/></a></div>
                 <div class="add-team matches-menu-item"><a
                         href="${pageContext.servletContext.contextPath}/controller?command=show_add_confederation_page"

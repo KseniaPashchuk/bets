@@ -61,6 +61,10 @@
                        <c:if test="${!btg:contains(errors,'refillCashError' )}">style="display:none;"</c:if>>
                         <fmt:message key="common.profile.refill_cash.error"/>
                     </p>
+                    <p class="error-label"
+                       <c:if test="${!btg:contains(errors,'invalidRefillAmount' )}">style="display:none;"</c:if>>
+                        <fmt:message key="common.profile.refill_cash.invalid_amount"/>
+                    </p>
                 </div>
                 <div class="refill-cash colored-block clearfix">
                     <div class="label-row">
@@ -73,16 +77,13 @@
                     </div>
                     <form action="${pageContext.servletContext.contextPath}/controller" method="POST">
                         <input type="hidden" name="command" value="refill_cash">
-                    <div class="value-row">
-                            <div class="meta-value" id="current-amount">${balance}</div>
+                        <div class="value-row">
+                            <div class="meta-value" id="current-amount">${balance} BYN</div>
                             <div class="meta-value">
                                 <input class="<c:if test="${!btg:contains(errors,'invalidRefillAmount' )}">error</c:if>"
                                        type="text" name="amount" id="refill-amount"
-                                       placeholder="" value="" autocomplete="off">
-                                <p class="error-label"
-                                   <c:if test="${!btg:contains(errors,'invalidRefillAmount' )}">style="display:none;"</c:if>>
-                                    <fmt:message key="common.profile.refill_cash.invalid_amount"/>
-                                </p>
+                                       placeholder="" value="" autocomplete="off">BYN
+
                             </div>
                             <div class="meta-value">
                                 <div class="common-select clearfix">
@@ -93,15 +94,15 @@
                                     </select>
                                 </div>
                             </div>
-                    </div>
-                    <div style="text-align: center;">
-                        <div class="btn-group">
-                            <input type="submit" id="refill-cash-btn" value="<fmt:message
-                                    key="common.profile.refill_cash.refill"/>">
-                            <input type="reset" class="cancel-refill-cash-btn" value="<fmt:message
-                                    key="common.btn.cancel"/>">
                         </div>
-                    </div>
+                        <div style="padding: 0 110px;">
+                            <div class="btn-group">
+                                <input type="submit" id="refill-cash-btn" value="<fmt:message
+                                    key="common.profile.refill_cash.refill"/>">
+                                <input type="reset" class="cancel-refill-cash-btn" value="<fmt:message
+                                    key="common.btn.cancel"/>">
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

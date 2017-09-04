@@ -4,7 +4,14 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
 import java.io.IOException;
-
+/**
+ * The class provides encoding filter for servlet container which converts each request and response data to UTF-8
+ * encoding.
+ *
+ * @author Pashchuk Ksenia
+ * @see Filter
+ * @see WebFilter
+ */
 @WebFilter(urlPatterns = {"/*"},
         initParams = {@WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding Param")})
 public class EncodingFilter implements Filter {

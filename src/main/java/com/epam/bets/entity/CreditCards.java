@@ -48,9 +48,7 @@ public class CreditCards extends Entity{
         if (o == null || getClass() != o.getClass()) return false;
 
         CreditCards that = (CreditCards) o;
-
-        if (userId != that.userId) return false;
-        return creditCardList != null ? creditCardList.equals(that.creditCardList) : that.creditCardList == null;
+        return userId == that.userId && (creditCardList != null ? creditCardList.equals(that.creditCardList) : that.creditCardList == null);
     }
 
     @Override

@@ -257,7 +257,6 @@
                    <c:if test="${!btg:contains(errors,'invalidEmail' )}">style="display:none;"</c:if>>
                     <fmt:message key="signup.error.invalid_login"/>
                 </p>
-                <p class="abort-mail error"></p>
                 <input class="button-enter button-forget" type="submit"
                        value='<fmt:message key="common.registration.recover_password"/>'>
             </form>

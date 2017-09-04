@@ -144,8 +144,8 @@
                     <th><fmt:message key="common.bets.date"/></th>
                     <th><fmt:message key="common.bets.bet_type"/></th>
                     <th><fmt:message key="common.bets.coefficient"/></th>
-                    <th><fmt:message key="common.bets.summ"/></th>
-                    <th><fmt:message key="common.bets.max_bet"/></th>
+                    <th><fmt:message key="common.bets.summ"/>(BYN)</th>
+                    <th><fmt:message key="common.bets.max_bet"/>(BYN)</th>
                     <th></th>
                 </tr>
                 </thead>

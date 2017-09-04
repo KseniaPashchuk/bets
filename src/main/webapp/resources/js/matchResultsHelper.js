@@ -47,10 +47,10 @@ $(document).ready(function () {
 
         var confederacy;
         var selectConfederacy = $("#results-confederations").val();
-        var prevConfederacy = $("#prev-confederacy").val();
+        var prevConfederacy = $("#prev-confederation").val();
         if (selectConfederacy != null && selectConfederacy.trim() !='') {
             confederacy = selectConfederacy;
-            $('#prev-confederacy').val(selectConfederacy);
+            $('#prev-confederation').val(selectConfederacy);
         } else {
             if (prevConfederacy != null || prevConfederacy.trim() != '') {
                 confederacy = prevConfederacy;
@@ -62,7 +62,7 @@ $(document).ready(function () {
 
         if (isConfederacyValid) {
             $.ajax({
-                url: "/ajax?command=show_match_results&date=" + resultsDate + "&confederacy=" + confederacy,
+                url: "/ajax?command=show_match_results&date=" + resultsDate + "&confederation=" + confederacy,
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
@@ -113,7 +113,7 @@ $(document).ready(function () {
         }
     });
 
-    if ($("#prev-date").val != null && $("#prev-date").val.trim() != '') {
+    if ($("#prev-date").val != null) {
         $("#show-results").click();
     } else {
         $('#select-results-date').data("DateTimePicker").date(new Date());

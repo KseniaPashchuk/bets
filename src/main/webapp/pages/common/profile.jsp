@@ -21,7 +21,17 @@
 </head>
 <body>
 <div class="full-container">
-    <%@include file="../user/jspf/header.jsp" %>
+    <c:choose>
+        <c:when test="${role == 'ADMIN'}">
+            <%@include file="../admin/jspf/header.jspf" %>
+        </c:when>
+        <c:when test="${role == 'BOOKMAKER'}">
+            <%@include file="../bookmaker/jspf/header.jsp" %>
+        </c:when>
+        <c:otherwise>
+            <%@include file="../user/jspf/header.jsp" %>
+        </c:otherwise>
+    </c:choose>
 
     <section class="content clearfix">
         <div class="row user-profile">
@@ -98,7 +108,7 @@
                             <div class="meta-label"><fmt:message key="common.first_name"/></div>
                             <div class="meta-label"><fmt:message key="common.last_name"/></div>
                             <div class="meta-label"><fmt:message key="common.profile.birth_date"/></div>
-                            <div class="meta-label"><fmt:message key="common.profile.balance"/></div>
+                            <div class="meta-label"><fmt:message key="common.profile.balance"/> BYN</div>
                             <div class="meta-label"><fmt:message key="common.profile.credit_cards"/></div>
                         </div>
                         <div class="value-row col-lg-7">

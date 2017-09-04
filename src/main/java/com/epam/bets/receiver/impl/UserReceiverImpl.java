@@ -25,26 +25,39 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import static com.epam.bets.constant.ErrorConstant.ERROR_LIST_NAME;
 import static com.epam.bets.constant.ErrorConstant.UserError.*;
 import static com.epam.bets.constant.RequestParamConstant.CommonParam.DATE_PATTERN;
 import static com.epam.bets.constant.RequestParamConstant.MatchParam.PARAM_NAME_MATCH_ID;
-import static com.epam.bets.constant.RequestParamConstant.MatchParam.PARAM_NAME_MAX_BET;
 import static com.epam.bets.constant.RequestParamConstant.UserParam.*;
 
-
+/**
+ * The class provides {@link UserReceiver} implementation.
+ *
+ * @author Pashchuk Ksenia
+ */
 public class UserReceiverImpl implements UserReceiver {
 
     private static final Logger LOGGER = LogManager.getLogger(UserReceiverImpl.class);
 
+    /**
+     * Provides signing in operation
+     *
+     * @param requestContent - user info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see UserValidator
+     * @see DaoFactory
+     * @see UserDAO
+     */
     @Override
     public void signIn(RequestContent requestContent) throws ReceiverException {
         User user = null;
         List<String> errors = new ArrayList<>();
-        String login = requestContent.findParameterValue(PARAM_NAME_LOGIN);
-        String password = requestContent.findParameterValue(PARAM_NAME_PASSWORD);
         try (DaoFactory factory = new DaoFactory()) {
-            if (new UserValidator().validateSignInParams(login, password, errors)) {
+            if (new UserValidator().validateSignInParams(requestContent, errors)) {
+                String login = requestContent.findParameterValue(PARAM_NAME_LOGIN);
+                String password = requestContent.findParameterValue(PARAM_NAME_PASSWORD);
                 UserDAO userDAO = factory.getUserDao();
                 String realPassword = userDAO.findPasswordByLogin(login);
                 if (DigestUtils.md5Hex(password).equals(realPassword)) {
@@ -71,22 +84,31 @@ public class UserReceiverImpl implements UserReceiver {
         }
     }
 
+    /**
+     * Provides signing up operation
+     *
+     * @param requestContent - user info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see UserValidator
+     * @see TransactionManager
+     * @see UserDAO
+     * @see CreditCardDAO
+     */
     @Override
     public void signUp(RequestContent requestContent) throws ReceiverException {
 
         List<String> errors = new ArrayList<>();
-        User user = new User();
-        user.setLogin(requestContent.findParameterValue(PARAM_NAME_LOGIN));
-        user.setPassword(requestContent.findParameterValue(PARAM_NAME_PASSWORD));
-        user.setFirstName(requestContent.findParameterValue(PARAM_NAME_FIRST_NAME));
-        user.setLastName(requestContent.findParameterValue(PARAM_NAME_LAST_NAME));
-        LocalDate birthDate = LocalDate.parse(requestContent.findParameterValue(PARAM_NAME_BIRTH_DATE), DateTimeFormatter.ofPattern(DATE_PATTERN));
-        user.setBirthDate(birthDate);
-        CreditCards creditCards = new CreditCards();
-        creditCards.addCreditCard(requestContent.findParameterValue(PARAM_NAME_CREDIT_CARD));
-        user.setCreditCards(creditCards);
-        if (new UserValidator().validateSignUpParams(user, errors)) {
+        if (new UserValidator().validateSignUpParams(requestContent, errors)) {
+            User user = new User();
+            user.setLogin(requestContent.findParameterValue(PARAM_NAME_LOGIN));
             user.setPassword(DigestUtils.md5Hex(requestContent.findParameterValue(PARAM_NAME_PASSWORD)));
+            user.setFirstName(requestContent.findParameterValue(PARAM_NAME_FIRST_NAME));
+            user.setLastName(requestContent.findParameterValue(PARAM_NAME_LAST_NAME));
+            LocalDate birthDate = LocalDate.parse(requestContent.findParameterValue(PARAM_NAME_BIRTH_DATE), DateTimeFormatter.ofPattern(DATE_PATTERN));
+            user.setBirthDate(birthDate);
+            CreditCards creditCards = new CreditCards();
+            creditCards.addCreditCard(requestContent.findParameterValue(PARAM_NAME_CREDIT_CARD));
+            user.setCreditCards(creditCards);
             UserDAO userDAO = new UserDAOImpl();
             CreditCardDAO creditCardDAO = new CreditCardDAOImpl();
             TransactionManager manager = new TransactionManager();
@@ -123,6 +145,12 @@ public class UserReceiverImpl implements UserReceiver {
         }
     }
 
+    /**
+     * Provides log out operation
+     *
+     * @param requestContent - user info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     */
     @Override
     public void logout(RequestContent requestContent) {
         requestContent.removeSessionAttribute(PARAM_NAME_USER_ID);
@@ -130,6 +158,16 @@ public class UserReceiverImpl implements UserReceiver {
         requestContent.removeSessionAttribute(PARAM_NAME_ROLE);
     }
 
+    /**
+     * Provides showing user profile operation
+     *
+     * @param requestContent - user info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see UserValidator
+     * @see DaoFactory
+     * @see UserDAO
+     * @see CreditCardDAO
+     */
     @Override
     public void showProfileInfo(RequestContent requestContent) throws ReceiverException {
         User user;
@@ -159,26 +197,35 @@ public class UserReceiverImpl implements UserReceiver {
         }
     }
 
+    /**
+     * Provides editing user profile operation
+     *
+     * @param requestContent - user info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see UserValidator
+     * @see TransactionManager
+     * @see UserDAO
+     */
     @Override
     public void editProfile(RequestContent requestContent) throws ReceiverException {
         User user = new User();
         List<String> errors = new ArrayList<>();
-        int userId = (int) requestContent.findSessionAttribute(PARAM_NAME_USER_ID);
-        String birthDate = requestContent.findParameterValue(PARAM_NAME_BIRTH_DATE);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
-        user.setId(userId);
-        user.setFirstName(requestContent.findParameterValue(PARAM_NAME_FIRST_NAME));
-        user.setLastName(requestContent.findParameterValue(PARAM_NAME_LAST_NAME));
-        user.setBirthDate(LocalDate.parse(birthDate, formatter));
-        String[] creditCardArray = requestContent.findParameterValues(PARAM_NAME_CREDIT_CARD);
-        CreditCards creditCards = new CreditCards();
-        for (String card : creditCardArray) {
-            if (card != null && !card.isEmpty()) {
-                creditCards.addCreditCard(card);
+        if (new UserValidator().validatePersonalParams(requestContent, errors)) {
+            int userId = (int) requestContent.findSessionAttribute(PARAM_NAME_USER_ID);
+            String birthDate = requestContent.findParameterValue(PARAM_NAME_BIRTH_DATE);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
+            user.setId(userId);
+            user.setFirstName(requestContent.findParameterValue(PARAM_NAME_FIRST_NAME));
+            user.setLastName(requestContent.findParameterValue(PARAM_NAME_LAST_NAME));
+            user.setBirthDate(LocalDate.parse(birthDate, formatter));
+            String[] creditCardArray = requestContent.findParameterValues(PARAM_NAME_CREDIT_CARD);
+            CreditCards creditCards = new CreditCards();
+            for (String card : creditCardArray) {
+                if (card != null && !card.isEmpty()) {
+                    creditCards.addCreditCard(card);
+                }
             }
-        }
-        user.setCreditCards(creditCards);
-        if (new UserValidator().validatePersonalParams(user, errors)) {
+            user.setCreditCards(creditCards);
             UserDAO userDAO = new UserDAOImpl();
             CreditCardDAO creditCardDAO = new CreditCardDAOImpl();
             TransactionManager manager = new TransactionManager();
@@ -200,27 +247,25 @@ public class UserReceiverImpl implements UserReceiver {
         }
         if (!errors.isEmpty()) {
             requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
-        } else {
-            requestContent.insertRequestAttribute(CHANGE_PROFILE_SUCCESS, CHANGE_PROFILE_SUCCESS);
         }
     }
 
+    /**
+     * Provides editing user password operation
+     *
+     * @param requestContent - user info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see UserValidator
+     * @see TransactionManager
+     * @see UserDAO
+     */
     @Override
     public void editPassword(RequestContent requestContent) throws ReceiverException {
         String login = (String) requestContent.findSessionAttribute(PARAM_NAME_LOGIN);
-        String oldPassword = requestContent.findParameterValue(PARAM_NAME_OLD_PASSWORD);
-        String newPassword = requestContent.findParameterValue(PARAM_NAME_NEW_PASSWORD);
-        boolean isValid = true;
         List<String> errors = new ArrayList<>();
-        if (!new UserValidator().validatePassword(oldPassword)) {//TODO
-            isValid = false;
-            errors.add(INVALID_CURRENT_PASSWORD_ERROR);
-        }
-        if (!new UserValidator().validatePassword(newPassword)) {
-            isValid = false;
-            errors.add(INVALID_NEW_PASSWORD_ERROR);
-        }
-        if (isValid) {
+        if (new UserValidator().validateEditPasswordParams(requestContent, errors)) {
+            String oldPassword = requestContent.findParameterValue(PARAM_NAME_OLD_PASSWORD);
+            String newPassword = requestContent.findParameterValue(PARAM_NAME_NEW_PASSWORD);
             UserDAO userDAO = new UserDAOImpl();
             TransactionManager manager = new TransactionManager();
             try {
@@ -246,19 +291,23 @@ public class UserReceiverImpl implements UserReceiver {
         }
         if (!errors.isEmpty()) {
             requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
-        } else {
-            requestContent.insertRequestAttribute(CHANGE_PASSWORD_SUCCESS, CHANGE_PASSWORD_SUCCESS);
         }
     }
 
+    /**
+     * Provides making bet operation for user
+     *
+     * @param requestContent - user info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see UserValidator
+     * @see DaoFactory
+     * @see UserDAO
+     * @see TransactionManager
+     */
     @Override
     public void makeBet(RequestContent requestContent) throws ReceiverException {
         List<Bet> bets = new ArrayList<>();
         List<String> errors = new ArrayList<>();
-        String[] matchIds = requestContent.findParameterValues(PARAM_NAME_MATCH_ID);
-        String[] summs = requestContent.findParameterValues(PARAM_NAME_SUMM);
-        String[] betTypes = requestContent.findParameterValues(PARAM_NAME_BET_TYPE);
-        String[] maxBets = requestContent.findParameterValues(PARAM_NAME_MAX_BET);
         BigDecimal balance;
         int userId = (int) requestContent.findSessionAttribute(PARAM_NAME_USER_ID);
         try (DaoFactory factory = new DaoFactory()) {
@@ -267,15 +316,25 @@ public class UserReceiverImpl implements UserReceiver {
         } catch (DaoException e) {
             throw new ReceiverException(e);
         }
-        if (new UserValidator().validateMakeBetParams(summs, maxBets, balance, errors)) {
+        if (new UserValidator().validateMakeBetParams(requestContent, balance, errors)) {
+            String[] matchIds = requestContent.findParameterValues(PARAM_NAME_MATCH_ID);
+            String[] summs = requestContent.findParameterValues(PARAM_NAME_SUMM);
+            String[] betTypes = requestContent.findParameterValues(PARAM_NAME_BET_TYPE);
+            BigDecimal sumParam;
+            BigDecimal betsSumm = new BigDecimal("0");
             BetDAO betDAO = new BetDAOImpl();
+            UserDAO userDao = new UserDAOImpl();
             TransactionManager manager = new TransactionManager();
-            manager.beginTransaction(betDAO);
+            manager.beginTransaction(betDAO, userDao);
             try {
+                for (String summ : summs) {
+                    sumParam = new BigDecimal(summ);
+                    betsSumm = betsSumm.add(sumParam);
+                }
                 for (int i = 0; i < matchIds.length; i++) {
                     bets.add(new Bet(new BigDecimal(summs[i]), Integer.parseInt(matchIds[i]), BetType.valueOf(betTypes[i]), userId));
                 }
-                if (betDAO.createBets(bets)) {
+                if (userDao.makeBet(userId, betsSumm) && betDAO.createBets(bets)) {
                     manager.commit();
                 } else {
                     manager.rollback();
@@ -296,17 +355,25 @@ public class UserReceiverImpl implements UserReceiver {
         }
     }
 
+    /**
+     * Provides showing user bets operation
+     *
+     * @param requestContent - user info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see UserValidator
+     * @see DaoFactory
+     * @see UserDAO
+     */
     @Override
     public List<Bet> showBets(RequestContent requestContent) throws ReceiverException {
         List<Bet> bets = null;
-        String email;
         int userId;
+
         String type = requestContent.findParameterValue(PARAM_NAME_USER_BETS_TYPE);
         try (DaoFactory factory = new DaoFactory()) {
-            if (requestContent.findParameterValue(PARAM_NAME_EMAIL) != null) {
-                email = requestContent.findParameterValue(PARAM_NAME_EMAIL);
+            if (UserRole.valueOf(requestContent.findSessionAttribute(PARAM_NAME_ROLE).toString()).equals(UserRole.ADMIN)) {
                 UserDAO userDAO = factory.getUserDao();
-                userId = userDAO.findUserIdByLogin(email);
+                userId = userDAO.findUserIdByLogin(requestContent.findParameterValue(PARAM_NAME_EMAIL));
             } else {
                 userId = (int) requestContent.findSessionAttribute(PARAM_NAME_USER_ID);
             }
@@ -331,12 +398,21 @@ public class UserReceiverImpl implements UserReceiver {
         return bets;
     }
 
+    /**
+     * Provides refill cash operation for user
+     *
+     * @param requestContent - user info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see UserValidator
+     * @see TransactionManager
+     * @see UserDAO
+     */
     @Override
     public void refillCash(RequestContent requestContent) throws ReceiverException {
         List<String> errors = new ArrayList<>();
-        int userId = (int) requestContent.findSessionAttribute(PARAM_NAME_USER_ID);
-        BigDecimal amount = new BigDecimal(requestContent.findParameterValue(PARAM_NAME_REFILL_AMOUNT));
-        if (new UserValidator().validateRefillAmount(amount, errors)) {
+        if (new UserValidator().validateRefillAmount(requestContent, errors)) {
+            int userId = (int) requestContent.findSessionAttribute(PARAM_NAME_USER_ID);
+            BigDecimal amount = new BigDecimal(requestContent.findParameterValue(PARAM_NAME_REFILL_AMOUNT));
             UserDAO userDAO = new UserDAOImpl();
             TransactionManager manager = new TransactionManager();
             try {
@@ -360,7 +436,15 @@ public class UserReceiverImpl implements UserReceiver {
         }
     }
 
-
+    /**
+     * Provides recovering user password operation
+     *
+     * @param requestContent - user info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see UserValidator
+     * @see TransactionManager
+     * @see UserDAO
+     */
     @Override
     public void recoverPassword(RequestContent requestContent) throws ReceiverException {
         UserDAO userDAO = new UserDAOImpl();
@@ -369,7 +453,7 @@ public class UserReceiverImpl implements UserReceiver {
         if (new MailValidator().validateEmail(email, errors)) {
             TransactionManager manager = new TransactionManager();
             manager.beginTransaction(userDAO);
-            String newPassword = new PasswordGenerator().generatePassword();
+            String newPassword = PasswordGenerator.generatePassword();
             String emailText = PASSWORD_RECOVER_MAIL_TEXT_START + newPassword + PASSWORD_RECOVER_MAIL_TEXT_END;
             try {
                 if (userDAO.loginExists(email)) {
@@ -384,7 +468,7 @@ public class UserReceiverImpl implements UserReceiver {
                         manager.rollback();
                         errors.add(RECOVER_PASSWORD_ERROR);
                     }
-                }else {
+                } else {
                     errors.add(NO_SUCH_USER_ERROR);
                 }
             } catch (DaoException e) {
@@ -400,6 +484,17 @@ public class UserReceiverImpl implements UserReceiver {
 
     }
 
+    /**
+     * Provides calculationg user gain operation
+     *
+     * @param requestContent - user info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see UserValidator
+     * @see DaoFactory
+     * @see UserDAO
+     * @see TransactionManager
+     * @see BetDAO
+     */
     @Override
     public void calculateGain(RequestContent requestContent) throws ReceiverException {
         List<Bet> bets;
@@ -437,6 +532,15 @@ public class UserReceiverImpl implements UserReceiver {
         }
     }
 
+    /**
+     * Provides finding all user credit cards operation
+     *
+     * @param requestContent - user info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see UserValidator
+     * @see DaoFactory
+     * @see UserDAO
+     */
     @Override
     public void findAllCreditCards(RequestContent requestContent) throws ReceiverException {
         CreditCards cards;
@@ -455,19 +559,34 @@ public class UserReceiverImpl implements UserReceiver {
         }
     }
 
+    /**
+     * Provides finding user balance operation
+     *
+     * @param requestContent - user info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see UserValidator
+     * @see DaoFactory
+     * @see UserDAO
+     */
     @Override
     public void findUserBalance(RequestContent requestContent) throws ReceiverException {
         BigDecimal balance;
         int userId = (int) requestContent.findSessionAttribute(PARAM_NAME_USER_ID);
         try (DaoFactory factory = new DaoFactory()) {
-            UserDAO creditCardDAO = factory.getUserDao();
-            balance = creditCardDAO.findBalance(userId);
+            UserDAO userDAO = factory.getUserDao();
+            balance = userDAO.findBalance(userId);
             requestContent.insertRequestAttribute(PARAM_NAME_BALANCE, balance);
         } catch (DaoException e) {
             throw new ReceiverException(e);
         }
     }
 
+    /**
+     * Provides chanding locale operation
+     *
+     * @param requestContent - user info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     */
     @Override
     public void changeLocale(RequestContent requestContent) {
         String prevLocale = requestContent.findParameterValue(PARAM_NAME_LOCALE);
@@ -487,6 +606,16 @@ public class UserReceiverImpl implements UserReceiver {
         }
     }
 
+    /**
+     * Provides showing user info operation for admin.
+     *
+     * @param requestContent - user info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see UserValidator
+     * @see DaoFactory
+     * @see UserDAO
+     * @see CreditCardDAO
+     */
     @Override
     public void showUserInfo(RequestContent requestContent) throws ReceiverException {
         User user;

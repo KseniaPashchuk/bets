@@ -13,6 +13,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class provides {@link MailDAO} implementation.
+ *
+ * @author Pashchuk Ksenia
+ */
 public class MailDAOImpl extends MailDAO {
     private static final String SELECT_ALL_USER_MAIL =
             "SELECT mail_id, mail_text, mail_date_time, mail_type, login AS user_email FROM support_mail JOIN " +
@@ -37,6 +42,15 @@ public class MailDAOImpl extends MailDAO {
         super(connection);
     }
 
+
+    /**
+     * Takes  {@link List} of last {@link SupportMail} of all users
+     *
+     * @return taken {@link List} of all {@link SupportMail} object or empty {@link List}
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public List<SupportMail> findLastUsersMail() throws DaoException {
         List<SupportMail> mailList;
@@ -49,6 +63,14 @@ public class MailDAOImpl extends MailDAO {
         return mailList;
     }
 
+    /**
+     * Takes  {@link List} of all {@link SupportMail} by user email.
+     *
+     * @return taken {@link List} of all {@link SupportMail} object or empty {@link List}
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public List<SupportMail> findAllUserMail(String email) throws DaoException {
         List<SupportMail> mailList;
@@ -62,6 +84,15 @@ public class MailDAOImpl extends MailDAO {
         return mailList;
     }
 
+    /**
+     * Create user {@link SupportMail}
+     *
+     * @param entity mail info
+     * @return id of created mail
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public int create(SupportMail entity) throws DaoException {
         try (PreparedStatement statementMail = connection.prepareStatement(CREATE_MAIL)) {
@@ -76,11 +107,25 @@ public class MailDAOImpl extends MailDAO {
         }
     }
 
+    /**
+     * Update user {@link SupportMail}. Unnecessary operation.
+     *
+     * @param entity bet info
+     * @throws {@link UnsupportedOperationException}
+     */
     @Override
     public boolean update(SupportMail entity) throws DaoException {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Builds {@link SupportMail} object by parsing {@link ResultSet} object.
+     *
+     * @param resultSet {@link ResultSet} object to parse
+     * @return parsed {@link SupportMail} object or null
+     * @throws SQLException if the columnLabel is not valid; if a database access error occurs or this method is called
+     *                      on a closed result set
+     */
     private SupportMail buildMail(ResultSet resultSet) throws SQLException {
         SupportMail mail = new SupportMail();
         mail.setMailId(resultSet.getInt(PARAM_NAME_ID));
@@ -91,6 +136,15 @@ public class MailDAOImpl extends MailDAO {
         return mail;
     }
 
+    /**
+     * Builds {@link List} object filled by {@link SupportMail} objects by parsing {@link ResultSet} object.
+     *
+     * @param resultSet {@link ResultSet} object to parse
+     * @return parsed {@link List} object or null
+     * @throws SQLException if the columnLabel is not valid; if a database access error occurs or this method is called
+     *                      on a closed result set
+     * @see #buildMail(ResultSet)
+     */
     private List<SupportMail> buildMailList(ResultSet resultSet) throws SQLException {
         List<SupportMail> mailList = new ArrayList<>();
         while (resultSet.next()) {

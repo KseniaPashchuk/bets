@@ -8,13 +8,35 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
 
+/**
+ * The class provides transaction operations  for DAO layer classes.
+ *
+ * @author Pashchuk Ksenia
+ * @see AutoCloseable
+ */
+
 public class TransactionManager implements AutoCloseable {
+    /**
+     * Field used to connect to database and execute queries.
+     *
+     * @see ProxyConnection
+     */
     private ProxyConnection connection = ConnectionPool.getInstance().takeConnection();
     private static final Logger LOGGER = LogManager.getLogger(TransactionManager.class);
 
+    /**
+     * Getter for {@link #connection}.
+     */
     public ProxyConnection getConnection() {
         return connection;
     }
+
+
+    /**
+     * Starts transaction for multiple dao.
+     *
+     * @see ProxyConnection#setAutoCommit(boolean)
+     */
 
     public void beginTransaction(AbstractDAO dao, AbstractDAO... daos) {
         try {
@@ -28,6 +50,9 @@ public class TransactionManager implements AutoCloseable {
         }
     }
 
+    /**
+     * Returns {@link #connection} to {@link ConnectionPool}.
+     */
     public void close() {
         try {
             connection.close();
@@ -37,6 +62,11 @@ public class TransactionManager implements AutoCloseable {
         }
     }
 
+    /**
+     * Commits database changes made during transaction.     *
+     *
+     * @see ProxyConnection#setAutoCommit(boolean)
+     */
     public void commit() {
         try {
             connection.commit();
@@ -45,6 +75,11 @@ public class TransactionManager implements AutoCloseable {
         }
     }
 
+    /**
+     * Rollbacks database changes made during transaction.
+     *
+     * @see ProxyConnection#setAutoCommit(boolean)
+     */
     public void rollback() {
         try {
             connection.rollback();

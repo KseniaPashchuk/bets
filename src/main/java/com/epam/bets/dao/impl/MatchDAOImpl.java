@@ -10,7 +10,11 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * The class provides {@link MatchDAO} implementation.
+ *
+ * @author Pashchuk Ksenia
+ */
 public class MatchDAOImpl extends MatchDAO {
     private static final String SELECT_ALL_MATCHES = "SELECT match_id, date_time, confederation_name," +
             " first_team.team_name AS first_team,  second_team.team_name AS second_team,  total_value, max_bet_value " +
@@ -39,8 +43,8 @@ public class MatchDAOImpl extends MatchDAO {
             "first_team.team_name AS first_team, second_team.team_name AS second_team, first_team_score, second_team_score " +
             "FROM (football_match  JOIN football_team AS first_team ON football_match.first_team_id = first_team.team_id " +
             "JOIN football_team AS second_team ON football_match.second_team_id = second_team.team_id " +
-            "JOIN confederation ON football_match.confederation_id = confederation.confederation_id )" +
-            "WHERE finished = 1 ANDconfederation_name=? AND  date_time BETWEEN ? AND ?";
+            "JOIN confederation ON football_match.confederation_id = confederation.confederation_id ) " +
+            "WHERE finished = 1 AND confederation_name=? AND  date_time BETWEEN ? AND ?";
 
     private static final String SELECTS_MATCH_INFO = "SELECT first_team_score, second_team_score, total_value FROM football_match " +
             "JOIN match_bet_info ON match_id = match_bet_info.football_match_id WHERE match_id=?";
@@ -81,6 +85,15 @@ public class MatchDAOImpl extends MatchDAO {
         super(connection);
     }
 
+
+    /**
+     * Takes  {@link List} of all {@link Match}
+     *
+     * @return taken {@link List} of all {@link Match} object or empty {@link List}
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public List<Match> findAllMatches() throws DaoException {
         List<Match> matchList;
@@ -92,12 +105,20 @@ public class MatchDAOImpl extends MatchDAO {
         }
         return matchList;
     }
-
+    /**
+     * Takes  {@link List} of  {@link Match} by confederation
+     *
+     * @param confederation - results confederation
+     * @return taken {@link List} of all {@link Match} object or empty {@link List}
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
-    public List<Match> findMatchesByConfederacy(String confederacy) throws DaoException {
+    public List<Match> findMatchesByConfederacy(String confederation) throws DaoException {
         List<Match> matchList;
         try (PreparedStatement statementMatch = connection.prepareStatement(SELECT_MATCHES_BY_CONFEDERACY)) {
-            statementMatch.setString(1, confederacy);
+            statementMatch.setString(1, confederation);
             ResultSet resultSet = statementMatch.executeQuery();
             matchList = buildMatchList(resultSet);
         } catch (SQLException e) {
@@ -106,6 +127,14 @@ public class MatchDAOImpl extends MatchDAO {
         return matchList;
     }
 
+    /**
+     * Takes  {@link List} of  all {@link String} confederations
+     *
+     * @return taken {@link List} of all {@link String} object or empty {@link List}
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public List<String> findAllConfederations() throws DaoException {
         List<String> confederacyList = new ArrayList<>();
@@ -120,7 +149,14 @@ public class MatchDAOImpl extends MatchDAO {
         }
         return confederacyList;
     }
-
+    /**
+     * Takes  {@link List} of  all {@link String} football teams
+     *
+     * @return taken {@link List} of all {@link String} object or empty {@link List}
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public List<String> findAllTeams() throws DaoException {
         List<String> teamList = new ArrayList<>();
@@ -135,6 +171,17 @@ public class MatchDAOImpl extends MatchDAO {
         return teamList;
     }
 
+    /**
+     * Provides setting score for match
+     *
+     * @param matchId - match id
+     * @param firstTeamScore - firts team score
+     * @param secondTeamScore - second team score
+     * @return true if successfully set score
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public boolean setScore(int matchId, BigDecimal firstTeamScore, BigDecimal secondTeamScore) throws DaoException {
         try (PreparedStatement statementMatch = connection.prepareStatement(SET_SCORE)) {
@@ -147,7 +194,14 @@ public class MatchDAOImpl extends MatchDAO {
             throw new DaoException("Can't set score", e);
         }
     }
-
+    /**
+     * Takes finished {@link Match} info by match id
+     *
+     * @return taken {@link Match}
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public Match findFinishedMatchInfo(int matchId) throws DaoException {
         Match match = new Match();
@@ -165,6 +219,14 @@ public class MatchDAOImpl extends MatchDAO {
         }
     }
 
+    /**
+     * Creates new {@link Match}
+     *
+     * @return true if successfully created
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public boolean createNewFootballTeam(String team, String country) throws DaoException {
         try (PreparedStatement teamStatement = connection.prepareStatement(CREATE_FOOTBALL_TEAM)) {
@@ -176,7 +238,14 @@ public class MatchDAOImpl extends MatchDAO {
             throw new DaoException("Can't create football team", e);
         }
     }
-
+    /**
+     * Creates new confederation
+     *
+     * @return true if successfully created
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public boolean createNewConfederation(String confederation) throws DaoException {
         try (PreparedStatement teamStatement = connection.prepareStatement(CREATE_CONFEDERATION)) {
@@ -187,7 +256,14 @@ public class MatchDAOImpl extends MatchDAO {
             throw new DaoException("Can't create confederation", e);
         }
     }
-
+    /**
+     * Creates new {@link Match}
+     *
+     * @return id of created match
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public int create(Match entity) throws DaoException {
         try (PreparedStatement statementMatch = connection.prepareStatement(CREATE_MATCH, Statement.RETURN_GENERATED_KEYS);
@@ -213,7 +289,14 @@ public class MatchDAOImpl extends MatchDAO {
         }
         return 0;
     }
-
+    /**
+     * Updates {@link Match}
+     *
+     * @return true if successfully updated
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public boolean update(Match entity) throws DaoException {
         try (PreparedStatement statementMatch = connection.prepareStatement(UPDATE_MATCH);
@@ -234,6 +317,15 @@ public class MatchDAOImpl extends MatchDAO {
         }
     }
 
+    /**
+     * Takes  {@link List} of  {@link Match} results by date
+     *
+     * @param date - results date
+     * @return taken {@link List} of all {@link Match} object or empty {@link List}
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public List<Match> findResultsByDate(LocalDate date) throws DaoException {
         List<Match> results;
@@ -248,12 +340,22 @@ public class MatchDAOImpl extends MatchDAO {
         return results;
     }
 
+    /**
+     * Takes  {@link List} of  {@link Match} results by date and confederation
+     *
+     * @param date          - results date
+     * @param confederation - results confederation
+     * @return taken {@link List} of all {@link Match} object or empty {@link List}
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
-    public List<Match> findResultsByDateAndConfederacy(LocalDate date, String confederacy) throws DaoException {
+    public List<Match> findResultsByDateAndConfederacy(LocalDate date, String confederation) throws DaoException {
         List<Match> results;
         try (PreparedStatement statementResults = connection.prepareStatement(SELECTS_RESULTS_BY_DATE_AND_CONFEDERACY)) {
 
-            statementResults.setString(1, confederacy);
+            statementResults.setString(1, confederation);
             statementResults.setTimestamp(2, Timestamp.valueOf(date.atStartOfDay()));
             statementResults.setTimestamp(3, Timestamp.valueOf(date.plusDays(1).atStartOfDay()));
             ResultSet resultSet = statementResults.executeQuery();
@@ -264,6 +366,14 @@ public class MatchDAOImpl extends MatchDAO {
         return results;
     }
 
+    /**
+     * Builds {@link Match} object by parsing {@link ResultSet} object.
+     *
+     * @param resultSet {@link ResultSet} object to parse
+     * @return parsed {@link Match} object or null
+     * @throws SQLException if the columnLabel is not valid; if a database access error occurs or this method is called
+     *                      on a closed result set
+     */
     private Match buildMatch(ResultSet resultSet) throws SQLException {
         Match match = new Match();
         match.setId(resultSet.getInt(PARAM_NAME_ID));
@@ -275,7 +385,15 @@ public class MatchDAOImpl extends MatchDAO {
         match.setDate((resultSet.getTimestamp(PARAM_NAME_DATE).toLocalDateTime()));
         return match;
     }
-
+    /**
+     * Builds {@link List} object filled by {@link Match} objects by parsing {@link ResultSet} object.
+     *
+     * @param resultSet {@link ResultSet} object to parse
+     * @return parsed {@link List} object or null
+     * @throws SQLException if the columnLabel is not valid; if a database access error occurs or this method is called
+     *                      on a closed result set
+     * @see #buildResult(ResultSet)
+     */
     private List<Match> buildMatchList(ResultSet resultSet) throws SQLException {
         List<Match> matchList = new ArrayList<>();
         while (resultSet.next()) {
@@ -284,6 +402,14 @@ public class MatchDAOImpl extends MatchDAO {
         return matchList;
     }
 
+    /**
+     * Builds {@link Match} result object by parsing {@link ResultSet} object.
+     *
+     * @param resultSet {@link ResultSet} object to parse
+     * @return parsed {@link Match} object or null
+     * @throws SQLException if the columnLabel is not valid; if a database access error occurs or this method is called
+     *                      on a closed result set
+     */
     private Match buildResult(ResultSet resultSet) throws SQLException {
         Match match = new Match();
         match.setId(resultSet.getInt(PARAM_NAME_ID));
@@ -295,7 +421,15 @@ public class MatchDAOImpl extends MatchDAO {
         match.setDate((resultSet.getTimestamp(PARAM_NAME_DATE).toLocalDateTime()));
         return match;
     }
-
+    /**
+     * Builds {@link List} object by {@link Match} results objects by parsing {@link ResultSet} object.
+     *
+     * @param resultSet {@link ResultSet} object to parse
+     * @return parsed {@link List} object or null
+     * @throws SQLException if the columnLabel is not valid; if a database access error occurs or this method is called
+     *                      on a closed result set
+     * @see #buildResult(ResultSet)
+     */
     private List<Match> buildResultList(ResultSet resultSet) throws SQLException {
         List<Match> matchList = new ArrayList<>();
         while (resultSet.next()) {

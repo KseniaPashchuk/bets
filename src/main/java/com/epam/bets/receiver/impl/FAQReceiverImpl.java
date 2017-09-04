@@ -24,8 +24,21 @@ import static com.epam.bets.constant.RequestParamConstant.FAQParam.PARAM_NAME_AN
 import static com.epam.bets.constant.RequestParamConstant.FAQParam.PARAM_NAME_FAQ_LIST;
 import static com.epam.bets.constant.RequestParamConstant.FAQParam.PARAM_NAME_QUESTION;
 
+/**
+ * The class provides {@link FAQReceiver} implementation.
+ *
+ * @author Pashchuk Ksenia
+ */
 public class FAQReceiverImpl implements FAQReceiver {
 
+    /**
+     * Provides showing all faq questions operation
+     *
+     * @param requestContent - faq info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see DaoFactory
+     * @see FaqDAO
+     */
     @Override
     public void showAllFAQ(RequestContent requestContent) throws ReceiverException {
         List<FAQ> faqList;
@@ -42,16 +55,24 @@ public class FAQReceiverImpl implements FAQReceiver {
         } catch (DaoException e) {
             throw new ReceiverException(e);
         }
-
     }
 
+    /**
+     * Provides creating faq operation for admin
+     *
+     * @param requestContent - faq info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see TransactionManager
+     * @see FaqDAO
+     * @see FAQValidator
+     */
     @Override
     public void createFAQ(RequestContent requestContent) throws ReceiverException {
         FAQ faq = new FAQ();
-        faq.setQuestion(requestContent.findParameterValue(PARAM_NAME_QUESTION));
-        faq.setAnswer(requestContent.findParameterValue(PARAM_NAME_ANSWER));
         List<String> errors = new ArrayList<>();
-        if (new FAQValidator().validateFAQParams(faq, errors)) {
+        if (new FAQValidator().validateFAQParams(requestContent, errors)) {
+            faq.setQuestion(requestContent.findParameterValue(PARAM_NAME_QUESTION));
+            faq.setAnswer(requestContent.findParameterValue(PARAM_NAME_ANSWER));
             FaqDAO faqDAO = new FaqDAOImpl();
             TransactionManager manager = new TransactionManager();
             manager.beginTransaction(faqDAO);
@@ -76,37 +97,58 @@ public class FAQReceiverImpl implements FAQReceiver {
         }
     }
 
+    /**
+     * Provides deleting faq operation for admin
+     *
+     * @param requestContent - faq info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see TransactionManager
+     * @see FaqDAO
+     */
     @Override
     public void deleteFAQ(RequestContent requestContent) throws ReceiverException {
         String question = requestContent.findParameterValue(PARAM_NAME_QUESTION);
         List<String> errors = new ArrayList<>();
-        FaqDAO faqDAO = new FaqDAOImpl();
-        TransactionManager manager = new TransactionManager();
-        manager.beginTransaction(faqDAO);
-        try {
-            if (faqDAO.deleteByQuestion(question)) {
-                manager.commit();
-            } else {
+        if (new FAQValidator().validateFAQQuestion(question, errors)) {
+            FaqDAO faqDAO = new FaqDAOImpl();
+            TransactionManager manager = new TransactionManager();
+            manager.beginTransaction(faqDAO);
+            try {
+                if (faqDAO.deleteByQuestion(question)) {
+                    manager.commit();
+                } else {
+                    manager.rollback();
+                    errors.add(DELETE_FAQ_ERROR);
+                }
+            } catch (DaoException e) {
                 manager.rollback();
-                errors.add(DELETE_FAQ_ERROR);
-                requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
+                throw new ReceiverException(e);
+            } finally {
+                manager.close();
             }
-        } catch (DaoException e) {
-            manager.rollback();
-            throw new ReceiverException(e);
-        } finally {
-            manager.close();
         }
-
+        if (!errors.isEmpty()) {
+            requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
+        }
     }
 
+    /**
+     * Provides editing faq operation for admin
+     *
+     * @param requestContent - faq info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see TransactionManager
+     * @see FaqDAO
+     * @see FAQValidator
+     */
     @Override
     public void editFAQ(RequestContent requestContent) throws ReceiverException {
         FAQ faq = new FAQ();
-        faq.setQuestion(requestContent.findParameterValue(PARAM_NAME_QUESTION));
-        faq.setAnswer(requestContent.findParameterValue(PARAM_NAME_ANSWER));
+
         List<String> errors = new ArrayList<>();
-        if (new FAQValidator().validateFAQParams(faq, errors)) {
+        if (new FAQValidator().validateFAQParams(requestContent, errors)) {
+            faq.setQuestion(requestContent.findParameterValue(PARAM_NAME_QUESTION));
+            faq.setAnswer(requestContent.findParameterValue(PARAM_NAME_ANSWER));
             FaqDAO faqDAO = new FaqDAOImpl();
             TransactionManager manager = new TransactionManager();
             manager.beginTransaction(faqDAO);

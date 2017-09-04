@@ -1,6 +1,8 @@
 package com.epam.bets.validator;
 
 import java.math.BigDecimal;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The base class for all validators.
@@ -30,7 +32,19 @@ public abstract class BaseValidator {
     public boolean validateStringParamWithLimit(String param, int limit) {
         return param != null && !param.trim().isEmpty() && param.length() <= limit;
     }
+    /**
+     * Checks if any string param is valid
+     *
+     * @param param - any string param
+     * @param regex - string param length limit
+     * @return true if param is not null, not empty, not longer than max lenght
+     */
 
+    public boolean validateStringParamWithRegex(String param, String regex) {
+        Pattern paramPattern = Pattern.compile(regex);
+        Matcher paramMatcher = paramPattern.matcher(param);
+        return paramMatcher.matches();
+    }
 
     /**
      * Checks if any bigdecimal param is valid

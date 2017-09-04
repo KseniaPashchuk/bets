@@ -39,7 +39,7 @@ public class PageConstant {
 
     public static final String SERVER_ERROR_PAGE = "/pages/error/error500.jsp";
 
-    public static final String REFILL_CASH_PAGE = "/pages/common/refillCash.jsp";
+    public static final String REFILL_CASH_PAGE = "/pages/user/refillCash.jsp";
     public static final String SHOW_REFILL_CASH_PAGE = "/controller?command=create_refill_cash_page";
 
     public static final String SUPPORT_PAGE = "/pages/admin/support.jsp";

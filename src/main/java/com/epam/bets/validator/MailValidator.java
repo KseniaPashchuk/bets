@@ -25,12 +25,12 @@ public class MailValidator extends BaseValidator {
      * @return true if email matches to the regular expression.
      */
     public boolean validateEmail(String email, List<String> errors) {
-        Pattern loginPattern = Pattern.compile(EMAIL_REGEX);
-        Matcher loginMatcher = loginPattern.matcher(email);
-        if (!loginMatcher.matches()) {
+       boolean isValid = true;
+        if (!validateStringParamWithRegex(email,EMAIL_REGEX )) {
+            isValid = false;
             errors.add(INVALID_EMAIL_ERROR);
         }
-        return loginMatcher.matches();
+        return isValid;
     }
 
     /**

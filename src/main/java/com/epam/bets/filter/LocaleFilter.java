@@ -1,6 +1,5 @@
 package com.epam.bets.filter;
 
-import com.epam.bets.entity.UserRole;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
@@ -8,16 +7,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * The class provides user locale filter for user session which saves default locale i not exists in session.
+ *
+ * @author Pashchuk Ksenia
+ * @see Filter
+ * @see WebFilter
+ */
 @WebFilter(
         urlPatterns = {"/*"},
         servletNames = {"BetServlet", "AjaxServlet"},
-        initParams = { @WebInitParam(name = "locale", value = "locale")},
+        initParams = {@WebInitParam(name = "locale", value = "locale")},
         dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD}
 )
 public class LocaleFilter implements Filter {
     private static final String DEFAULT_LOCALE = "en_EN";
     private String locale;
-
 
 
     @Override

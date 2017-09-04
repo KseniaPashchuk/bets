@@ -57,6 +57,10 @@
             </div>
             <div class="change-password-wrap col-lg-9 col-md-9 col-sm-9">
                 <div class="change-password colored-block clearfix">
+                    <p class="show-message success-label"
+                       <c:if test="${success == null}">style="display:none;"</c:if>>
+                        <fmt:message key="common.profile.change_password.success"/>
+                    </p>
                     <p class="error-label" id="invalid-current-password"
                        <c:if test="${!btg:contains(errors,'invalidCurrentPasswordError' )}">style="display:none;"</c:if>>
                         <fmt:message key="common.profile.change_password.invalid_current"/>
@@ -76,10 +80,6 @@
                        <c:if test="${!btg:contains(errors,'changePasswordError' )}">style="display:none;"</c:if>>
                         <fmt:message key="common.profile.change_password.error"/>
                     </p>
-                    <p class="success-label"
-                       <c:if test="${!btg:contains(errors,'changeProfileSuccess' )}">style="display:none;"</c:if>>
-                        <fmt:message key="common.profile.change_password.success"/>
-                    </p>
                     <form method="POST" action="${pageContext.servletContext.contextPath}/controller"
                           onsubmit=" return validateChangePasswordForm()">
                         <input type="hidden" name="command" value="change_password">
@@ -93,15 +93,18 @@
                         </div>
                         <div class="value-row">
                             <div class="meta-value" id="current_password">
-                                <input class="input-text" type="password" id="current-password" placeholder="" value=""
+                                <input class="input-text  <c:if test="${!btg:contains(errors,'invalidCurrentPasswordError' )}">error</c:if>"
+                                       type="password" id="current-password" placeholder="" value=""
                                        autocomplete="off" name="currentPassword">
                             </div>
                             <div class="meta-value">
-                                <input class="input-text" type="password" id="new-password" name="newPassword"
+                                <input class="input-text <c:if test="${!btg:contains(errors,'invalidNewPasswordError' )}">error</c:if>"
+                                       type="password" id="new-password" name="newPassword"
                                        placeholder="" value="" autocomplete="off">
                             </div>
                             <div class="meta-value">
-                                <input class="input-text" type="password" id="confirm-password" name="confirmPassword"
+                                <input class="input-text"
+                                       type="password" id="confirm-password" name="confirmPassword"
                                        placeholder="" value="" autocomplete="off">
                             </div>
                         </div>

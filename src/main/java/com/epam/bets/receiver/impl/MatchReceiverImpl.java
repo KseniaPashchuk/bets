@@ -31,10 +31,22 @@ import static com.epam.bets.constant.RequestParamConstant.CommonParam.DATE_PATTE
 import static com.epam.bets.constant.RequestParamConstant.CommonParam.PARAM_NAME_DATE;
 import static com.epam.bets.constant.RequestParamConstant.MatchParam.*;
 
-
+/**
+ * The class provides {@link MatchReceiver} implementation.
+ *
+ * @author Pashchuk Ksenia
+ */
 public class MatchReceiverImpl implements MatchReceiver {
 
-
+    /**
+     * Provides showing all matches results operation
+     *
+     * @param requestContent - match info
+     * @return {@link List} of {@link Match} object or empty {@link List}
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see DaoFactory
+     * @see MatchDAO
+     */
     @Override
     public List<Match> showMatchResults(RequestContent requestContent) throws ReceiverException {
         List<Match> results;
@@ -53,7 +65,15 @@ public class MatchReceiverImpl implements MatchReceiver {
         }
         return results;
     }
-
+    /**
+     * Provides showing all matches operation
+     *
+     * @param requestContent - match info
+     * @return {@link List} of {@link Match} object or empty {@link List}
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see DaoFactory
+     * @see MatchDAO
+     */
     @Override
     public List<Match> showMatches(RequestContent requestContent) throws ReceiverException {
         List<Match> matches;
@@ -74,7 +94,14 @@ public class MatchReceiverImpl implements MatchReceiver {
         }
         return matches;
     }
-
+    /**
+     * Provides showing all confederations operation
+     *
+     * @param requestContent - match info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see DaoFactory
+     * @see MatchDAO
+     */
     @Override
     public void showAllConfederations(RequestContent requestContent) throws ReceiverException {
         List<String> confederations;
@@ -92,7 +119,14 @@ public class MatchReceiverImpl implements MatchReceiver {
             throw new ReceiverException(e);
         }
     }
-
+    /**
+     * Provides showing all football teams operation
+     *
+     * @param requestContent - match info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see DaoFactory
+     * @see MatchDAO
+     */
     @Override
     public void showAllTeams(RequestContent requestContent) throws ReceiverException {
         List<String> teams;
@@ -112,26 +146,34 @@ public class MatchReceiverImpl implements MatchReceiver {
             throw new ReceiverException(e);
         }
     }
-
+    /**
+     * Provides creating match operation for bookmaker
+     *
+     * @param requestContent - match info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see TransactionManager
+     * @see MatchValidator
+     * @see MatchDAO
+     */
     @Override
     public void createMatch(RequestContent requestContent) throws ReceiverException {
         Match match = new Match();
         List<String> errors = new ArrayList<>();
-        match.setFirstTeam(requestContent.findParameterValue(PARAM_NAME_FIRST_TEAM));
-        match.setSecondTeam(requestContent.findParameterValue(PARAM_NAME_SECOND_TEAM));
-        match.setConfederation(requestContent.findParameterValue(PARAM_NAME_CONFEDERATION));
-        match.setDate(LocalDateTime.parse(requestContent.findParameterValue(PARAM_NAME_DATE), DateTimeFormatter.ofPattern(DATE_TIME_PATTERN)));
-        match.addCoefficient(BetType.FW, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_FW)));
-        match.addCoefficient(BetType.X, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_X)));
-        match.addCoefficient(BetType.SW, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_SW)));
-        match.addCoefficient(BetType.FWX, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_FWX)));
-        match.addCoefficient(BetType.FS, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_FS)));
-        match.addCoefficient(BetType.XSW, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_XSW)));
-        match.addCoefficient(BetType.TL, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_TL)));
-        match.addCoefficient(BetType.TM, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_TM)));
-        match.setTotal(new BigDecimal(requestContent.findParameterValue(PARAM_NAME_T)));
-        match.setMaxBet(new BigDecimal(requestContent.findParameterValue(PARAM_NAME_MAX_BET)));
-        if (new MatchValidator().validateMatchParams(match, errors)) {
+        if (new MatchValidator().validateMatchParams(requestContent, errors)) {
+            match.setFirstTeam(requestContent.findParameterValue(PARAM_NAME_FIRST_TEAM));
+            match.setSecondTeam(requestContent.findParameterValue(PARAM_NAME_SECOND_TEAM));
+            match.setConfederation(requestContent.findParameterValue(PARAM_NAME_CONFEDERATION));
+            match.setDate(LocalDateTime.parse(requestContent.findParameterValue(PARAM_NAME_DATE), DateTimeFormatter.ofPattern(DATE_TIME_PATTERN)));
+            match.addCoefficient(BetType.FW, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_FW)));
+            match.addCoefficient(BetType.X, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_X)));
+            match.addCoefficient(BetType.SW, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_SW)));
+            match.addCoefficient(BetType.FWX, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_FWX)));
+            match.addCoefficient(BetType.FS, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_FS)));
+            match.addCoefficient(BetType.XSW, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_XSW)));
+            match.addCoefficient(BetType.TL, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_TL)));
+            match.addCoefficient(BetType.TM, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_TM)));
+            match.setTotal(new BigDecimal(requestContent.findParameterValue(PARAM_NAME_T)));
+            match.setMaxBet(new BigDecimal(requestContent.findParameterValue(PARAM_NAME_MAX_BET)));
             MatchDAO matchDAO = new MatchDAOImpl();
             GainCoefficientDAO coefficientDAO = new GainCoefficientDAOImpl();
             TransactionManager manager = new TransactionManager();
@@ -164,26 +206,34 @@ public class MatchReceiverImpl implements MatchReceiver {
             requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
         }
     }
-
+    /**
+     * Provides editing match operation for bookmaker
+     *
+     * @param requestContent - match info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see TransactionManager
+     * @see MatchValidator
+     * @see MatchDAO
+     */
     @Override
     public void editMatch(RequestContent requestContent) throws ReceiverException {
         Match match = new Match();
         List<String> errors = new ArrayList<>();
-        match.setFirstTeam(requestContent.findParameterValue(PARAM_NAME_FIRST_TEAM));
-        match.setSecondTeam(requestContent.findParameterValue(PARAM_NAME_SECOND_TEAM));
-        match.setConfederation(requestContent.findParameterValue(PARAM_NAME_CONFEDERATION));
-        match.setDate(LocalDateTime.parse(requestContent.findParameterValue(PARAM_NAME_DATE), DateTimeFormatter.ofPattern(DATE_TIME_PATTERN)));
-        match.addCoefficient(BetType.FW, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_FW)));
-        match.addCoefficient(BetType.X, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_X)));
-        match.addCoefficient(BetType.SW, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_SW)));
-        match.addCoefficient(BetType.FWX, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_FWX)));
-        match.addCoefficient(BetType.FS, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_FS)));
-        match.addCoefficient(BetType.XSW, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_XSW)));
-        match.addCoefficient(BetType.TL, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_TL)));
-        match.addCoefficient(BetType.TM, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_TM)));
-        match.setTotal(new BigDecimal(requestContent.findParameterValue(PARAM_NAME_T)));
-        match.setMaxBet(new BigDecimal(requestContent.findParameterValue(PARAM_NAME_MAX_BET)));
-        if (new MatchValidator().validateMatchParams(match, errors)) {
+        if (new MatchValidator().validateMatchParams(requestContent, errors)) {
+            match.setFirstTeam(requestContent.findParameterValue(PARAM_NAME_FIRST_TEAM));
+            match.setSecondTeam(requestContent.findParameterValue(PARAM_NAME_SECOND_TEAM));
+            match.setConfederation(requestContent.findParameterValue(PARAM_NAME_CONFEDERATION));
+            match.setDate(LocalDateTime.parse(requestContent.findParameterValue(PARAM_NAME_DATE), DateTimeFormatter.ofPattern(DATE_TIME_PATTERN)));
+            match.addCoefficient(BetType.FW, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_FW)));
+            match.addCoefficient(BetType.X, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_X)));
+            match.addCoefficient(BetType.SW, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_SW)));
+            match.addCoefficient(BetType.FWX, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_FWX)));
+            match.addCoefficient(BetType.FS, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_FS)));
+            match.addCoefficient(BetType.XSW, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_XSW)));
+            match.addCoefficient(BetType.TL, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_TL)));
+            match.addCoefficient(BetType.TM, new BigDecimal(requestContent.findParameterValue(PARAM_NAME_TM)));
+            match.setTotal(new BigDecimal(requestContent.findParameterValue(PARAM_NAME_T)));
+            match.setMaxBet(new BigDecimal(requestContent.findParameterValue(PARAM_NAME_MAX_BET)));
             MatchDAO matchDAO = new MatchDAOImpl();
             GainCoefficientDAO coefficientDAO = new GainCoefficientDAOImpl();
             TransactionManager manager = new TransactionManager();
@@ -210,18 +260,27 @@ public class MatchReceiverImpl implements MatchReceiver {
         }
     }
 
-
+    /**
+     * Provides setting match score operation for bookmaker
+     *
+     * @param requestContent - match info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see TransactionManager
+     * @see MatchDAO
+     * @see MatchValidator
+     */
     @Override
     public void setMatchScore(RequestContent requestContent) throws
             ReceiverException {
         List<String> errors = new ArrayList<>();
-        int matchId = Integer.parseInt(requestContent.findParameterValue(PARAM_NAME_MATCH_ID));
-        BigDecimal firstTeamScore = new BigDecimal(requestContent.findParameterValue(PARAM_NAME_FIRST_TEAM_SCORE));
-        BigDecimal secondTeamScore = new BigDecimal(requestContent.findParameterValue(PARAM_NAME_SECOND_TEAM_SCORE));
-        LocalDateTime dateTime = LocalDateTime.parse(requestContent.findParameterValue(PARAM_NAME_DATE),
-                DateTimeFormatter.ofPattern(DATE_TIME_PATTERN));
 
-        if (new MatchValidator().validateSetScoreParams(dateTime, firstTeamScore, secondTeamScore, errors)) {
+        if (new MatchValidator().validateSetScoreParams(requestContent, errors)) {
+            int matchId = Integer.parseInt(requestContent.findParameterValue(PARAM_NAME_MATCH_ID));
+            BigDecimal firstTeamScore = new BigDecimal(requestContent.findParameterValue(PARAM_NAME_FIRST_TEAM_SCORE));
+            BigDecimal secondTeamScore = new BigDecimal(requestContent.findParameterValue(PARAM_NAME_SECOND_TEAM_SCORE));
+            LocalDateTime dateTime = LocalDateTime.parse(requestContent.findParameterValue(PARAM_NAME_DATE),
+                    DateTimeFormatter.ofPattern(DATE_TIME_PATTERN));
+
             MatchDAO matchDAO = new MatchDAOImpl();
             TransactionManager manager = new TransactionManager();
             manager.beginTransaction(matchDAO);
@@ -243,13 +302,22 @@ public class MatchReceiverImpl implements MatchReceiver {
             requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
         }
     }
-
+    /**
+     * Provides creating football team operation for admin
+     *
+     * @param requestContent - match info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see TransactionManager
+     * @see MatchDAO
+     * @see MatchValidator
+     */
     @Override
     public void createFootballTeam(RequestContent requestContent) throws ReceiverException {
-        String team = requestContent.findParameterValue(PARAM_NAME_TEAM);
-        String country = requestContent.findParameterValue(PARAM_NAME_COUNTRY);
+
         List<String> errors = new ArrayList<>();
-        if (new MatchValidator().validateCreateTeamParams(team, country, errors)) {
+        if (new MatchValidator().validateCreateTeamParams(requestContent, errors)) {
+            String team = requestContent.findParameterValue(PARAM_NAME_TEAM);
+            String country = requestContent.findParameterValue(PARAM_NAME_COUNTRY);
             MatchDAO matchDAO = new MatchDAOImpl();
             TransactionManager manager = new TransactionManager();
             manager.beginTransaction(matchDAO);
@@ -271,6 +339,16 @@ public class MatchReceiverImpl implements MatchReceiver {
             requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
         }
     }
+
+    /**
+     * Provides creating confederation operation for admin
+     *
+     * @param requestContent - match info
+     * @throws ReceiverException if {@link DaoException} occurred while working
+     * @see TransactionManager
+     * @see MatchValidator
+     * @see MatchDAO
+     */
     @Override
     public void createConfederation(RequestContent requestContent) throws ReceiverException {
         String confederation = requestContent.findParameterValue(PARAM_NAME_CONFEDERATION);

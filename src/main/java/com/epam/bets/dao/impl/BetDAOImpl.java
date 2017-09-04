@@ -13,7 +13,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * The class provides {@link BetDAO} implementation.
+ *
+ * @author Pashchuk Ksenia
+ */
 public class BetDAOImpl extends BetDAO {
     private static final String SELECT_WINNED_BETS = "SELECT money, coefficient,first_team.team_name AS first_team, second_team.team_name AS second_team," +
             " bet_type FROM bookmaker_office.bet JOIN (football_match  JOIN football_team AS first_team ON football_match.first_team_id = first_team.team_id " +
@@ -51,6 +55,16 @@ public class BetDAOImpl extends BetDAO {
     }
 
 
+    /**
+     * Create user {@link Bet}
+     *
+     * @param entity bet info
+     * @return id of created bet
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
+
     @Override
     public int create(Bet entity) throws DaoException {
         try (PreparedStatement statementBet = connection.prepareStatement(CREATE_BET, Statement.RETURN_GENERATED_KEYS)) {
@@ -70,11 +84,26 @@ public class BetDAOImpl extends BetDAO {
 
     }
 
+    /**
+     * Update user {@link Bet}. Unnecessary operation.
+     *
+     * @param entity bet info
+     * @throws {@link UnsupportedOperationException}
+     */
     @Override
     public boolean update(Bet entity) throws DaoException {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Takes {@link List} of winned {@link Bet} by user id.
+     *
+     * @param userId user id
+     * @return taken {@link List} of all {@link Bet} object or empty {@link List}
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public List<Bet> findWinnedBets(int userId) throws DaoException {
         List<Bet> bets;
@@ -88,6 +117,15 @@ public class BetDAOImpl extends BetDAO {
         }
     }
 
+    /**
+     * Takes {@link List} of lost {@link Bet} by user id.
+     *
+     * @param userId user id
+     * @return taken {@link List} of {@link Bet} object or empty {@link List}
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public List<Bet> findLostBets(int userId) throws DaoException {
         List<Bet> bets;
@@ -101,6 +139,15 @@ public class BetDAOImpl extends BetDAO {
         }
     }
 
+    /**
+     * Takes {@link List} of open {@link Bet} by user id.
+     *
+     * @param userId user id
+     * @return taken {@link List} of {@link Bet} object or empty {@link List}
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public List<Bet> findOpenBets(int userId) throws DaoException {
         List<Bet> bets;
@@ -114,6 +161,15 @@ public class BetDAOImpl extends BetDAO {
         }
     }
 
+    /**
+     * Create user {@link Bet}s
+     *
+     * @param bets list of bets to be created
+     * @return true if successfully created
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public boolean createBets(List<Bet> bets) throws DaoException {
         try (PreparedStatement statementBet = connection.prepareStatement(CREATE_BET)) {
@@ -130,6 +186,15 @@ public class BetDAOImpl extends BetDAO {
         }
     }
 
+    /**
+     * Takes {@link List} of {@link Bet} by match id.
+     *
+     * @param matchId match id
+     * @return taken {@link List} of {@link Bet} object or empty {@link List}
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public List<Bet> findBetsByMatchId(int matchId) throws DaoException {
         List<Bet> bets = new ArrayList<>();
@@ -153,6 +218,16 @@ public class BetDAOImpl extends BetDAO {
         }
     }
 
+    /**
+     * Update isWon param for {@link Bet} by its id.
+     *
+     * @param betId    bet id
+     * @param isBetWon if bet is winning
+     * @return taken {@link List} of {@link Bet} object or empty {@link List}
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public boolean updateIsBetWon(int betId, boolean isBetWon) throws DaoException {
         try (PreparedStatement statementBet = connection.prepareStatement(UPDATE_IS_BET_WON)) {
@@ -164,6 +239,14 @@ public class BetDAOImpl extends BetDAO {
             throw new DaoException("Can't find bets", e);
         }
     }
+    /**
+     * Builds {@link Bet} object by parsing {@link ResultSet} object.
+     *
+     * @param resultSet {@link ResultSet} object to parse
+     * @return parsed {@link Bet} object or null
+     * @throws SQLException if the columnLabel is not valid; if a database access error occurs or this method is called
+     *                      on a closed result set
+     */
 
     private Bet buildBet(ResultSet resultSet) throws SQLException {
         Bet bet = new Bet();
@@ -173,7 +256,15 @@ public class BetDAOImpl extends BetDAO {
         bet.setCoefficient(resultSet.getBigDecimal(PARAM_NAME_COEFFICIENT));
         return bet;
     }
-
+    /**
+     * Builds {@link List} object filled by {@link Bet} objects by parsing {@link ResultSet} object.
+     *
+     * @param resultSet {@link ResultSet} object to parse
+     * @return parsed {@link List} object or null
+     * @throws SQLException if the columnLabel is not valid; if a database access error occurs or this method is called
+     *                      on a closed result set
+     * @see #buildBet(ResultSet)
+     */
     private List<Bet> buildBetList(ResultSet resultSet) throws SQLException {
         List<Bet> matchList = new ArrayList<>();
         while (resultSet.next()) {

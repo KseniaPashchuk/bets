@@ -50,9 +50,7 @@ public final class ErrorConstant {
         public static final String INVALID_NEW_PASSWORD_ERROR = "invalidNewPasswordError";
         public static final String SIGN_IN_ERROR = "signInError";
         public static final String SIGN_UP_ERROR = "signUpError";
-        public static final String CHANGE_PASSWORD_SUCCESS = "changePasswordSuccess";
         public static final String CHANGE_PASSWORD_ERROR = "changePasswordError";
-        public static final String CHANGE_PROFILE_SUCCESS = "changeProfileSuccess";
         public static final String CHANGE_PROFILE_ERROR = "changeProfileError";
         public static final String SHOW_CREDIT_CARD_ERROR = "showCreditCardError";
         public static final String REFILL_CASH_ERROR = "refillCashError";

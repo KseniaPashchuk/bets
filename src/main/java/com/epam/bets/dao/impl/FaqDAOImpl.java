@@ -12,6 +12,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class provides {@link FaqDAO} implementation.
+ *
+ * @author Pashchuk Ksenia
+ */
 public class FaqDAOImpl extends FaqDAO {
 
     private static final String SELECT_ALL_FAQ =
@@ -34,7 +39,14 @@ public class FaqDAOImpl extends FaqDAO {
         super(connection);
     }
 
-
+    /**
+     * Takes  {@link List} of all {@link FAQ}
+     *
+     * @return taken {@link List} of all {@link FAQ} object or empty {@link List}
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public List<FAQ> findAllFAQ() throws DaoException {
         List<FAQ> faqList;
@@ -47,7 +59,15 @@ public class FaqDAOImpl extends FaqDAO {
         return faqList;
     }
 
-
+    /**
+     * Deletes {@link FAQ} by faq question.
+     *
+     * @param question faq question.
+     * @return true if successfully deleted
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public boolean deleteByQuestion(String question) throws DaoException {
         try (PreparedStatement statementFAQ = connection.prepareStatement(DELETE_FAQ_BY_QUESTION)) {
@@ -59,6 +79,15 @@ public class FaqDAOImpl extends FaqDAO {
         }
     }
 
+    /**
+     * Creates {@link FAQ}.
+     *
+     * @param entity faq entity.
+     * @return true if successfully created
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public int create(FAQ entity) throws DaoException {
         try (PreparedStatement statementFAQ = connection.prepareStatement(CREATE_FAQ, Statement.RETURN_GENERATED_KEYS)) {
@@ -78,6 +107,15 @@ public class FaqDAOImpl extends FaqDAO {
         }
     }
 
+    /**
+     * Updates {@link FAQ}.
+     *
+     * @param entity faq entity
+     * @return true if successfully updated
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public boolean update(FAQ entity) throws DaoException {
         try (PreparedStatement statementNews = connection.prepareStatement(UPDATE_FAQ)) {
@@ -90,6 +128,14 @@ public class FaqDAOImpl extends FaqDAO {
         }
     }
 
+    /**
+     * Builds {@link List} object filled by {@link FAQ} objects by parsing {@link ResultSet} object.
+     *
+     * @param resultSet {@link ResultSet} object to parse
+     * @return parsed {@link List} object or null
+     * @throws SQLException if the columnLabel is not valid; if a database access error occurs or this method is called
+     *                      on a closed result set
+     */
     private FAQ buildFAQ(ResultSet resultSet) throws SQLException {
         FAQ faq = new FAQ();
         faq.setId(resultSet.getInt(PARAM_NAME_ID));
@@ -98,6 +144,15 @@ public class FaqDAOImpl extends FaqDAO {
         return faq;
     }
 
+    /**
+     * Builds {@link List} object filled by {@link FAQ} objects by parsing {@link ResultSet} object.
+     *
+     * @param resultSet {@link ResultSet} object to parse
+     * @return parsed {@link List} object or null
+     * @throws SQLException if the columnLabel is not valid; if a database access error occurs or this method is called
+     *                      on a closed result set
+     * @see #buildFAQ(ResultSet)
+     */
     private List<FAQ> buildFAQList(ResultSet resultSet) throws SQLException {
         List<FAQ> faqList = new ArrayList<>();
         while (resultSet.next()) {

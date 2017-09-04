@@ -50,7 +50,15 @@ public class UserDAOImpl extends UserDAO {
         super(connection);
     }
 
-
+    /**
+     * Takes {@link User} object by user id
+     *
+     * @param id - user id
+     * @return taken {@link User} object
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public User findUserById(int id) throws DaoException {
         User user = null;
@@ -65,7 +73,15 @@ public class UserDAOImpl extends UserDAO {
         }
         return user;
     }
-
+    /**
+     * Takes {@link User} object by user login
+     *
+     * @param login - user login
+     * @return taken {@link User} object
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public User findUserByLogin(String login) throws DaoException {
         User user = null;
@@ -80,7 +96,15 @@ public class UserDAOImpl extends UserDAO {
         }
         return user;
     }
-
+    /**
+     * Takes user password by user login
+     *
+     * @param login - user login
+     * @return taken {@link String} password
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public String findPasswordByLogin(String login) throws DaoException {
         String password = "";
@@ -95,7 +119,15 @@ public class UserDAOImpl extends UserDAO {
         }
         return password;
     }
-
+    /**
+     * Create user {@link User}
+     *
+     * @param entity user info
+     * @return id of created user
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public int create(User entity) throws DaoException {
         try (PreparedStatement statementUser = connection.prepareStatement(CREATE_USER, Statement.RETURN_GENERATED_KEYS)) {
@@ -120,7 +152,15 @@ public class UserDAOImpl extends UserDAO {
         }
         return 0;
     }
-
+    /**
+     * Updates {@link User}
+     *
+     * @param entity user info
+     * @return true if successfully updated
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public boolean update(User entity) throws DaoException {
         try (PreparedStatement statementUser = connection.prepareStatement(UPDATE_USER)) {
@@ -135,7 +175,16 @@ public class UserDAOImpl extends UserDAO {
         }
     }
 
-
+    /**
+     * Updates password by user login
+     *
+     * @param login    - user login
+     * @param password - new user password
+     * @return true if successfully updated
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public boolean updatePasswordByLogin(String login, String password) throws DaoException {
         try (PreparedStatement statementUser = connection.prepareStatement(UPDATE_USER_PASSWORD)) {
@@ -147,7 +196,16 @@ public class UserDAOImpl extends UserDAO {
             throw new DaoException("Can't update user", e);
         }
     }
-
+    /**
+     * Updates user avatar by user id
+     *
+     * @param id        - user id
+     * @param avatarUrl - new user avatar url
+     * @return true if successfully updated
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public boolean updateAvatar(int id, String avatarUrl) throws DaoException {
         try (PreparedStatement statementUser = connection.prepareStatement(UPDATE_AVATAR)) {
@@ -159,7 +217,15 @@ public class UserDAOImpl extends UserDAO {
             throw new DaoException("Can't update avatar", e);
         }
     }
-
+    /**
+     * Checks if definite login exists
+     *
+     * @param login - login to check
+     * @return true if login exists
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public boolean loginExists(String login) throws DaoException {
         try (PreparedStatement statementUser = connection.prepareStatement(LOGIN_EXISTS)) {
@@ -170,7 +236,16 @@ public class UserDAOImpl extends UserDAO {
             throw new DaoException("Can't update avatar", e);
         }
     }
-
+    /**
+     * Updates user avatar by user id
+     *
+     * @param userId  - user id
+     * @param balance - user balance to update
+     * @return true if successfully updated
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public boolean updateBalance(int userId, BigDecimal balance) throws DaoException {
         BigDecimal currentBalance;
@@ -191,7 +266,15 @@ public class UserDAOImpl extends UserDAO {
             throw new DaoException(e);
         }
     }
-
+    /**
+     * Takes {@link BigDecimal} balance by user id
+     *
+     * @param userId - user id
+     * @return taken {@link BigDecimal} balance
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public BigDecimal findBalance(int userId) throws DaoException {
         BigDecimal currentBalance = null;
@@ -206,7 +289,15 @@ public class UserDAOImpl extends UserDAO {
         }
         return currentBalance;
     }
-
+    /**
+     * Takes {@link User} object by user login
+     *
+     * @param login - user login
+     * @return taken {@link User} object
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
     @Override
     public int findUserIdByLogin(String login) throws DaoException {
         int userId = 0;
@@ -221,7 +312,44 @@ public class UserDAOImpl extends UserDAO {
         }
         return userId;
     }
+    /**
+     * Makes user bets
+     *
+     * @param userId - user id
+     * @param money - monetary bet
+     * @return true if successfully made bet
+     * @throws DaoException if {@link SQLException} occurred while working with database
+     * @see PreparedStatement
+     * @see ResultSet
+     */
+    @Override
+    public boolean makeBet(int userId, BigDecimal money) throws DaoException {
+        BigDecimal currentBalance;
+        try (PreparedStatement statementSelectBalance = connection.prepareStatement(SELECT_BALANCE);
+             PreparedStatement statementUpdateBalance = connection.prepareStatement(UPDATE_BALANCE)) {
+            statementSelectBalance.setInt(1, userId);
 
+            ResultSet resultSet = statementSelectBalance.executeQuery();
+            if (resultSet.next()) {
+                currentBalance = resultSet.getBigDecimal(PARAM_NAME_BALANCE);
+                statementUpdateBalance.setBigDecimal(1, currentBalance.subtract(money));
+                statementUpdateBalance.setInt(2, userId);
+                statementUpdateBalance.executeUpdate();
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+    /**
+     * Builds {@link User} object by parsing {@link ResultSet} object.
+     *
+     * @param resultSet {@link ResultSet} object to parse
+     * @return parsed {@link User} object or null
+     * @throws SQLException if the columnLabel is not valid; if a database access error occurs or this method is called
+     *                      on a closed result set
+     */
     private User buildUser(ResultSet resultSet) throws SQLException {
         User user = new User();
         user.setId(resultSet.getInt(PARAM_NAME_ID));
@@ -234,7 +362,15 @@ public class UserDAOImpl extends UserDAO {
         user.setAvatarUrl(resultSet.getString(PARAM_NAME_AVATAR));
         return user;
     }
-
+    /**
+     * Builds {@link List} object filled by {@link User} objects by parsing {@link ResultSet} object.
+     *
+     * @param resultSet {@link ResultSet} object to parse
+     * @return parsed {@link List} object or null
+     * @throws SQLException if the columnLabel is not valid; if a database access error occurs or this method is called
+     *                      on a closed result set
+     * @see #buildUser(ResultSet)
+     */
     private List<User> buildUserList(ResultSet resultSet) throws SQLException {
         List<User> userList = new ArrayList<>();
         while (resultSet.next()) {

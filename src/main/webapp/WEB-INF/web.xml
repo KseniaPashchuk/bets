@@ -28,7 +28,6 @@
         <exception-type>java.lang.Exception</exception-type>
         <location>/pages/error/error.jsp</location>
     </error-page>
-
     <jsp-config>
         <taglib>
             <taglib-uri>bettags</taglib-uri>
