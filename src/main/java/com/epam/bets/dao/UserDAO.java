@@ -42,4 +42,6 @@ public abstract class UserDAO extends AbstractDAO<User> {
 
     public abstract BigDecimal findBalance(int userId) throws DaoException;
 
+    public abstract int findUserIdByLogin(String login) throws  DaoException;
+
 }

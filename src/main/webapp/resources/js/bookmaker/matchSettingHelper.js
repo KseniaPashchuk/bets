@@ -10,7 +10,7 @@ $(document).ready(function () {
         format: 'DD/MM/YYYY HH:mm'
     });
 
-    $('.dropdown').click(function () {
+    $('#dropdown').click(function () {
         $('#league-list').slideToggle(500);
     });
 

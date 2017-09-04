@@ -4,7 +4,7 @@ $(document).ready(function () {
     var betMap = {"1": "FW", "2": "SW", "X": "X", "12": "FS", "1X": "FWX", "X2": "XSW", "L": "TL", "M": "TM"};
 
 
-    $('.dropdown').click(function () {
+    $('#dropdown').click(function () {
         $('#league-list').slideToggle(500);
     });
 

@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="full-container">
-    <%@include file="../user/jspf/header.jsp" %>
+    <%@include file="jspf/header.jsp" %>
     <section class="content clearfix">
         <div class="row user-profile">
             <div class="user-menu-wrap col-lg-3 col-md-3 col-sm-3">
@@ -36,7 +36,7 @@
                     ><fmt:message
                             key="common.profile.edit_password"/></a></div>
                     <div class="user-menu-item dropdown">
-                        <a href="${pageContext.servletContext.contextPath}/pages/common/userBets.jsp" style="color: #ffa71b" class="dropdown-toggle" data-toggle="dropdown"><fmt:message
+                        <a href="${pageContext.servletContext.contextPath}/pages/user/userBets.jsp" style="color: #ffa71b" class="dropdown-toggle" data-toggle="dropdown"><fmt:message
                                 key="common.profile.my_bets"/>
                             <span
                                     class="caret"></span></a>
@@ -57,6 +57,7 @@
             </div>
             <div class="user-bets-wrap col-lg-9 col-md-9 col-sm-9">
                 <div class="user-bets colored-block">
+                    <input type="hidden" value="${param.type}" id="prev-type"/>
                     <table id="user-bets-table" class="table table-bordered bets-table" cellspacing="0" width="100%">
                         <thead>
                         <tr>
@@ -70,10 +71,10 @@
                         <tbody>
                         </tbody>
                     </table>
-                    <p class="" id="no-bets" style="display:none;">
+                    <p class="show-message" id="no-bets" style="display:none;">
                         <fmt:message key="common.user_bets.no_bets"/>
                     </p>
-                    <p class="error-label" id="bets-error" style="display:none;">
+                    <p class="error-label show-message" id="bets-error" style="display:none;">
                         <fmt:message key="common.error.server_error"/>
                     </p>
 
@@ -82,8 +83,8 @@
         </div>
     </section>
 
-    <%@include file="jspf/footer.jspf" %>
-    <%@ include file="jspf/logout.jspf" %>
+    <%@include file="../common/jspf/footer.jspf" %>
+    <%@ include file="../common/jspf/logout.jspf" %>
 </div>
 </body>
 </html>

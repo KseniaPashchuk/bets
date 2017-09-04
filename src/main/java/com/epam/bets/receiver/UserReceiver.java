@@ -40,11 +40,5 @@ public interface UserReceiver extends Receiver {
 
     void changeLocale(RequestContent requestContent);
 
-    void sendSupportMail(RequestContent requestContent) throws ReceiverException;
-
-    void showSupportMailChat(RequestContent requestContent) throws ReceiverException;
-
-    List<SupportMail> showLastUsersMail(RequestContent requestContent) throws ReceiverException;
-
     void showUserInfo(RequestContent requestContent) throws ReceiverException;
 }

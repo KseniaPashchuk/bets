@@ -14,14 +14,29 @@ import org.apache.logging.log4j.Logger;
 import static com.epam.bets.constant.ErrorConstant.ERROR_LIST_NAME;
 import static com.epam.bets.constant.PageConstant.REGISTRATION_PAGE;
 import static com.epam.bets.constant.PageConstant.SERVER_ERROR_PAGE;
-
+/**
+ * Class provides recovering password operation.
+ *
+ * @author Pashchuk Ksenia
+ * @see AbstractCommand
+ */
 public class PasswordRecoverCommand implements AbstractCommand {
 
     private static final String NEXT_PAGE = REGISTRATION_PAGE;
 
     private static final Logger LOGGER = LogManager.getLogger(PasswordRecoverCommand.class);
     private UserReceiver receiver = new UserReceiverImpl();
-
+    /**
+     * Provides recovering password operation.
+     * Takes as parameter {@link RequestContent} and pass it to the Receiver layer  {@link UserReceiver}.
+     * Takes Receiver operation result, navigates to {@link com.epam.bets.constant.PageConstant#REGISTRATION_PAGE}
+     * and saves navigation page to the session (required for use in locale change command
+     * {@link com.epam.bets.command.common.ChangeLocaleCommand}).
+     * If Receiver operation throws {@link ReceiverException}  navigates to {@link com.epam.bets.constant.PageConstant#SERVER_ERROR_PAGE}
+     *
+     * @param requestContent ({@link RequestContent}) request from client to get parameters to work with
+     * @return {@link PageNavigator} with response parameters.
+     */
     @Override
     public PageNavigator execute(RequestContent requestContent) {
         PageNavigator navigator;

@@ -13,35 +13,39 @@
     <script type="text/javascript" src="../../resources/js/lib/jquery-3.2.1.js"></script>
     <script type="text/javascript" src="../../resources/js/lib/moment.js"></script>
     <script type="text/javascript" src="../../resources/js/logout.js"></script>
-    <script type="text/javascript" src="../../resources/js/admin/addTeamHelper.js"></script>
-    <script type="text/javascript" src="../../resources/js/matchHelper.js"></script>
+    <script type="text/javascript" src="../../resources/js/admin/matchesSettingHelper.js"></script>
+
     <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,500&amp;subset=cyrillic" rel="stylesheet">
 </head>
 <body>
 <div class="full-container">
-    <%@include file="../bookmaker/jspf/header.jsp" %>
+    <%@include file="../admin/jspf/header.jspf" %>
     <div class="games-wrap row">
         <div class="games-menu-wrap col-lg-3">
             <div class="games-menu colored-block">
                 <div class="matches-list matches-menu-item">
-                    <div class="matches-title">
-                        <a href="${pageContext.servletContext.contextPath}/pages/common/matches.jsp" id="matches-title"><fmt:message key="common.bets.matches"/></a> <span
-                            class="glyphicon glyphicon-chevron-down dropdown" style="color: #ffa71b"
-                            aria-hidden="true"></span>
-                    </div>
-                    <div class="league-list" id="league-list" style="display: none">
-                        <div class="btn-group">
-                            <c:forEach var="item" items="${confederationList}">
-                                <label><input type="radio" name="league" value="${item}"/>${item}</label>
-                            </c:forEach>
+                    <form id="show-matches-page" method="POST" action="${pageContext.servletContext.contextPath}/controller">
+                        <input type="hidden" name="command" value="show_matches_page"/>
+                        <input type="hidden" name="confederation" id="confederation" value=""/>
+                        <div class="matches-title">
+                            <a href="javascript://" id="matches-title"><fmt:message key="common.bets.matches"/></a> <span
+                                class="glyphicon glyphicon-chevron-down dropdown" id="dropdown" style="color: #ffa71b"
+                                aria-hidden="true"></span>
                         </div>
-                    </div>
+                        <div class="league-list" id="league-list" style="display: none">
+                            <div class="btn-group">
+                                <c:forEach var="item" items="${confederationList}">
+                                    <label><input type="radio" name="league" value="${item}"/>${item}</label>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="results matches-menu-item"><a href="${pageContext.servletContext.contextPath}/pages/common/matches.jsp" id="match-results"><fmt:message
+                <div class="results matches-menu-item"><a href="${pageContext.servletContext.contextPath}/controller?command=show_match_results_page" id="match-results"><fmt:message
                         key="common.bets.results"/></a></div>
-                <div class="add-team matches-menu-item" ><a href="${pageContext.servletContext.contextPath}/pages/admin/addTeam.jsp"
+                <div class="add-team matches-menu-item" ><a href="${pageContext.servletContext.contextPath}/controller?command=show_add_team_page"
                                          ><fmt:message key="admin.match.add_team"/></a></div>
-                <div class="add-team matches-menu-item"><a href="${pageContext.servletContext.contextPath}/pages/admin/addConfederation.jsp"
+                <div class="add-team matches-menu-item"><a href="${pageContext.servletContext.contextPath}controller?command=show_add_confederation_page"
                                          ><fmt:message key="admin.match.add_confederation"/></a></div>
             </div>
         </div>

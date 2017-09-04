@@ -15,7 +15,12 @@ import static com.epam.bets.constant.PageConstant.FAQ_PAGE;
 import static com.epam.bets.constant.PageConstant.SERVER_ERROR_PAGE;
 import static com.epam.bets.constant.PageConstant.SHOW_FAQ_PAGE;
 
-
+/**
+ * Class provides showing FAQ operation.
+ *
+ * @author Pashchuk Ksenia
+ * @see AbstractCommand
+ */
 public class ShowFAQCommand implements AbstractCommand {
 
     private static final Logger LOGGER = LogManager.getLogger(ShowFAQCommand.class);
@@ -23,6 +28,17 @@ public class ShowFAQCommand implements AbstractCommand {
 
     private FAQReceiver receiver = new FAQReceiverImpl();
 
+    /**
+     * Provides showing FAQ operation.
+     * Takes as parameter {@link RequestContent} and pass it to the Receiver layer {@link FAQReceiver}.
+     * Takes Receiver operation result, navigates to {@link com.epam.bets.constant.PageConstant#FAQ_PAGE}
+     * and saves navigation page to the session (required for use in locale change command
+     * {@link com.epam.bets.command.common.ChangeLocaleCommand}).
+     * If Receiver operation throws {@link ReceiverException}  navigates to {@link com.epam.bets.constant.PageConstant#SERVER_ERROR_PAGE}
+     *
+     * @param requestContent ({@link RequestContent}) request from client to get parameters to work with
+     * @return {@link PageNavigator} with response parameters.
+     */
     @Override
     public PageNavigator execute(RequestContent requestContent) {
         PageNavigator navigator;

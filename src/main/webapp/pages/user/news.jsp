@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <article class="row">
     <div class="news ">
-        <div class="colored-block">
-            <p class="error-label"
+        <div>
+            <p class="error-label show-message"
                <c:if test="${!btg:contains(errors,'showNewsError' )}">style="display:none;"</c:if>>
                 <fmt:message key="common.news.piece.error"/>
             </p>
@@ -20,8 +20,8 @@
         </div>
         <div class="news-wrap" id="news-wrap">
         </div>
-        <div class="colored-block show-message">
-            <p class="" id="no-news" style="display:none">
+        <div class="show-message">
+            <p class="show-message" id="no-news" style="display:none">
                 <fmt:message key="common.news.no_news"/>
             </p>
         </div>

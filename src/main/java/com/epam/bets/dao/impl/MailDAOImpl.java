@@ -38,7 +38,7 @@ public class MailDAOImpl extends MailDAO {
     }
 
     @Override
-    public List<SupportMail> findLastUsersMail() throws DaoException {//TODO !!!!!!!!!!!!!
+    public List<SupportMail> findLastUsersMail() throws DaoException {
         List<SupportMail> mailList;
         try (PreparedStatement statementMail = connection.prepareStatement(SELECT_ALL_USER_EMAILS)) {
             ResultSet resultSet = statementMail.executeQuery();

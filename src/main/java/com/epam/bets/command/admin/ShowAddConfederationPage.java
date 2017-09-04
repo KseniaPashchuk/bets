@@ -15,12 +15,29 @@ import static com.epam.bets.constant.PageConstant.CREATE_CONFEDERATION_PAGE;
 import static com.epam.bets.constant.PageConstant.SERVER_ERROR_PAGE;
 import static com.epam.bets.constant.PageConstant.SHOW_CREATE_CONFEDERATION_PAGE;
 
+/**
+ * Class provides showing add confederation page operation for admin.
+ *
+ * @author Pashchuk Ksenia
+ * @see AbstractCommand
+ */
 public class ShowAddConfederationPage implements AbstractCommand {
     private static final String NEXT_PAGE = CREATE_CONFEDERATION_PAGE;
     private static final Logger LOGGER = LogManager.getLogger(ShowAddConfederationPage.class);
 
     private MatchReceiver receiver = new MatchReceiverImpl();
 
+    /**
+     * Provides showing add confederation page operation for admin.
+     * Takes as parameter {@link RequestContent} and pass it to the Receiver layer  {@link MatchReceiver}.
+     * Takes Receiver operation result, navigates to {@link com.epam.bets.constant.PageConstant#CREATE_CONFEDERATION_PAGE}
+     * and saves navigation page to the session (required for use in locale change command
+     * {@link com.epam.bets.command.common.ChangeLocaleCommand}).
+     * If Receiver operation throws {@link ReceiverException}  navigates to {@link com.epam.bets.constant.PageConstant#SERVER_ERROR_PAGE}
+     *
+     * @param requestContent ({@link RequestContent}) request from client to get parameters to work with
+     * @return {@link PageNavigator} with response parameters.
+     */
     @Override
     public PageNavigator execute(RequestContent requestContent) {
         PageNavigator navigator;

@@ -27,9 +27,9 @@ public class AddConfederationCommand implements AbstractCommand{
     private static final Logger LOGGER = LogManager.getLogger(AddFootballTeamCommand.class);
 
     /**
-     * Provides creating football team operation for admin.
+     * Provides creating confederation operation for admin.
      * Takes as parameter {@link RequestContent} and pass it to the Receiver layer.
-     * Takes Receiver operation result, navigates to {@link com.epam.bets.constant.PageConstant#CREATE_TEAM_PAGE}.
+     * Takes Receiver operation result, navigates to {@link com.epam.bets.constant.PageConstant#CREATE_CONFEDERATION_PAGE}.
      * and saves navigation page to the session (required for use in locale change command
      * {@link com.epam.bets.command.common.ChangeLocaleCommand}).
      * If Receiver operation throws {@link ReceiverException}  navigates to {@link com.epam.bets.constant.PageConstant#SERVER_ERROR_PAGE}

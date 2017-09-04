@@ -42,13 +42,13 @@
     <div class="games-wrap row">
         <div class="games-menu-wrap col-lg-3">
             <div class="games-menu colored-block">
-                <div class="matches-list">
+                <div class="matches-list matches-menu-item">
                     <form id="show-matches-page" method="POST" action="${pageContext.servletContext.contextPath}/controller">
                         <input type="hidden" name="command" value="show_matches_page"/>
                         <input type="hidden" name="confederation" id="confederation" value=""/>
                     <div class="matches-title">
                         <a href="javascript://" id="matches-title"><fmt:message key="common.bets.matches"/></a> <span
-                            class="glyphicon glyphicon-chevron-down dropdown" style="color: #ffa71b"
+                            class="glyphicon glyphicon-chevron-down dropdown" id="dropdown" style="color: #ffa71b"
                             aria-hidden="true"></span>
                     </div>
                     <div class="league-list" id="league-list" style="display: none">
@@ -60,7 +60,7 @@
                     </div>
                     </form>
                 </div>
-                <div class="results"><a href="javascript://" id="match-results"><fmt:message
+                <div class="results matches-menu-item"><a href="javascript://" id="match-results"><fmt:message
                         key="common.bets.results"/></a>
                 </div>
                 <c:if test="${role == 'ADMIN'}">
@@ -114,7 +114,7 @@
                     <tbody>
                     </tbody>
                 </table>
-                <p id="no-results" style="display:none;">
+                <p class="show-message" id="no-results" style="display:none;">
                     <fmt:message key="common.bets.results.no_results"/>
                 </p>
                 <p class="error-label" id="results-error" style="display:none;">

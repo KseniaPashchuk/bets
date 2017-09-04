@@ -36,7 +36,7 @@
                     ><fmt:message key="common.profile.edit_password"/></a></div>
                     <c:if test="${role == 'USER'}">
                     <div class="user-menu-item dropdown">
-                        <a href="${pageContext.servletContext.contextPath}/pages/common/userBets.jsp"
+                        <a href="${pageContext.servletContext.contextPath}/pages/user/userBets.jsp"
                            class="dropdown-toggle" data-toggle="dropdown"><fmt:message
                                 key="common.profile.my_bets"/>
                             <span
@@ -67,11 +67,13 @@
                        <c:if test="${!btg:contains(errors,'updateUserAvatarError' )}">style="display:none;"</c:if>>
                         <fmt:message key="common.profile.update_avatar.error"/>
                     </p>
-                </div>
-                <div class="colored-block">
                     <p class="error-label"
                        <c:if test="${!btg:contains(errors,'changeProfileError' )}">style="display:none;"</c:if>>
                         <fmt:message key="common.profile.edit.error"/>
+                    </p>
+                    <p class="error-label"
+                       <c:if test="${!btg:contains(errors,'showProfileError' )}">style="display:none;"</c:if>>
+                        <fmt:message key="common.profile.show.error"/>
                     </p>
                 </div>
                 <div class="user-info colored-block">
@@ -115,9 +117,9 @@
                 </div>
             </div>
             <div class="edit-info-wrap col-lg-9 col-md-9 col-sm-9"
-                 <c:if test="${(!btg:contains(errors,'invalidFirstNameError' ))||
-                 (!btg:contains(errors,'invalidLastNameError' ))||
-                 (!btg:contains(errors,'invalidBirthDateError' ))||
+                 <c:if test="${(!btg:contains(errors,'invalidFirstNameError' ))&&
+                 (!btg:contains(errors,'invalidLastNameError' ))&&
+                 (!btg:contains(errors,'invalidBirthDateError' ))&&
                  (!btg:contains(errors,'invalidCreditCardError' ))}">style="display:none;"</c:if>
                  id="edit-user-info">
                 <div class="edit-info colored-block">
@@ -159,11 +161,12 @@
 											</span>
                                     </div>
                                 </div>
-                                <p class="error-label" id="invalid-birth-date"
-                                   <c:if test="${!btg:contains(errors,'invalidBirthDateError' )}">style="display:none;"</c:if>>
-                                    <fmt:message key="signup.error.invalid_birth_date"/>
-                                </p>
+
                             </div>
+                            <p class="error-label" id="invalid-birth-date"
+                               <c:if test="${!btg:contains(errors,'invalidBirthDateError' )}">style="display:none;"</c:if>>
+                                <fmt:message key="signup.error.invalid_birth_date"/>
+                            </p>
                         </div>
                         <div class="shell-for-input clearfix">
                             <div class="edit-label col-lg-3"><fmt:message key="common.profile.credit_cards"/></div>

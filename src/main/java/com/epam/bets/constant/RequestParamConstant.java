@@ -12,6 +12,12 @@ public final class RequestParamConstant {
         public static final String PARAM_NAME_DATE = "date";
     }
 
+    public final class MailParam{
+        public static final String PARAM_NAME_MAIL_TEXT = "text";
+        public static final String PARAM_NAME_ALL_MAIL = "allMail";
+    }
+
+
     public final class UserParam {
         public static final String PARAM_NAME_USER_ID = "userId";
         public static final String PARAM_NAME_LOGIN = "login";
@@ -34,8 +40,6 @@ public final class RequestParamConstant {
         public static final String PASSWORD_RECOVER_MAIL_SUBJECT = "Password Recovery";
         public static final String PASSWORD_RECOVER_MAIL_TEXT_START = "We've received a request to reset your password. Your new password: ";
         public static final String PASSWORD_RECOVER_MAIL_TEXT_END = "\n The BETS Team.";
-        public static final String PARAM_NAME_MAIL_TEXT = "text";
-        public static final String PARAM_NAME_ALL_MAIL = "allMail";
         public static final String PARAM_NAME_REFILL_AMOUNT = "amount";
 
     }

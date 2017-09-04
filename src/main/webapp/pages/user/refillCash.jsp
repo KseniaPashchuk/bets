@@ -18,7 +18,7 @@
 </head>
 <body>
 <div class="full-container">
-    <%@include file="../user/jspf/header.jsp" %>
+    <%@include file="jspf/header.jsp" %>
 
     <section class="content clearfix">
         <div class="row user-profile">
@@ -33,7 +33,7 @@
                     ><fmt:message
                             key="common.profile.edit_password"/></a></div>
                     <div class="user-menu-item dropdown">
-                        <a href="${pageContext.servletContext.contextPath}/pages/common/userBets.jsp"
+                        <a href="${pageContext.servletContext.contextPath}/pages/user/userBets.jsp"
                            class="dropdown-toggle" data-toggle="dropdown"><fmt:message
                                 key="common.profile.my_bets"/>
                             <span
@@ -109,9 +109,9 @@
 
     </section>
 
-    <%@include file="jspf/footer.jspf" %>
+    <%@include file="../common/jspf/footer.jspf" %>
 
-    <%@ include file="jspf/logout.jspf" %>
+    <%@ include file="../common/jspf/logout.jspf" %>
 </div>
 </body>
 </html>

@@ -231,15 +231,23 @@
                    value="<fmt:message key="common.registration.sign_up"/>">
         </form>
     </div>
-    <div id="pass-recovery" <c:if test="${!btg:contains(errors,'recoverPasswordError' )}">style="display:none;"</c:if>>
+    <div id="pass-recovery" <c:if test="${(!btg:contains(errors,'recoverPasswordError' ))&&
+   (!btg:contains(errors,'invalidEmail' ))&&
+    (!btg:contains(errors,'noSuchUserError' ))}">style="display:none;"</c:if>>
         <div class="popup-holder forget-pass-holder" id="forget-form"
-             <c:if test="${!btg:contains(errors,'recoverPasswordError' )}">style="display:none;"</c:if>>
+             <c:if test="${(!btg:contains(errors,'recoverPasswordError' ))&&
+   (!btg:contains(errors,'invalidEmail' ))&&
+    (!btg:contains(errors,'noSuchUserError' ))}">style="display:none;"</c:if>>
             <h3><i class="fa fa-lock fa-4x"></i></h3>
             <h2 class="text-center"><fmt:message key="common.registration.forgot_password"/></h2>
             <p><fmt:message key="common.registration.reset_password"/></p>
             <p class="error-label"
                <c:if test="${!btg:contains(errors,'recoverPasswordError' )}">style="display:none;"</c:if>>
                 <fmt:message key="common.recover_password.error"/>
+            </p>
+            <p class="error-label"
+               <c:if test="${!btg:contains(errors,'noSuchUserError' )}">style="display:none;"</c:if>>
+                <fmt:message key="common.user.not_found"/>
             </p>
             <form class="forget-form" id="pass-rec" action="${pageContext.servletContext.contextPath}/controller"
                   method="POST" onsubmit="validateRecoverPasswordForm()">

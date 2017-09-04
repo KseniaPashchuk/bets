@@ -63,7 +63,7 @@
         <div class="news-wrap" id="news-wrap">
 
         </div>
-        <div class="colored-block show-message">
+        <div class="show-message">
             <p class="" id="no-news" style="display:none;">
                 <fmt:message key="common.news.no_news"/>
             </p>

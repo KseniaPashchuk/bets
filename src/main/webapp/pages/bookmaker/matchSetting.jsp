@@ -9,7 +9,7 @@
                         aria-hidden="true"></span>
                 </div>
                 <input type="hidden" id="prev-confederation" value="${param.confederation}"/>
-                <div class="league-list" id="league-list" style="display: none">
+                <div class="league-list" id="league-list" id="dropdown" style="display: none">
                     <div class="btn-group">
                         <c:forEach var="item" items="${confederationList}">
                             <label><input type="radio" name="league" value="${item}"/>${item}</label>
@@ -109,7 +109,7 @@
                 <tbody>
                 </tbody>
             </table>
-            <p id="no-results" style="display:none;">
+            <p class="show-message" id="no-results" style="display:none;">
                 <fmt:message key="common.bets.results.no_results"/>
             </p>
             <p class="error-label" id="results-error" style="display:none;">

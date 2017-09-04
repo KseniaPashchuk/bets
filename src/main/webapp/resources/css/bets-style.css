@@ -377,16 +377,6 @@ footer ul {
     margin-left: 36px;
 }
 
-.error-label {
-    font-size: 15px;
-    line-height: 15px;
-    color: red !important;
-    margin: 15px 0 0px;
-}
-
-.error {
-    border: solid 2px maroon;
-}
 
 .success-label {
     font-size: 15px;
@@ -642,6 +632,17 @@ option {
 
 .last-news {
     padding-top: 15px;
+}
+
+.error-label {
+    font-size: 15px;
+    line-height: 15px;
+    color: red !important;
+    margin: 15px 0 0;
+}
+
+.error {
+    border: solid 2px maroon;
 }
 
 .logout-form input[type="button"], .logout-form input[type="submit"],
@@ -1409,9 +1410,6 @@ th {
     margin-bottom: 10px;
 }
 
-.edit-info-wrap {
-    height: 700px;
-}
 
 /*----------------------------TECH SUPPORT-----------------------------------------------------------------------*/
 
@@ -2110,4 +2108,6 @@ table.dataTable {
     border: 1px solid;
     padding: 5px 10px;
 }
-
+.games-menu-wrap form{
+    margin-bottom: 0;
+}

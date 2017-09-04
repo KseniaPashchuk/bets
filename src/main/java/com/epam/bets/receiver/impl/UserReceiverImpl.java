@@ -1,6 +1,6 @@
 package com.epam.bets.receiver.impl;
 
-import com.epam.bets.dao.impl.MailDAOImpl;
+
 import com.epam.bets.entity.*;
 import com.epam.bets.generator.PasswordGenerator;
 import com.epam.bets.dao.*;
@@ -21,7 +21,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +28,6 @@ import java.util.List;
 import static com.epam.bets.constant.ErrorConstant.ERROR_LIST_NAME;
 import static com.epam.bets.constant.ErrorConstant.UserError.*;
 import static com.epam.bets.constant.RequestParamConstant.CommonParam.DATE_PATTERN;
-import static com.epam.bets.constant.RequestParamConstant.CommonParam.PARAM_NAME_DATE;
-import static com.epam.bets.constant.RequestParamConstant.MatchParam.DATE_TIME_PATTERN;
 import static com.epam.bets.constant.RequestParamConstant.MatchParam.PARAM_NAME_MATCH_ID;
 import static com.epam.bets.constant.RequestParamConstant.MatchParam.PARAM_NAME_MAX_BET;
 import static com.epam.bets.constant.RequestParamConstant.UserParam.*;
@@ -152,7 +149,7 @@ public class UserReceiverImpl implements UserReceiver {
                 requestContent.insertRequestAttribute(PARAM_NAME_AVATAR_URL, user.getAvatarUrl());
                 requestContent.insertRequestAttribute(PARAM_NAME_BALANCE, user.getBalance());
             } else {
-                errors.add(INVALID_PARAMS_ERROR);
+                errors.add(SHOW_PROFILE_ERROR);
             }
             if (!errors.isEmpty()) {
                 requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
@@ -302,9 +299,17 @@ public class UserReceiverImpl implements UserReceiver {
     @Override
     public List<Bet> showBets(RequestContent requestContent) throws ReceiverException {
         List<Bet> bets = null;
-        int userId = (int) requestContent.findSessionAttribute(PARAM_NAME_USER_ID);
+        String email;
+        int userId;
         String type = requestContent.findParameterValue(PARAM_NAME_USER_BETS_TYPE);
         try (DaoFactory factory = new DaoFactory()) {
+            if (requestContent.findParameterValue(PARAM_NAME_EMAIL) != null) {
+                email = requestContent.findParameterValue(PARAM_NAME_EMAIL);
+                UserDAO userDAO = factory.getUserDao();
+                userId = userDAO.findUserIdByLogin(email);
+            } else {
+                userId = (int) requestContent.findSessionAttribute(PARAM_NAME_USER_ID);
+            }
             BetDAO betDAO = factory.getBetDao();
             switch (type) {
                 case "open": {
@@ -329,16 +334,16 @@ public class UserReceiverImpl implements UserReceiver {
     @Override
     public void refillCash(RequestContent requestContent) throws ReceiverException {
         List<String> errors = new ArrayList<>();
-        int userId = (int)requestContent.findSessionAttribute(PARAM_NAME_USER_ID);
+        int userId = (int) requestContent.findSessionAttribute(PARAM_NAME_USER_ID);
         BigDecimal amount = new BigDecimal(requestContent.findParameterValue(PARAM_NAME_REFILL_AMOUNT));
-        if(new UserValidator().validateRefillAmount(amount, errors)) {
+        if (new UserValidator().validateRefillAmount(amount, errors)) {
             UserDAO userDAO = new UserDAOImpl();
             TransactionManager manager = new TransactionManager();
             try {
                 manager.beginTransaction(userDAO);
-                if(userDAO.updateBalance(userId, amount)){
+                if (userDAO.updateBalance(userId, amount)) {
                     manager.commit();
-                }else{
+                } else {
                     manager.rollback();
                     errors.add(REFILL_CASH_ERROR);
                 }
@@ -357,7 +362,7 @@ public class UserReceiverImpl implements UserReceiver {
 
 
     @Override
-    public void recoverPassword(RequestContent requestContent) throws ReceiverException {//TODO check email exists
+    public void recoverPassword(RequestContent requestContent) throws ReceiverException {
         UserDAO userDAO = new UserDAOImpl();
         List<String> errors = new ArrayList<>();
         String email = requestContent.findParameterValue(PARAM_NAME_EMAIL);
@@ -367,19 +372,20 @@ public class UserReceiverImpl implements UserReceiver {
             String newPassword = new PasswordGenerator().generatePassword();
             String emailText = PASSWORD_RECOVER_MAIL_TEXT_START + newPassword + PASSWORD_RECOVER_MAIL_TEXT_END;
             try {
-                if (userDAO.updatePasswordByLogin(email, DigestUtils.md5Hex(newPassword))) {
-                    if (EmailSender.sendMail(email, PASSWORD_RECOVER_MAIL_SUBJECT, emailText)) {
-                        manager.commit();
+                if (userDAO.loginExists(email)) {
+                    if (userDAO.updatePasswordByLogin(email, DigestUtils.md5Hex(newPassword))) {
+                        if (EmailSender.sendMail(email, PASSWORD_RECOVER_MAIL_SUBJECT, emailText)) {
+                            manager.commit();
+                        } else {
+                            manager.rollback();
+                            errors.add(RECOVER_PASSWORD_ERROR);
+                        }
                     } else {
                         manager.rollback();
                         errors.add(RECOVER_PASSWORD_ERROR);
                     }
-                } else {
-                    manager.rollback();
-                    errors.add(RECOVER_PASSWORD_ERROR);
-                }
-                if (!errors.isEmpty()) {
-                    requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
+                }else {
+                    errors.add(NO_SUCH_USER_ERROR);
                 }
             } catch (DaoException e) {
                 manager.rollback();
@@ -482,61 +488,11 @@ public class UserReceiverImpl implements UserReceiver {
     }
 
     @Override
-    public void sendSupportMail(RequestContent requestContent) throws ReceiverException {
-        List<String> errors = new ArrayList<>();
-        SupportMail mail = new SupportMail();
-        mail.setUserEmail(requestContent.findParameterValue(PARAM_NAME_EMAIL));
-        mail.setMailDate(LocalDateTime.now());
-        String userRole = requestContent.findSessionAttribute(PARAM_NAME_ROLE).toString();
-        if (userRole.equalsIgnoreCase("ADMIN")) {
-            mail.setType(SupportMail.MailType.IN);
-        } else {
-            mail.setType(SupportMail.MailType.OUT);
-        }
-        mail.setMailText(requestContent.findParameterValue(PARAM_NAME_MAIL_TEXT));
-        MailDAO mailDAO = new MailDAOImpl();
-        TransactionManager manager = new TransactionManager();
-        manager.beginTransaction(mailDAO);
-        if (new MailValidator().validateMailText(mail.getMailText(), errors)) {
-            try {
-                int mailIdx = mailDAO.create(mail);
-                if (mailIdx != 0) {
-                    manager.commit();
-                } else {
-                    manager.rollback();
-                    errors.add(SEND_SUPPORT_MAIL_ERROR);
-                }
-                manager.commit();
-            } catch (DaoException e) {
-                manager.rollback();
-                throw new ReceiverException(e);
-            } finally {
-                manager.close();
-            }
-        }
-        if (!errors.isEmpty()) {
-            requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
-        }
-    }
-
-    @Override
-    public List<SupportMail> showLastUsersMail(RequestContent requestContent) throws ReceiverException {
-        List<SupportMail> userEmails;
-        try (DaoFactory factory = new DaoFactory()) {
-            MailDAO mailDAO = factory.getMailDao();
-            userEmails = mailDAO.findLastUsersMail();
-            return userEmails;
-        } catch (DaoException e) {
-            throw new ReceiverException(e);
-        }
-    }
-
-    @Override
     public void showUserInfo(RequestContent requestContent) throws ReceiverException {
         User user;
         List<String> errors = new ArrayList<>();
         String userLogin = requestContent.findParameterValue(PARAM_NAME_EMAIL);
-        if(new UserValidator().validateLogin(userLogin, errors)) {
+        if (new UserValidator().validateLogin(userLogin, errors)) {
             try (DaoFactory factory = new DaoFactory()) {
                 UserDAO userDAO = factory.getUserDao();
                 CreditCardDAO cardDAO = factory.gerCreditCardDao();
@@ -562,31 +518,6 @@ public class UserReceiverImpl implements UserReceiver {
         }
         if (!errors.isEmpty()) {
             requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
-        }
-    }
-
-
-    @Override
-    public void showSupportMailChat(RequestContent requestContent) throws ReceiverException {
-        List<SupportMail> mail;
-        List<String> errors = new ArrayList<>();
-        String email;
-        if (requestContent.findSessionAttribute(PARAM_NAME_ROLE).toString().equalsIgnoreCase("ADMIN")) {
-            email = requestContent.findParameterValue(PARAM_NAME_EMAIL);
-        } else {
-            email = (String) requestContent.findSessionAttribute(PARAM_NAME_LOGIN);
-        }
-        try (DaoFactory factory = new DaoFactory()) {
-            MailDAO mailDAO = factory.getMailDao();
-            mail = mailDAO.findAllUserMail(email);
-            if (mail != null && !mail.isEmpty()) {
-                requestContent.insertRequestAttribute(PARAM_NAME_ALL_MAIL, mail);
-            } else {
-                errors.add(SHOW_SUPPORT_CHAT_ERROR);
-                requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
-            }
-        } catch (DaoException e) {
-            throw new ReceiverException(e);
         }
     }
 }

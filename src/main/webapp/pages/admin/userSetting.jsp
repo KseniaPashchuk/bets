@@ -19,14 +19,13 @@
     <script type="text/javascript" src="../../resources/js/lib/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="../../resources/js/lib/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript" src="../../resources/js/logout.js"></script>
-    <script type="text/javascript" src="../../resources/js/userBetsHelper.js"></script>
     <script type="text/javascript" src="../../resources/js/admin/userSettingHelper.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,500&amp;subset=cyrillic" rel="stylesheet">
 
 </head>
 <body>
 <div class="full-container">
-    <%@include file="../user/jspf/header.jsp" %>
+    <%@include file="../admin/jspf/header.jspf" %>
 
     <section class="content clearfix">
         <div class="row">
@@ -34,6 +33,10 @@
                 <div class="search-user">
                     <form class="clearfix" action="${pageContext.request.contextPath}/controller" method="GET">
                         <input type="hidden" name="command" value="show_user_info">
+                        <p class="error-label"
+                           <c:if test="${!btg:contains(errors,'noSuchUserError' )}">style="display:none;"</c:if>>
+                            <fmt:message key="common.user.not_found"/>
+                        </p>
                         <p class="error-label"
                            <c:if test="${!btg:contains(errors,'invalidLoginError' )}">style="display:none;"</c:if>>
                             <fmt:message key="signup.error.invalid_login"/>
@@ -49,7 +52,9 @@
             </div>
 
             <div class="found-user-wrap colored-block"
-                    <c:if test="${(btg:contains(errors,'invalidLoginError'))||(requestScope.login==null)}">
+                    <c:if test="${(btg:contains(errors,'invalidLoginError'))||
+                    (btg:contains(errors,'noSuchUserError'))||
+                    (requestScope.login==null)}">
                         style="display: none;"
                     </c:if>>
                 <div class="user-info">
@@ -102,6 +107,7 @@
                         </ul>
                     </div>
                     <table id="user-bets-table" class="table table-bordered bets-table" cellspacing="0" width="100%">
+                        <input type="hidden" id="email" value="${param.email}">
                         <thead>
                         <tr>
                             <th style="min-width: 300px"><fmt:message key="common.bets.event"/></th>
@@ -114,7 +120,7 @@
                         <tbody>
                         </tbody>
                     </table>
-                    <p class="" id="no-bets" style="display:none;">
+                    <p class="show-message" id="no-bets" style="display:none;">
                         <fmt:message key="common.user_bets.no_bets"/>
                     </p>
                     <p class="error-label" id="bets-error" style="display:none;">

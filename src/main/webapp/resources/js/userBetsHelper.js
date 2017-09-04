@@ -14,6 +14,7 @@ $(document).ready(function () {
     });
 
     function findBets(type) {
+        $("#prev-type").val(type);
         $.ajax({
                 url: "/ajax?command=show_bets&type=" + type,
                 type: 'GET',
@@ -51,6 +52,9 @@ $(document).ready(function () {
                 }
             }
         );
+    }
+    if ($("#prev-type").val() != null && $("#prev-type").val().trim() != '') {
+        findBets($("#prev-type").val());
     }
 
 });

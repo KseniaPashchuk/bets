@@ -99,8 +99,8 @@ function validateEditProfileForm(){
         $("#edit-surname").css('border','solid 2px maroon');
     }
 
-
-   $.each($('.credit-card.active'), function (key, item) {
+var creditCards = $('.credit-card.active');
+   $.each(creditCards, function (key, item) {
        if(!REGEX_CREDIT_CARD.test(item.find('input').eq(0).val().trim())){
            isFormValid = false;
            item.find('input').eq(0).css('border','solid 2px maroon');

@@ -8,7 +8,7 @@ $(document).ready(function () {
     });
 
 
-    $('.dropdown').click(function () {
+    $('#dropdown').click(function () {
         $('#league-list').slideToggle(500);
     });
 
@@ -113,7 +113,7 @@ $(document).ready(function () {
         }
     });
 
-    if ($("#prev-date").val != null || $("#prev-date").val.trim() != '') {
+    if ($("#prev-date").val != null && $("#prev-date").val.trim() != '') {
         $("#show-results").click();
     } else {
         $('#select-results-date').data("DateTimePicker").date(new Date());

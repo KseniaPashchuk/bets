@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.epam.bets.constant.ErrorConstant.MailError.INVALID_MAIL_TEXT_ERROR;
 import static com.epam.bets.constant.ErrorConstant.UserError.*;
 
 /**

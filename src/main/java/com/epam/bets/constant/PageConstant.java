@@ -50,6 +50,9 @@ public class PageConstant {
     public static final String SHOW_USER_INFO = "/controller?command=show_user_info&login=";
     public static final String USER_SETTING_PAGE = "/pages/admin/userSetting.jsp";
 
+    public static final String BETS_PAGE = "/pages/user/userBets.jsp";
+    public static final String SHOW_BETS_PAGE = "/controller?command=show_bets_page&type=";
+
     private PageConstant() {
     }
 }

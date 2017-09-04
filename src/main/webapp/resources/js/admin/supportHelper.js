@@ -45,10 +45,10 @@ $(function () {
                         '</form>' +
                         '</td>';
                     if (item.type.localeCompare('IN')){
-                        html += '<td class="view-message"><img class="user-mail-img" src="../../images/techSupport.jpg"/>' +
+                        html += '<td class="view-message"><img class="user-mail-img" src="/resources/images/techSupport.jpg"/>' +
                             item.mailText.substring(0, 15) + '</td>';
                     }else{
-                        html += '<td class="view-message"><img class="user-mail-img" src="../../images/user.jpg"/>' +
+                        html += '<td class="view-message"><img class="user-mail-img" src="/resources/images/user.jpg"/>' +
                             item.mailText.substring(0, 15) + '</td>';
                     }
                     html +='<td class="view-message inbox-small-cells"></td>' +

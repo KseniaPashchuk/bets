@@ -31,6 +31,10 @@ public class UserDAOImpl extends UserDAO {
             "SELECT password FROM user WHERE login=?";
     private static final String SELECT_BALANCE =
             "SELECT balance FROM user WHERE user_id=?";
+
+    private static final String SELECT_ID =
+            "SELECT user_id FROM user WHERE login=?";
+
     private static final String DELETE_USER_BY_ID = "DELETE FROM user WHERE user_id=?";
     private static final String CREATE_USER = "INSERT INTO user (user_id, login, password, first_name, last_name, birth_date, role, avatar_url, balance)" +
             " VALUES( NULL, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -161,10 +165,7 @@ public class UserDAOImpl extends UserDAO {
         try (PreparedStatement statementUser = connection.prepareStatement(LOGIN_EXISTS)) {
             statementUser.setString(1, login);
             ResultSet resultSet = statementUser.executeQuery();
-            if (resultSet.next()) {
-                return true;
-            }
-            return false;
+            return resultSet.next();
         } catch (SQLException e) {
             throw new DaoException("Can't update avatar", e);
         }
@@ -204,6 +205,21 @@ public class UserDAOImpl extends UserDAO {
             throw new DaoException(e);
         }
         return currentBalance;
+    }
+
+    @Override
+    public int findUserIdByLogin(String login) throws DaoException {
+        int userId = 0;
+        try (PreparedStatement statementSelectBalance = connection.prepareStatement(SELECT_ID)) {
+            statementSelectBalance.setString(1, login);
+            ResultSet resultSet = statementSelectBalance.executeQuery();
+            if (resultSet.next()) {
+                userId = resultSet.getInt(PARAM_NAME_ID);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return userId;
     }
 
     private User buildUser(ResultSet resultSet) throws SQLException {

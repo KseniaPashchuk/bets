@@ -5,7 +5,7 @@
             <div class="matches-list">
                 <div class="matches-title matches-menu-item">
                     <a href="javascript://" id="matches-title"><fmt:message key="common.bets.matches"/></a> <span
-                        class="glyphicon glyphicon-chevron-down dropdown" style="color: #ffa71b"
+                        class="glyphicon glyphicon-chevron-down dropdown"  id="dropdown" style="color: #ffa71b"
                         aria-hidden="true"></span>
                 </div>
                 <div class="league-list" id="league-list" style="display: none">
@@ -93,10 +93,10 @@
                 <tbody>
                 </tbody>
             </table>
-            <p id="no-results" style="display:none;">
+            <p class="show-message" id="no-results" style="display:none;">
                 <fmt:message key="common.bets.results.no_results"/>
             </p>
-            <p class="error-label" id="results-error" style="display:none;">
+            <p class="error-label"  id="results-error" style="display:none;">
                 <fmt:message key="common.error.server_error"/>
             </p>
         </div>

@@ -5,7 +5,7 @@
             <div class="matches-list matches-menu-item">
                 <div class="matches-title">
                     <a href="javascript://" id="matches-title"><fmt:message key="common.bets.matches"/></a> <span
-                        class="glyphicon glyphicon-chevron-down dropdown" style="color: #ffa71b"
+                        class="glyphicon glyphicon-chevron-down dropdown" id="dropdown" style="color: #ffa71b"
                         aria-hidden="true"></span>
                 </div>
                 <input type="hidden" id="prev-confederation" value="${param.confederation}"/>
@@ -62,7 +62,7 @@
                 <tbody>
                 </tbody>
             </table>
-            <p id="no-matches" style="display:none;">
+            <p class="show-message" id="no-matches" style="display:none;">
                 <fmt:message key="common.bets.no_matches"/>
             </p>
             <p class="error-label" id="matches-error" style="display:none;">

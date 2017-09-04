@@ -2,7 +2,7 @@
 
 <div class="row">
 
-    <div class="colored-block show-message">
+    <div class="show-message">
         <p class="error-label"
            <c:if test="${(!btg:contains(errors,'createFAQError' ))}">style="display:none;"</c:if>>
             <fmt:message key="admin.faq.create.error"/>

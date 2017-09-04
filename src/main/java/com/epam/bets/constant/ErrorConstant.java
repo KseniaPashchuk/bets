@@ -13,7 +13,11 @@ public final class ErrorConstant {
         public static final String INVALID_CREATE_PARAMS = "invalidCreateParams";
         public static final String INVALID_EDIT_PARAMS = "invalidEditParams";
     }
-
+    public final class MailError {
+        public static final String INVALID_MAIL_TEXT_ERROR = "invalidMailTextError";
+        public static final String SHOW_SUPPORT_CHAT_ERROR = "showSupportChatError";
+        public static final String SEND_SUPPORT_MAIL_ERROR = "sendSupportMailError";
+    }
     public final class MatchError {
         public static final String SHOW_ALL_CONFEDERATIONS_ERROR = "Cannot find all confederations";
         public static final String SHOW_ALL_TEAMS_ERROR = "Cannot find all teams";
@@ -60,12 +64,10 @@ public final class ErrorConstant {
         public static final String NOT_ENOUGH_MONEY = "notEnoughMoneyError";
         public static final String SUMM_NOT_POSITIVE = "summNotPositiveError";
         public static final String RECOVER_PASSWORD_ERROR = "recoverPasswordError";
-        public static final String SEND_SUPPORT_MAIL_ERROR = "sendSupportMailError";
         public static final String INVALID_EMAIL_ERROR = "invalidEmailError";
-        public static final String INVALID_MAIL_TEXT_ERROR = "invalidMailTextError";
-        public static final String SHOW_SUPPORT_CHAT_ERROR = "showSupportChatError";
-        public static final String NO_SUCH_USER_ERROR = "noSuchUserError";
 
+        public static final String NO_SUCH_USER_ERROR = "noSuchUserError";
+        public static final String SHOW_PROFILE_ERROR = "showProfileError";
     }
 
     public final class NewsError {

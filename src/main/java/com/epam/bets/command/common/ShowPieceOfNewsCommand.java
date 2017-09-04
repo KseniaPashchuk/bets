@@ -14,6 +14,12 @@ import static com.epam.bets.constant.ErrorConstant.ERROR_LIST_NAME;
 import static com.epam.bets.constant.PageConstant.*;
 import static com.epam.bets.constant.RequestParamConstant.NewsParam.PARAM_NAME_TITLE;
 
+/**
+ * Class provides recovering password operation.
+ *
+ * @author Pashchuk Ksenia
+ * @see AbstractCommand
+ */
 
 public class ShowPieceOfNewsCommand implements AbstractCommand {
 
@@ -22,6 +28,18 @@ public class ShowPieceOfNewsCommand implements AbstractCommand {
     private static final Logger LOGGER = LogManager.getLogger(ShowPieceOfNewsCommand.class);
     private NewsReceiver receiver = new NewsReceiverImpl();
 
+    /**
+     * Provides singing up operation.
+     * Takes as parameter {@link RequestContent} and pass it to the Receiver layer {@link NewsReceiver}.
+     * If Receiver operation passed successfully navigates to {@link com.epam.bets.constant.PageConstant#PIECE_OF_NEWS_PAGE}
+     * (that provide saving news picture). Else navigates to {@link com.epam.bets.constant.PageConstant#NEWS_PAGE}
+     * and saves navigation page to the session (required for use in locale change command
+     * {@link com.epam.bets.command.common.ChangeLocaleCommand}).
+     * If Receiver operation throws {@link ReceiverException}  navigates to {@link com.epam.bets.constant.PageConstant#SERVER_ERROR_PAGE}
+     *
+     * @param requestContent ({@link RequestContent}) request from client to get parameters to work with
+     * @return {@link PageNavigator} with response parameters.
+     */
     @Override
     public PageNavigator execute(RequestContent requestContent) {
         PageNavigator navigator;

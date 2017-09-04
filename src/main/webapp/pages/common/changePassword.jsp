@@ -34,7 +34,7 @@
                             key="common.profile.edit_password"/></a></div>
                     <c:if test="${role == 'USER'}">
                         <div class="user-menu-item dropdown">
-                            <a href="${pageContext.servletContext.contextPath}/pages/common/userBets.jsp"
+                            <a href="${pageContext.servletContext.contextPath}/pages/user/userBets.jsp"
                                class="dropdown-toggle" data-toggle="dropdown"><fmt:message
                                     key="common.profile.my_bets"/>
                                 <span

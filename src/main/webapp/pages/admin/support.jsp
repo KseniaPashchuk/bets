@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="colored-block show-message">
-                <p class="" id="no-mail" style="display:none;">
+                <p class="show-message" id="no-mail" style="display:none;">
                     <fmt:message key="common.mail.no_mail"/>
                 </p>
                 <p class="error-label" id="mail-error" style="display:none;">

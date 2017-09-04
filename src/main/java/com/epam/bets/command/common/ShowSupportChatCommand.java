@@ -1,13 +1,11 @@
 package com.epam.bets.command.common;
 
 import com.epam.bets.command.AbstractCommand;
-import com.epam.bets.command.common.PasswordRecoverCommand;
 import com.epam.bets.entity.UserRole;
 import com.epam.bets.exception.ReceiverException;
 import com.epam.bets.navigator.PageNavigator;
-import com.epam.bets.receiver.LoadReceiver;
-import com.epam.bets.receiver.UserReceiver;
-import com.epam.bets.receiver.impl.UserReceiverImpl;
+import com.epam.bets.receiver.SupportMailReceiver;
+import com.epam.bets.receiver.impl.SupportMailReceiverImpl;
 import com.epam.bets.request.RequestContent;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -28,11 +26,12 @@ import static com.epam.bets.constant.RequestParamConstant.UserParam.PARAM_NAME_R
 public class ShowSupportChatCommand implements AbstractCommand {
     private static final String NEXT_PAGE = SUPPORT_CHAT_PAGE;
     private static final Logger LOGGER = LogManager.getLogger(PasswordRecoverCommand.class);
-    private UserReceiver receiver = new UserReceiverImpl();
+    private SupportMailReceiver receiver = new SupportMailReceiverImpl();
+
     /**
-     * Provides editing news picture operation for admin.
-     * Takes as parameter {@link RequestContent} and pass it to the Receiver layer  {@link UserReceiver}.
-     * akes Receiver operation result, navigates to {@link com.epam.bets.constant.PageConstant#SUPPORT_CHAT_PAGE}
+     * Provides showing chat with tech support.
+     * Takes as parameter {@link RequestContent} and pass it to the Receiver layer  {@link SupportMailReceiver}.
+     * Takes Receiver operation result, navigates to {@link com.epam.bets.constant.PageConstant#SUPPORT_CHAT_PAGE}
      * and saves navigation page to the session (required for use in locale change command
      * {@link com.epam.bets.command.common.ChangeLocaleCommand}).
      * If Receiver operation throws {@link ReceiverException}  navigates to {@link com.epam.bets.constant.PageConstant#SERVER_ERROR_PAGE}
@@ -45,15 +44,12 @@ public class ShowSupportChatCommand implements AbstractCommand {
         PageNavigator navigator;
         try {
             receiver.showSupportMailChat(requestContent);
-            if (requestContent.findRequestAttribute(ERROR_LIST_NAME) == null) {
-                navigator = new PageNavigator(NEXT_PAGE, PageNavigator.PageType.FORWARD);
-            } else {
-                navigator = new PageNavigator(NEXT_PAGE, PageNavigator.PageType.FORWARD);
-            }
-            if(UserRole.valueOf(requestContent.findSessionAttribute(PARAM_NAME_ROLE).toString()).equals(UserRole.ADMIN)) {
+            navigator = new PageNavigator(NEXT_PAGE, PageNavigator.PageType.FORWARD);
+
+            if (UserRole.valueOf(requestContent.findSessionAttribute(PARAM_NAME_ROLE).toString()).equals(UserRole.ADMIN)) {
                 requestContent.insertSessionAttribute(PREV_REQUEST, SHOW_SUPPORT_CHAT_PAGE +
                         requestContent.findParameterValue(PARAM_NAME_EMAIL));
-            }else{
+            } else {
                 requestContent.insertSessionAttribute(PREV_REQUEST, SHOW_SUPPORT_CHAT_PAGE +
                         requestContent.findSessionAttribute(PARAM_NAME_ROLE));
             }

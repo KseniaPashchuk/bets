@@ -11,13 +11,28 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import static com.epam.bets.constant.PageConstant.*;
-
+/**
+ * Class provides calculating users gain operation.
+ *
+ * @author Pashchuk Ksenia
+ * @see AbstractCommand
+ */
 public class CalculateUserGainCommand implements AbstractCommand {
 
     private static final String NEXT_PAGE = SHOW_MATCHES_PAGE;
     private UserReceiver receiver = new UserReceiverImpl();
     private static final Logger LOGGER = LogManager.getLogger(CalculateUserGainCommand.class);
-
+    /**
+     * Provides setting football match score operation for bookmaker.
+     * Takes as parameter {@link RequestContent} and pass it to the Receiver layer {@link UserReceiver}.
+     * Takes Receiver operation result, navigates to {@link com.epam.bets.constant.PageConstant#SHOW_MATCHES_PAGE}
+     * and saves navigation page to the session (required for use in locale change command
+     * {@link com.epam.bets.command.common.ChangeLocaleCommand}).
+     * If Receiver operation throws {@link ReceiverException}  navigates to {@link com.epam.bets.constant.PageConstant#SERVER_ERROR_PAGE}
+     *
+     * @param requestContent ({@link RequestContent}) request from client to get parameters to work with
+     * @return {@link PageNavigator} with response parameters.
+     */
     @Override
     public PageNavigator execute(RequestContent requestContent) {
         PageNavigator navigator;
