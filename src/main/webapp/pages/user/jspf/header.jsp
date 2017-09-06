@@ -12,7 +12,7 @@
                 <fmt:message key="common.menu.news"/></a>
             </li>
             <li class="item-main"><a
-                    href="${pageContext.servletContext.contextPath}/controller?command=show_matches_page"
+                    href="${pageContext.servletContext.contextPath}/controller?command=show_matches_page&confederation=all"
                     class="main-link"><fmt:message key="common.menu.matches"/></a>
             </li>
             <li class="item-main">

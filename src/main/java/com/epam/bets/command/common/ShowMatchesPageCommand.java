@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import static com.epam.bets.constant.ErrorConstant.ERROR_LIST_NAME;
 import static com.epam.bets.constant.PageConstant.*;
+import static com.epam.bets.constant.RequestParamConstant.MatchParam.PARAM_NAME_CONFEDERATION;
 
 /**
  * Class provides showing match results page operation.
@@ -26,6 +27,7 @@ public class ShowMatchesPageCommand implements AbstractCommand {
     private static final String NEXT_PAGE = MATCHES_PAGE;
 
     private MatchReceiver receiver = new MatchReceiverImpl();
+
     /**
      * Provides setting football match score operation for bookmaker.
      * Takes as parameter {@link RequestContent} and pass it to the Receiver layer {@link MatchReceiver}.
@@ -45,7 +47,8 @@ public class ShowMatchesPageCommand implements AbstractCommand {
             receiver.showAllConfederations(requestContent);
             navigator = new PageNavigator(NEXT_PAGE, PageNavigator.PageType.FORWARD);
 
-            requestContent.insertSessionAttribute(PREV_REQUEST, SHOW_MATCHES_PAGE);
+            requestContent.insertSessionAttribute(PREV_REQUEST, SHOW_MATCHES_PAGE +
+                    requestContent.findParameterValue(PARAM_NAME_CONFEDERATION));
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e, e);
             navigator = new PageNavigator(SERVER_ERROR_PAGE, PageNavigator.PageType.REDIRECT);

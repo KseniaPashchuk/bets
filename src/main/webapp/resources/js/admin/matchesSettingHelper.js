@@ -4,13 +4,13 @@ $(document).ready(function() {
         $('#league-list').slideToggle(500);
     });
     $('a[id=matches-title]').click(function () {
-        $("#confederacy").val('all');
+        $("#confederation").val('all');
         $("#show-matches-page").submit();
     });
 
     $('input[type="radio"]').click(function () {
         var selectedConfederacy = $(this).val();
-        $("#confederacy").val(selectedConfederacy);
+        $("#confederation").val(selectedConfederacy);
         $("#show-matches-page").submit();
     });
 });

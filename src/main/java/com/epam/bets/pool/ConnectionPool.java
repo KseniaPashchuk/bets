@@ -12,8 +12,20 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Class provides singleton container for {@link ProxyConnection} objects.
+ *
+ * @author Pashchuk Ksenia
+ */
+
 public class ConnectionPool {
+    /**
+     * Class singleton instance.
+     */
     private static ConnectionPool instance;
+    /**
+     * Marker to check if {@link #instance} is created.
+     */
     private static AtomicBoolean flag = new AtomicBoolean();
     private static Lock lock = new ReentrantLock();
     private BlockingQueue<ProxyConnection> connections;

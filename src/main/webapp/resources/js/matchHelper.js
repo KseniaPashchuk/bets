@@ -19,14 +19,14 @@ $(document).ready(function () {
         findMatches(selectedConfederacy);
     });
 
-    if ($("#prev-confederacy").val() != null && $("#prev-confederacy").val().trim() != '') {
-        findMatches($("#prev-confederacy").val());
+    if ($("#prev-confederation").val() != null && $("#prev-confederation").val().trim() != '') {
+        findMatches($("#prev-confederation").val());
     } else {
         $('a[id=matches-title]').click();
     }
 
     function findMatches(confederation) {
-        $("#prev-confederacy").val(confederation);
+        $("#prev-confederation").val(confederation);
         $.ajax({
             url: "/ajax?command=show_matches&confederation=" + confederation,
             type: 'GET',
