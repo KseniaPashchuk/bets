@@ -63,7 +63,7 @@ $(document).ready(function () {
                                 '</tr>';
                             confederation = item.confederation;
                         }
-                        if(moment().isAfter(moment(date))) {
+                        if (moment().isAfter(moment(date))) {
                             html += '<tr id="' + item.id + '">' +
                                 '<td>' + item.id + '</td>' +
                                 '<td>' + item.firstTeam + '-' + item.secondTeam + '</td>' +
@@ -79,7 +79,7 @@ $(document).ready(function () {
                                 '<td>' + item.matchCoefficients.coefficients['TM'] + '</td>' +
                                 '<td class="hidden">' + item.maxBet + '</td>' +
                                 '</tr>';
-                        }else{
+                        } else {
                             html += '<tr id="' + item.id + '">' +
                                 '<td>' + item.id + '</td>' +
                                 '<td>' + item.firstTeam + '-' + item.secondTeam + '</td>' +
@@ -120,12 +120,6 @@ $(document).ready(function () {
     });
 
 
-    $(".make-bet-close").click(function (event) {
-        $("#make-bet-popup").hide();
-        $("#make-bet").hide();
-        return false;
-    });
-
     $("#clean-bets-btn").click(function (event) {
         $('#games tbody').find('td.active.selected').each(function (index, el) {
             $(el).removeClass('selected');
@@ -133,7 +127,12 @@ $(document).ready(function () {
             $("#make-bet-table").find('tr[id=' + $(elementRow).eq(0).text() + ']').remove();
         });
     });
-
+    $(".make-bet-close").click(function (event) {
+        $("#make-bet-popup").hide();
+        $("#make-bet").hide();
+        $("#clean-bets-btn").click();
+        return false;
+    });
     $('#games tbody').on('click', 'td', function () {
         if ($(this).hasClass('active')) {
             var betType = matchesTable.column($(this).index()).header();
@@ -181,7 +180,16 @@ $(document).ready(function () {
             $("#make-bet").show();
         }
     });
+    $("#make-bet-submit").click(function (event) {
+        var betType;
+        $('#make-bet-table > tbody  > tr').each(function (key, item) {
+            betType = $(item).find('input[name=type]').val();
+            $(item).find('input[name=betType]').val(betMap[betType]);
+        });
 
+        $(".make-bet-form").submit();
+
+    });
 });
 function validateMakeBetForm() {
 

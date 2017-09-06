@@ -8,6 +8,7 @@ import com.epam.bets.pool.ProxyConnection;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -76,7 +77,7 @@ public class MatchDAOImpl extends MatchDAO {
     private static final String SELECTS_TEAMS = "SELECT DISTINCT team_name FROM football_team";
 
     private static final String SET_SCORE = "UPDATE football_match SET finished=1, first_team_score=?," +
-            " second_team_score=? WHERE match_id=?";
+            " second_team_score=?, date_time=? WHERE match_id=?";
 
     public MatchDAOImpl() {
     }
@@ -183,11 +184,12 @@ public class MatchDAOImpl extends MatchDAO {
      * @see ResultSet
      */
     @Override
-    public boolean setScore(int matchId, BigDecimal firstTeamScore, BigDecimal secondTeamScore) throws DaoException {
+    public boolean setScore(int matchId, BigDecimal firstTeamScore, BigDecimal secondTeamScore, LocalDateTime date) throws DaoException {
         try (PreparedStatement statementMatch = connection.prepareStatement(SET_SCORE)) {
             statementMatch.setBigDecimal(1, firstTeamScore);
             statementMatch.setBigDecimal(2, secondTeamScore);
-            statementMatch.setInt(3, matchId);
+            statementMatch.setTimestamp(3, Timestamp.valueOf(date));
+            statementMatch.setInt(4, matchId);
             statementMatch.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -235,6 +237,9 @@ public class MatchDAOImpl extends MatchDAO {
             teamStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
+            if (e.getErrorCode() == EXISTING_ENTITY_ERROR_CODE) {
+                return false;
+            }
             throw new DaoException("Can't create football team", e);
         }
     }
@@ -253,6 +258,9 @@ public class MatchDAOImpl extends MatchDAO {
             teamStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
+            if (e.getErrorCode() == EXISTING_ENTITY_ERROR_CODE) {
+                return false;
+            }
             throw new DaoException("Can't create confederation", e);
         }
     }

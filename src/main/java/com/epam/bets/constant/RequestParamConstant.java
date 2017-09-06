@@ -61,7 +61,7 @@ public final class RequestParamConstant {
         public static final String PARAM_NAME_T = "T";
         public static final String PARAM_NAME_TM = "TM";
         public static final String PARAM_NAME_MAX_BET = "maxBet";
-        public static final String DATE_TIME_PATTERN = "dd/MM/yyyy HH:mm";
+        public static final String DATE_TIME_PATTERN = "dd/MM/yy HH:mm";
         public static final String PARAM_NAME_TEAM = "team";
         public static final String PARAM_NAME_COUNTRY = "country";
         public static final String PARAM_NAME_MATCH_ID = "matchId";

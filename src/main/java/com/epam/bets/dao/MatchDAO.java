@@ -8,6 +8,7 @@ import com.epam.bets.pool.ProxyConnection;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -99,7 +100,8 @@ public abstract class MatchDAO extends AbstractDAO<Match> {
      * @return true if successfully set score
      * @throws DaoException if {@link SQLException} occurred while working with database
      */
-    public abstract boolean setScore(int matchId, BigDecimal firstTeamScore, BigDecimal secondTeamScore) throws DaoException;
+    public abstract boolean setScore(int matchId, BigDecimal firstTeamScore, BigDecimal secondTeamScore, LocalDateTime date)
+            throws DaoException;
 
     /**
      * Takes finished {@link Match} info by match id

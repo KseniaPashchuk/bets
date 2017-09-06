@@ -60,8 +60,8 @@
             <div class=" create-faq-wrap colored-block">
                 <div class="create-team-title"><fmt:message key="admin.match.add_confederation"/></div>
                 <p class="error-label"
-                   <c:if test="${!btg:contains(errors,'createConfederationError' )}">style="display:none;"</c:if>>
-                    <fmt:message key="admin.match.create_team.error"/>
+                   <c:if test="${!btg:contains(errors,'existingEntityError' )}">style="display:none;"</c:if>>
+                    <fmt:message key="admin.match.create_confederation.exists"/>
                 </p>
                 <form class="create-team" method="POST" action="${pageContext.servletContext.contextPath}/controller"
                       onsubmit="return validateCreateConfederationForm()">

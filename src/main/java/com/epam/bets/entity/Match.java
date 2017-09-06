@@ -25,6 +25,7 @@ public class Match extends Entity {
 
     public void setId(int id) {
         this.id = id;
+        matchCoefficients.setFootballMatchId(id);
     }
 
     public String getFirstTeam() {

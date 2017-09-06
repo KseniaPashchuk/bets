@@ -2,12 +2,13 @@ $(document).ready(function () {
     var matchesTable = $('#games').DataTable();
 
     $('#create-match-date').datetimepicker({
-        format: 'DD/MM/YYYY HH:mm',
+        format: 'DD/MM/YY HH:mm',
+
         defaultDate: new Date()
     });
 
     $('#edit-match-date').datetimepicker({
-        format: 'DD/MM/YYYY HH:mm'
+        format: 'DD/MM/YY HH:mm'
     });
 
     $('#dropdown').click(function () {
@@ -37,10 +38,10 @@ $(document).ready(function () {
         var ev = $(elRow).eq(1).text();
         var firstTeam = ev.split('-')[0].trim();
         var secondTeam = ev.split('-')[1].trim();
-        $("#first-team-select option:contains('" + firstTeam + "')").prop("selected", true);
-        $("#second-team-select option:contains('" + secondTeam + "')").prop("selected", true);
+        $("#first-team-edit").find("option:contains('" + firstTeam + "')").prop("selected", true);
+        $("#second-team-edit").find("option:contains('" + secondTeam + "')").prop("selected", true);
         $("#create-match-date-input").val($(elRow).eq(2).text());
-        $("#confederacy-select option:contains('" + $(elRow).eq(13).text() + "')").prop("selected", true);
+        $("#confederation-edit").find("option:contains('" + $(elRow).eq(13).text() + "')").prop("selected", true);
 
         for (var i = 3; i < elRow.length - 1; i++) {
             $("#edit-games-table td").eq(i - 3).find('input').val($(elRow).eq(i).text());
@@ -54,11 +55,19 @@ $(document).ready(function () {
     $(".edit-games-close").click(function (event) {
         $("#edit-games-popup").hide();
         $("#edit-games").hide();
+        $("#edit-same-team").hide();
+        $("#edit-invalid-date").hide();
+        $("#edit-invalid-max-bet").hide();
+        $("#edit-invalid-coeff").hide();
         return false;
     });
     $(".create-game-close").click(function (event) {
         $("#create-game-popup").hide();
         $("#create-game").hide();
+        $("#create-same-team").hide();
+        $("#create-invalid-date").hide();
+        $("#create-invalid-max-bet").hide();
+        $("#create-invalid-coeff").hide();
         return false;
     });
 
@@ -66,7 +75,7 @@ $(document).ready(function () {
 
         $("input[id=edit-first-team]").val($("#first-team-edit").val());
         $("input[id=edit-second-team]").val($("#second-team-edit").val());
-        $("input[id=edit-confederacy]").val($("#confederacy-edit").val());
+        $("input[id=edit-confederation]").val($("#confederation-edit").val());
         $(".edit-games-form").submit();
     });
 
@@ -76,12 +85,12 @@ $(document).ready(function () {
         var id = $(elRow).eq(0).text();
         var date = $(elRow).eq(2).text();
         $("input[id=set-score-match-id]").val(id);
-        $("input[id=set-score-match-date]").val(moment(date, 'DD/MM/YYYY HH:mm'));
+        $("input[id=set-score-match-date]").val(moment(date).format('DD/MM/YY HH:mm'));
         var ev = $(elRow).eq(1).text();
         var firstTeam = ev.split('-')[0].trim();
         var secondTeam = ev.split('-')[1].trim();
-        $("#set-score-table").find('td[id=first-team]').text(firstTeam);
-        $("#set-score-table").find('td[id=second-team]').text(secondTeam);
+        $("#set-score-table").find('input[id=first-team]').val(firstTeam);
+        $("#set-score-table").find('input[id=second-team]').val(secondTeam);
         $("#set-score-popup").show();
         $("#set-score").show();
     });
@@ -90,6 +99,8 @@ $(document).ready(function () {
     $(".set-score-close").click(function (event) {
         $("#set-score-popup").hide();
         $("#set-score").hide();
+        $("#invalid-score").hide();
+        $("#invalid-date").hide();
         return false;
     });
 
@@ -115,14 +126,14 @@ $(document).ready(function () {
         findMatches(selectedConfederacy);
     });
 
-    if ($("#prev-confederacy").val() != null && $("#prev-confederacy").val().trim() != '') {
-        findMatches($("#prev-confederacy").val());
+    if ($("#prev-confederation").val() != null && $("#prev-confederation").val().trim() != '') {
+        findMatches($("#prev-confederation").val());
     } else {
         $('a[id=matches-title]').click();
     }
 
     function findMatches(confederation) {
-        $("#prev-confederacy").val(confederation);
+        $("#prev-confederation").val(confederation);
         $.ajax({
             url: "/ajax?command=show_matches&confederation=" + confederation,
             type: 'GET',
@@ -235,10 +246,10 @@ function validateCreateMatchForm() {
         }
     });
 
-    if ($("#max-bet-create").val() == null || parseFloat($("#max-bet-create").val()) <= 0.00) {
+    if ($(".edit-games-form").find("input[name=maxBet]").val() == null || parseFloat($(".edit-games-form").find("input[name=maxBet]").val()) <= 0.00) {
         isFormValid = false;
         $("#create-invalid-max-bet").show();
-        $("#max-bet-create").css('border', 'solid 2px maroon');
+        $(".edit-games-form").find("input[name=maxBet]").css('border', 'solid 2px maroon');
     }
 
     return isFormValid;
@@ -282,10 +293,10 @@ function validateEditMatchForm() {
         }
     });
 
-    if ($("#max-bet-edit").val() == null || parseFloat($("#max-bet-edit").val()) <= 0.00) {
+    if ($(".edit-games-form").find("input[name=maxBet]").val() == null || parseFloat($(".edit-games-form").find("input[name=maxBet]").val()) <= 0.00) {
         isFormValid = false;
         $("#edit-invalid-max-bet").show();
-        $("#max-bet-edit").css('border', 'solid 2px maroon');
+        $(".edit-games-form").find("input[name=maxBet]").css('border', 'solid 2px maroon');
     }
 
     return isFormValid;

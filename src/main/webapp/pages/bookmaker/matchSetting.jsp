@@ -5,11 +5,11 @@
             <div class="matches-list matches-menu-item">
                 <div class="matches-title">
                     <a href="javascript://" id="matches-title"><fmt:message key="common.bets.matches"/></a> <span
-                        class="glyphicon glyphicon-chevron-down dropdown" style="color: #ffa71b"
+                        class="glyphicon glyphicon-chevron-down dropdown"  id="dropdown" style="color: #ffa71b"
                         aria-hidden="true"></span>
                 </div>
                 <input type="hidden" id="prev-confederation" value="${param.confederation}"/>
-                <div class="league-list" id="league-list" id="dropdown" style="display: none">
+                <div class="league-list" id="league-list" style="display: none">
                     <div class="btn-group">
                         <c:forEach var="item" items="${confederationList}">
                             <label><input type="radio" name="league" value="${item}"/>${item}</label>
@@ -17,8 +17,9 @@
                     </div>
                 </div>
             </div>
-            <div class="results matches-menu-item"><a href="${pageContext.servletContext.contextPath}/controller?command=show_match_results_page"
-                                    id="match-results"><fmt:message key="common.bets.results"/></a>
+            <div class="results matches-menu-item"><a
+                    href="${pageContext.servletContext.contextPath}/controller?command=show_match_results_page"
+                    id="match-results"><fmt:message key="common.bets.results"/></a>
             </div>
         </div>
     </div>
@@ -56,8 +57,8 @@
                     <th class="active-th">L</th>
                     <th>T</th>
                     <th class="active-th">M</th>
-                    <th class="btn-ctrl-th"><fmt:message key="bookmaker.match.btn.edit"/></th>
-                    <th class="btn-ctrl-th"><fmt:message key="common.bets.score"/></th>
+                    <th class="btn-ctrl-th" style="width: 35px"><fmt:message key="bookmaker.match.btn.edit"/></th>
+                    <th class="btn-ctrl-th" style="width: 45px"><fmt:message key="common.bets.score"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -133,22 +134,22 @@
             <input type="hidden" name="confederation" id="edit-confederation" value=""/>
             <div class="edit-title">Edit</div>
             <p class="error-label" id="edit-same-team"
-               <c:if test="${(!btg:contains(errors,'invalidEditParams'))&&
+               <c:if test="${(!btg:contains(errors,'invalidEditParams'))||
                (!btg:contains(errors,'sameTeamError' ))}">style="display:none;"</c:if>>
                 <fmt:message key="bookmaker.match.create.same_team_error"/>
             </p>
             <p class="error-label" id="edit-invalid-date"
-               <c:if test="${(!btg:contains(errors,'invalidEditParams'))&&
+               <c:if test="${(!btg:contains(errors,'invalidEditParams'))||
                (!btg:contains(errors,'dateBeforeError') )}">style="display:none;"</c:if>>
                 <fmt:message key="bookmaker.match.create.date_before_error"/>
             </p>
             <p class="error-label" id="edit-invalid-max-bet"
-               <c:if test="${(!btg:contains(errors,'invalidEditParams'))&&
+               <c:if test="${(!btg:contains(errors,'invalidEditParams'))||
                (!btg:contains(errors,'invalidMaxBetError' ))}">style="display:none;"</c:if>>
                 <fmt:message key="bookmaker.match.create.max_bet_error"/>
             </p>
             <p class="error-label" id="edit-invalid-coeff"
-               <c:if test="${(!btg:contains(errors,'invalidEditParams'))&&
+               <c:if test="${(!btg:contains(errors,'invalidEditParams'))||
                (!btg:contains(errors,'invalidCoeffError' ))}">style="display:none;"</c:if>>
                 <fmt:message key="bookmaker.match.create.coeff_error"/>
             </p>
@@ -157,7 +158,14 @@
                     <label for="first-team-edit"><fmt:message key="bookmaker.bets.first_team"/></label>
                     <select id="first-team-edit" class="dark-select">
                         <c:forEach var="item" items="${teamList}">
-                            <option value="${item}">${item}</option>
+                            <c:choose>
+                                <c:when test="${item eq param.firstTeam}">
+                                    <option value="${item}" selected="selected">${item}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${item}">${item}</option>
+                                </c:otherwise>
+                            </c:choose>
                         </c:forEach>
                     </select>
                 </div>
@@ -165,7 +173,14 @@
                     <label for="second-team-edit"><fmt:message key="bookmaker.bets.second_team"/></label>
                     <select id="second-team-edit" class="dark-select">
                         <c:forEach var="item" items="${teamList}">
-                            <option value="${item}">${item}</option>
+                            <c:choose>
+                                <c:when test="${item eq param.secondTeam}">
+                                    <option value="${item}" selected="selected">${item}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${item}">${item}</option>
+                                </c:otherwise>
+                            </c:choose>
                         </c:forEach>
                     </select>
                 </div>
@@ -173,14 +188,21 @@
                     <label for="confederation-edit"><fmt:message key="common.bets.confederation"/></label>
                     <select id="confederation-edit" class="dark-select">
                         <c:forEach var="item" items="${confederationList}">
-                            <option value="${item}">${item}</option>
+                            <c:choose>
+                                <c:when test="${item eq param.confederation}">
+                                    <option value="${item}" selected="selected">${item}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${item}">${item}</option>
+                                </c:otherwise>
+                            </c:choose>
                         </c:forEach>
                     </select>
                 </div>
                 <div class="edit-match-info clearfix">
                     <label for="create-match-date"><fmt:message key="common.bets.date"/></label>
                     <div class="input-group date date-input" id='edit-match-date'>
-                        <input type="text" class="form-control" name="date" id='create-match-date-input'/>
+                        <input type="text" class="form-control" name="date" id='create-match-date-input' value="${param.date}"/>
                         <span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
@@ -204,16 +226,18 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td><input class="coeff-input" type="text" name="FW" value=""></td>
-                        <td><input class="coeff-input" type="text" name="X" value=""></td>
-                        <td><input class="coeff-input" type="text" name="SW" value=""></td>
-                        <td><input class="coeff-input" type="text" name="FWX" value=""></td>
-                        <td><input class="coeff-input" type="text" name="FS" value=""></td>
-                        <td><input class="coeff-input" type="text" name="XSW" value=""></td>
-                        <td><input class="coeff-input" type="text" name="TL" value=""></td>
-                        <td><input class="coeff-input" type="text" name="T" value=""></td>
-                        <td><input class="coeff-input" type="text" name="TM" value=""></td>
-                        <td><input class="coeff-input" type="text" id="max-bet-edit" name="maxBet" value=""></td>
+                        <td><input class="coeff-input" type="text" name="FW" value="${param.FW}"></td>
+                        <td><input class="coeff-input" type="text" name="X" value="${param.X}"></td>
+                        <td><input class="coeff-input" type="text" name="SW" value="${param.SW}"></td>
+                        <td><input class="coeff-input" type="text" name="FWX" value="${param.FWX}"></td>
+                        <td><input class="coeff-input" type="text" name="FS" value="${param.FS}"></td>
+                        <td><input class="coeff-input" type="text" name="XSW" value="${param.XSW}"></td>
+                        <td><input class="coeff-input" type="text" name="TL" value="${param.TL}"></td>
+                        <td><input class="coeff-input" type="text" name="T" value="${param.T}"></td>
+                        <td><input class="coeff-input" type="text" name="TM" value="${param.TM}"></td>
+                        <td><input class="coeff-input" type="text" name="maxBet"
+                                   value="${param.maxBet}"
+                                   required></td>
                     </tr>
                     </tbody>
                 </table>
@@ -227,35 +251,41 @@
     </div>
 </div>
 <div class="popup-wrap" id="set-score-popup"
-     <c:if test="${(!btg:contains(errors,'scoreNotPositiveError'))||(!btg:contains(errors,'setScoreDateError'))}">style="display: none"</c:if>>
+     <c:if test="${(!btg:contains(errors,'scoreNotPositiveError'))&&(!btg:contains(errors,'setScoreDateError'))}">style="display: none"</c:if>>
     <div class="popup-holder set-score-holder" id="set-score"
-         <c:if test="${(!btg:contains(errors,'scoreNotPositiveError'))||(!btg:contains(errors,'setScoreDateError'))}">style="display: none"</c:if>>
+         <c:if test="${(!btg:contains(errors,'scoreNotPositiveError'))&&(!btg:contains(errors,'setScoreDateError'))}">style="display: none"</c:if>>
         <form class="set-score-form clearfix" method="POST"
               action="${pageContext.servletContext.contextPath}/controller"
               onsubmit="return validateSetScoreForm()">
             <input type="hidden" name="command" value="set_score"/>
-            <input type="hidden" name="matchId" id="set-score-match-id" value=""/>
-            <input type="hidden" name="date" id="set-score-match-date" value=""/>
+            <input type="hidden" name="matchId" id="set-score-match-id" value="${param.matchId}"/>
+            <input type="hidden" name="date" id="set-score-match-date" value="${param.date}"/>
             <p class="error-label" id="invalid-score"
                <c:if test="${!btg:contains(errors,'scoreNotPositiveError' )}">style="display:none;"</c:if>>
                 <fmt:message key="bookmaker.match.set_score.not_positive_error"/>
             </p>
-            <p class="error-label"
+            <p class="error-label" id="invalid-date"
                <c:if test="${!btg:contains(errors,'setScoreDateError' )}">style="display:none;"</c:if>>
                 <fmt:message key="bookmaker.match.set_score.date.error"/>
             </p>
             <table id="set-score-table">
                 <caption><fmt:message key="bookmaker.bets.set_score"/></caption>
                 <tr>
-                    <td id="first-team"></td>
+                    <td><input id="first-team" class="score-input" type="text" readonly="readonly"
+                               style="background: transparent"
+                               name="firstTeam" value="${param.firstTeam}"/></td>
                     <td>
-                        <input class="score-input" id="first-team-score" type="text" name="firstTeamScore" value=""/>
+                        <input class="score-input" id="first-team-score" type="text" name="firstTeamScore"
+                               value="${param.firstTeamScore}"/>
                     </td>
                 </tr>
                 <tr>
-                    <td id="second-team"></td>
+                    <td><input id="second-team" class="score-input" type="text" readonly="readonly"
+                               style="background: transparent"
+                               name="secondTeam" value="${param.secondTeam}"/></td>
                     <td>
-                        <input class="score-input" id="second-team-score" type="text" name="secondTeamScore" value=""/>
+                        <input class="score-input" id="second-team-score" type="text" name="secondTeamScore"
+                               value="${param.secondTeamScore}"/>
                     </td>
                 </tr>
             </table>
@@ -280,22 +310,22 @@
             <input type="hidden" name="confederation" id="create-confederation" value=""/>
             <div class="create-title">Create</div>
             <p class="error-label" id="create-same-team"
-               <c:if test="${(!btg:contains(errors,'invalidCreateParams'))&&
+               <c:if test="${(!btg:contains(errors,'invalidCreateParams'))||
                (!btg:contains(errors,'sameTeamError' ))}">style="display:none;"</c:if>>
                 <fmt:message key="bookmaker.match.create.same_team_error"/>
             </p>
             <p class="error-label" id="create-invalid-date"
-               <c:if test="${(!btg:contains(errors,'invalidCreateParams'))&&
+               <c:if test="${(!btg:contains(errors,'invalidCreateParams'))||
                (!btg:contains(errors,'dateBeforeError'))}">style="display:none;"</c:if>>
                 <fmt:message key="bookmaker.match.create.date_before_error"/>
             </p>
             <p class="error-label" id="create-invalid-max-bet"
-               <c:if test="${(!btg:contains(errors,'invalidCreateParams'))&&
+               <c:if test="${(!btg:contains(errors,'invalidCreateParams'))||
                (!btg:contains(errors,'invalidMaxBetError'))}">style="display:none;"</c:if>>
                 <fmt:message key="bookmaker.match.create.max_bet_error"/>
             </p>
             <p class="error-label" id="create-invalid-coeff"
-               <c:if test="${(!btg:contains(errors,'invalidCreateParams'))&&
+               <c:if test="${(!btg:contains(errors,'invalidCreateParams'))||
                (!btg:contains(errors,'invalidCoeffError'))}">style="display:none;"</c:if>>
                 <fmt:message key="bookmaker.match.create.coeff_error"/>
             </p>
@@ -327,7 +357,7 @@
                 <div class="edit-match-info clearfix">
                     <label for="create-match-date"><fmt:message key="common.bets.date"/></label>
                     <div class="input-group date date-input" id='create-match-date'>
-                        <input type="text" class="form-control" name="date"/>
+                        <input type="text" class="form-control" name="date" value="${param.date}"/>
                         <span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
@@ -360,8 +390,9 @@
                         <td><input class="coeff-input" type="text" name="TL" value=""></td>
                         <td><input class="coeff-input" type="text" name="T" value=""></td>
                         <td><input class="coeff-input" type="text" name="TM" value=""></td>
-                        <td><input class="coeff-input" type="text" id="max-bet-create" name="maxBet" value=""
-                                   pattern="^[0-9]{1,5}\.?[0-9]{0,2}$" required></td>
+                        <td><input class="coeff-input" type="text" name="maxBet"
+                                   value=""
+                                   required></td>
                     </tr>
                     </tbody>
                 </table>

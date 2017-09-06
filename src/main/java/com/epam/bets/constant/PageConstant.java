@@ -31,7 +31,7 @@ public class PageConstant {
     public static final String MATCH_RESULTS_PAGE = "/pages/common/matchResults.jsp";
     public static final String SHOW_MATCHES_PAGE = "/controller?command=show_matches_page&confederation=";
     public static final String SHOW_MATCH_RESULTS_PAGE = "/controller?command=show_match_results_page";
-    public static final String AFTER_SETTING_MATCH_SCORE = "/controller?command=calculate_gain&match_id=";
+    public static final String AFTER_SETTING_MATCH_SCORE = "/controller?command=calculate_gain&matchId=";
     public static final String CREATE_TEAM_PAGE = "/pages/admin/addTeam.jsp";
     public static final String CREATE_CONFEDERATION_PAGE = "/pages/admin/addConfederation.jsp";
     public static final String SHOW_CREATE_TEAM_PAGE = "/controller?command=show_add_team_page";

@@ -33,7 +33,7 @@ $(document).ready(function () {
                                 '<td>' + item.coefficient + '</td>' +
                                 '<td>' + item.money + '</td>';
                             if (type == 'winned') {
-                                html += '<td>' + item.money * item.coefficient + '</td>';
+                                html += '<td>' + (item.money * item.coefficient).toFixed(2) + '</td>';
                             } else {
                                 html += '<td>0</td>';
                             }

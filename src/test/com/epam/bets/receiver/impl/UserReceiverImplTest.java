@@ -1,9 +1,10 @@
 package com.epam.bets.receiver.impl;
 
-import com.epam.bets.dao.DaoFactory;
 import com.epam.bets.dao.UserDAO;
+import com.epam.bets.dao.impl.UserDAOImpl;
 import com.epam.bets.entity.User;
-import com.epam.bets.receiver.UserReceiver;
+import com.epam.bets.exception.DaoException;
+import com.epam.bets.exception.ReceiverException;
 import com.epam.bets.request.RequestContent;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,17 +14,18 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserReceiverImplTest {
 
     @Mock
-    private UserDAO userDAO;
+    private UserDAOImpl userDAO;
     @Mock
     private RequestContent requestContent;
-
+    @Mock
+    private User user;
     @InjectMocks
     private UserReceiverImpl userReceiver;
 
@@ -32,13 +34,10 @@ public class UserReceiverImplTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
-    public void signUpCallDao() throws Exception {
-        User user = new User();
-        when(userDAO.create(user)).thenReturn(1);
+    @Test(expected = ReceiverException.class)
+    public void showBetsCallDao() throws ReceiverException, DaoException {
+
+        when(userDAO.create(user)).thenThrow(DaoException.class);
         userReceiver.signUp(requestContent);
-
-        verify(userDAO).create(user);
     }
-
 }

@@ -70,7 +70,7 @@ public class MatchValidator extends BaseValidator {
      *
      * @param param - match information
      * @param regex - for param validation
-     * @return true if login matches to the regular expression.
+     * @return true if param matches to the regular expression.
      */
     public boolean validateMatchDecimalParam(String param, String regex) {
         return (validateStringParamWithRegex(param, regex) && validateBigDecimalParam(new BigDecimal(param)));

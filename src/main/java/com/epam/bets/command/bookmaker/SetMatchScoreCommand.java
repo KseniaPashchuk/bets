@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import static com.epam.bets.constant.ErrorConstant.ERROR_LIST_NAME;
 import static com.epam.bets.constant.PageConstant.*;
+import static com.epam.bets.constant.RequestParamConstant.MatchParam.PARAM_NAME_MATCH_ID;
 
 /**
  * Class provides setting football match score operation for bookmaker.
@@ -45,7 +46,8 @@ public class SetMatchScoreCommand implements AbstractCommand {
         try {
             receiver.setMatchScore(requestContent);
             if (requestContent.findRequestAttribute(ERROR_LIST_NAME) == null) {
-                navigator = new PageNavigator(NEXT_PAGE, PageNavigator.PageType.REDIRECT);
+                navigator = new PageNavigator(NEXT_PAGE + requestContent.findParameterValue(PARAM_NAME_MATCH_ID),
+                        PageNavigator.PageType.REDIRECT);
             } else {
                 navigator = new PageNavigator(ERROR_PAGE, PageNavigator.PageType.FORWARD);
                 requestContent.insertSessionAttribute(PREV_REQUEST, NEXT_PAGE);

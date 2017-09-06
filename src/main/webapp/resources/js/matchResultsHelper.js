@@ -4,7 +4,6 @@ $(document).ready(function () {
 
     $('#select-results-date').datetimepicker({
         format: 'DD/MM/YYYY'
-        // defaultDate: new Date()
     });
 
 
@@ -13,13 +12,13 @@ $(document).ready(function () {
     });
 
     $('a[id=matches-title]').click(function () {
-        $("#confederacy").val('all');
+        $("#confederation").val('all');
         $("#show-matches-page").submit();
     });
 
     $('input[type="radio"]').click(function () {
         var selectedConfederacy = $(this).val();
-        $("#confederacy").val(selectedConfederacy);
+        $("#confederation").val(selectedConfederacy);
         $("#show-matches-page").submit();
     });
 
@@ -113,7 +112,7 @@ $(document).ready(function () {
         }
     });
 
-    if ($("#prev-date").val != null) {
+    if ($("#prev-date").val != null && $("#prev-date").val != "") {
         $("#show-results").click();
     } else {
         $('#select-results-date').data("DateTimePicker").date(new Date());

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.epam.bets.constant.ErrorConstant.*;
+import static com.epam.bets.constant.ErrorConstant.CommonError.EXISTING_ENTITY;
 import static com.epam.bets.constant.ErrorConstant.CommonError.INVALID_CREATE_PARAMS;
 import static com.epam.bets.constant.ErrorConstant.CommonError.INVALID_EDIT_PARAMS;
 import static com.epam.bets.constant.ErrorConstant.MatchError.*;
@@ -220,6 +221,7 @@ public class MatchReceiverImpl implements MatchReceiver {
         Match match = new Match();
         List<String> errors = new ArrayList<>();
         if (new MatchValidator().validateMatchParams(requestContent, errors)) {
+            match.setId(Integer.parseInt(requestContent.findParameterValue(PARAM_NAME_MATCH_ID)));
             match.setFirstTeam(requestContent.findParameterValue(PARAM_NAME_FIRST_TEAM));
             match.setSecondTeam(requestContent.findParameterValue(PARAM_NAME_SECOND_TEAM));
             match.setConfederation(requestContent.findParameterValue(PARAM_NAME_CONFEDERATION));
@@ -278,14 +280,13 @@ public class MatchReceiverImpl implements MatchReceiver {
             int matchId = Integer.parseInt(requestContent.findParameterValue(PARAM_NAME_MATCH_ID));
             BigDecimal firstTeamScore = new BigDecimal(requestContent.findParameterValue(PARAM_NAME_FIRST_TEAM_SCORE));
             BigDecimal secondTeamScore = new BigDecimal(requestContent.findParameterValue(PARAM_NAME_SECOND_TEAM_SCORE));
-            LocalDateTime dateTime = LocalDateTime.parse(requestContent.findParameterValue(PARAM_NAME_DATE),
+            LocalDateTime matchDate = LocalDateTime.parse(requestContent.findParameterValue(PARAM_NAME_DATE),
                     DateTimeFormatter.ofPattern(DATE_TIME_PATTERN));
-
             MatchDAO matchDAO = new MatchDAOImpl();
             TransactionManager manager = new TransactionManager();
             manager.beginTransaction(matchDAO);
             try {
-                if (matchDAO.setScore(matchId, firstTeamScore, secondTeamScore)) {
+                if (matchDAO.setScore(matchId, firstTeamScore, secondTeamScore, matchDate)) {
                     manager.commit();
                 } else {
                     manager.rollback();
@@ -326,7 +327,7 @@ public class MatchReceiverImpl implements MatchReceiver {
                     manager.commit();
                 } else {
                     manager.rollback();
-                    errors.add(CREATE_FOOTBALL_TEAM_ERROR);
+                    errors.add(EXISTING_ENTITY);
                 }
             } catch (DaoException e) {
                 manager.rollback();
@@ -362,7 +363,7 @@ public class MatchReceiverImpl implements MatchReceiver {
                     manager.commit();
                 } else {
                     manager.rollback();
-                    errors.add(CREATE_CONFEDERATION_ERROR);
+                    errors.add(EXISTING_ENTITY);
                 }
             } catch (DaoException e) {
                 manager.rollback();

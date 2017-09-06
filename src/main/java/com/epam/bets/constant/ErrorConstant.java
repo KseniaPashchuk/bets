@@ -12,6 +12,8 @@ public final class ErrorConstant {
     public final class CommonError {
         public static final String INVALID_CREATE_PARAMS = "invalidCreateParams";
         public static final String INVALID_EDIT_PARAMS = "invalidEditParams";
+        public static final String EXISTING_ENTITY = "existingEntityError";
+
     }
     public final class MailError {
         public static final String INVALID_MAIL_TEXT_ERROR = "invalidMailTextError";
@@ -35,11 +37,11 @@ public final class ErrorConstant {
         public static final String INVALID_CONFEDERATION_ERROR = "invalidConfederationError";
         public static final String INVALID_TEAM_NAME_ERROR = "invalidTeamNameError";
         public static final String INVALID_COUNTRY_ERROR = "invalidCountryError";
+
     }
 
     public final class UserError {
         public static final String INVALID_PARAMS_ERROR = "invalidParamsError";
-        public static final String EXISTING_USER_ERROR = "existingUserError";
         public static final String INVALID_PASSWORD_ERROR = "invalidPasswordError";
         public static final String INVALID_LOGIN_ERROR = "invalidLoginError";
         public static final String INVALID_FIRST_NAME_ERROR = "invalidFirstNameError";

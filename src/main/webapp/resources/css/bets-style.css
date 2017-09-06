@@ -670,7 +670,8 @@ option {
 }
 
 .popup-holder.make-bet-holder {
-    margin-left: -360px;
+    margin-left: -576px;
+    margin-right: 100px;
 }
 
 .popup-holder.edit-faq-holder {
@@ -1283,9 +1284,17 @@ th {
     background: #565656;
 }
 
+#pagination{
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+}
+
 .search-results-block select {
     -webkit-appearance: none;
     background: url(../images/arrow-down.png) no-repeat right #565656;
+    -webkit-padding-end: 39px !important;
+    -webkit-padding-start: 10px !important;
 }
 
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
@@ -1671,9 +1680,12 @@ table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sor
 }
 
 .active-th {
-    max-width: 40px;
+    width: 40px;
 }
-
+.games-table .row{
+    padding-left: 0;
+    padding-right: 0;
+}
 .table > thead > tr > th {
     padding: 5px;
 }
@@ -1912,9 +1924,12 @@ caption {
 }
 
 table.dataTable {
-    font-size: 14px;
+    font-size: 13px;
 }
-
+table .row {
+    padding-left: 0;
+    padding-right: 0;
+}
 .btn-ctrl-th {
     max-width: 40px;
 }
@@ -2110,4 +2125,9 @@ table.dataTable {
 }
 .games-menu-wrap form{
     margin-bottom: 0;
+}
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th,
+.table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    padding: 3px;
 }

@@ -17,8 +17,9 @@
                     </div>
                 </div>
             </div>
-            <div class="results matches-menu-item"><a href="${pageContext.servletContext.contextPath}/controller?command=show_match_results_page"
-                                    id="match-results"><fmt:message key="common.bets.results"/></a>
+            <div class="results matches-menu-item"><a
+                    href="${pageContext.servletContext.contextPath}/controller?command=show_match_results_page"
+                    id="match-results"><fmt:message key="common.bets.results"/></a>
             </div>
         </div>
     </div>
@@ -150,23 +151,43 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <c:if test="${(btg:contains(errors,'betSummBiggerThanMaxBetError'))||
+
+                <c:choose>
+                    <c:when test="${(btg:contains(errors,'betSummBiggerThanMaxBetError'))||
                      (btg:contains(errors,'notEnoughMoneyError'))||
                      (btg:contains(errors,'summNotPositiveError'))}">
-                        <td><input type="text" name="event" value="${param.event}"/></td>
-                        <td><input class="make-bet-input"  type="text" name="date" value="${param.date}"/></td>
-                        <td><input class="make-bet-input"  type="text" name="date" value="${param.type}"/></td>
-                        <td><input class="make-bet-input"  type="text" name="date" value="${param.betCoeff}"/></td>
-                        <td><input class="make-bet-input"  type="text" name="date" value="${param.money}"/></td>
-                        <td><input class="make-bet-input"  type="text" name="date" value="${param.maxBet}"/></td>
-                        <td></td>
-                    </c:if>
-                </tr>
+                        <c:forEach var="event" varStatus="loop" items="${paramValues.event}">
+                            <tr>
+                                <input type="hidden" name = "matchId" readOnly="readOnly" value="${paramValues.matchId[loop.index]}"/>
+                                <input type="hidden" name="betType" value=""/>
+                                <td><input type="text" name="event" value="${event}"/></td>
+                                <td><input class="make-bet-input" type="text" name="date"
+                                           value="${paramValues.date[loop.index]}"/></td>
+                                <td><input class="make-bet-input" type="text" name="type"
+                                           value="${paramValues.type[loop.index]}"/></td>
+                                <td><input class="make-bet-input" type="text" name="betCoeff"
+                                           value="${paramValues.betCoeff[loop.index]}"/></td>
+                                <td><input class="make-bet-input" type="text" name="money"
+                                           value="${paramValues.money[loop.index]}"/></td>
+                                <td><input class="make-bet-input" type="text" name="maxBet"
+                                           value="${paramValues.maxBet[loop.index]}"/></td>
+                                <td>
+                                    <button class="remove-row-btn"><span class="glyphicon glyphicon-remove"
+                                                                         aria-hidden="true"></span></button>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <tr></tr>
+                    </c:otherwise>
+                </c:choose>
+
+
                 </tbody>
             </table>
             <div class="btn-group">
-                <input type="submit" value='<fmt:message key="common.bets.make_bet"/>'>
+                <input type="button" value='<fmt:message key="common.bets.make_bet"/>' id="make-bet-submit">
                 <input class="make-bet-close" type="button" value='<fmt:message key="common.btn.cancel"/>'>
             </div>
         </form>

@@ -5,11 +5,13 @@ import com.epam.bets.request.RequestContent;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static com.epam.bets.constant.PageConstant.NEWS_PAGE;
-
+@RunWith(MockitoJUnitRunner.class)
 public class ShowNewsPageCommandTest {
         @Mock
         private RequestContent requestContent;

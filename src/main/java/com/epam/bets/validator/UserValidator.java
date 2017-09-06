@@ -28,6 +28,7 @@ public class UserValidator extends BaseValidator {
     private final String LOGIN_REGEX = "^.+@\\w+\\.\\w{2,6}$";
     private final String CREDIT_CARD_REGEX = "[0-9]{13,16}";
     private final String REFILL_AMOUNT_REGEX = "[0-9]{1,8}\\.?[0-9]{0,2}";
+    private final String BET_REGEX = "[0-9]{1,5}\\.?[0-9]{0,2}";
 
     /**
      * Checks if login is valid
@@ -36,7 +37,7 @@ public class UserValidator extends BaseValidator {
      * @return true if login matches to the regular expression.
      */
     public boolean validateLogin(String login, List<String> errors) {
-        boolean isValid =true;
+        boolean isValid = true;
         if (!validateStringParamWithRegex(login, LOGIN_REGEX)) {
             errors.add(INVALID_LOGIN_ERROR);
             isValid = false;
@@ -91,6 +92,19 @@ public class UserValidator extends BaseValidator {
         return isValid;
     }
 
+
+    /**
+     * Checks if monetary bet big decimal param is valid
+     *
+     * @param param - monetary bet
+     * @param regex - for param validation
+     * @return true if bet matches to the regular expression.
+     */
+    public boolean validateBetParam(String param, String regex) {
+        return (validateStringParamWithRegex(param, regex) && validateBigDecimalParam(new BigDecimal(param)));
+    }
+
+
     /**
      * Checks if refill cash amount is valid.
      *
@@ -100,7 +114,7 @@ public class UserValidator extends BaseValidator {
      */
     public boolean validateRefillAmount(RequestContent requestContent, List<String> errors) {
         boolean isValid = true;
-        if (!validateStringParamWithRegex(requestContent.findParameterValue(PARAM_NAME_REFILL_AMOUNT), REFILL_AMOUNT_REGEX)){
+        if (!validateStringParamWithRegex(requestContent.findParameterValue(PARAM_NAME_REFILL_AMOUNT), REFILL_AMOUNT_REGEX)) {
             errors.add(INVALID_REFILL_AMOUNT);
             isValid = false;
         }
@@ -186,13 +200,13 @@ public class UserValidator extends BaseValidator {
         BigDecimal sumParam;
         BigDecimal betsSumm = new BigDecimal("0");
         for (int i = 0; i < summs.length; i++) {
-            sumParam = new BigDecimal(summs[i]);
-            betsSumm = betsSumm.add(sumParam);
-            if (!validateBigDecimalParam(sumParam)) {
+            if (!validateBetParam(summs[i], BET_REGEX)) {
                 isValid = false;
                 errors.add(SUMM_NOT_POSITIVE);
                 break;
             }
+            sumParam = new BigDecimal(summs[i]);
+            betsSumm = betsSumm.add(sumParam);
             if (sumParam.compareTo(new BigDecimal(maxBets[i])) == 1) {
                 isValid = false;
                 errors.add(TOO_BIG_BET_SUMM);
@@ -205,6 +219,7 @@ public class UserValidator extends BaseValidator {
         }
         return isValid;
     }
+
     /**
      * Checks if user edit password params are valid.
      *

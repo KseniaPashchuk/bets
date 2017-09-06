@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import static com.epam.bets.constant.ErrorConstant.CommonError.EXISTING_ENTITY;
 import static com.epam.bets.constant.ErrorConstant.ERROR_LIST_NAME;
 import static com.epam.bets.constant.ErrorConstant.UserError.*;
 import static com.epam.bets.constant.RequestParamConstant.CommonParam.DATE_PATTERN;
@@ -130,7 +131,7 @@ public class UserReceiverImpl implements UserReceiver {
                     }
                 } else {
                     manager.rollback();
-                    errors.add(EXISTING_USER_ERROR);
+                    errors.add(EXISTING_ENTITY);
                 }
             } catch (DaoException e) {
                 manager.rollback();
