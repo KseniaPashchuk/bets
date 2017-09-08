@@ -79,6 +79,7 @@ function validateRegisterForm() {
     var REGEX_EMAIL = new RegExp("^.+@\\w+\\.\\w+$");
     var REGEX_PASSWORD = new RegExp("^(?=\\w{6,10}$)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\\d)");
     var REGEX_CREDIT_CARD = new RegExp("^[0-9]{13,16}$");
+    var dateFrom = moment([1900, 0, 1]);
 
     var isFormValid = true;
     if (!REGEX_EMAIL.test($("#reg_email").val())) {
@@ -120,6 +121,13 @@ function validateRegisterForm() {
         $("#invalid-birth-date").show();
         $("#select-birth-date").css('border', 'solid 2px maroon');
     }
+    var momentDate = moment(birthDate);
+    if (!momentDate.isAfter(dateFrom)) {
+        isFormValid = false;
+        $("#invalid-birth-date").show();
+        $("#select-birth-date").css('border', 'solid 2px maroon');
+    }
+
     if (!$("#rule").is(':checked')) {
         isFormValid = false;
         $("#rule_error").show();

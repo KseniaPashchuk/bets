@@ -13,6 +13,8 @@ $(document).ready(function() {
         $("#confederation").val(selectedConfederacy);
         $("#show-matches-page").submit();
     });
+
+
 });
 
 function validateCreateConfederationForm() {

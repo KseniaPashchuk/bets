@@ -271,7 +271,7 @@
             <table id="set-score-table">
                 <caption><fmt:message key="bookmaker.bets.set_score"/></caption>
                 <tr>
-                    <td><input id="first-team" class="score-input" type="text" readonly="readonly"
+                    <td><input id="first-team" type="text" readonly="readonly"
                                style="background: transparent"
                                name="firstTeam" value="${param.firstTeam}"/></td>
                     <td>
@@ -280,7 +280,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><input id="second-team" class="score-input" type="text" readonly="readonly"
+                    <td><input id="second-team" type="text" readonly="readonly"
                                style="background: transparent"
                                name="secondTeam" value="${param.secondTeam}"/></td>
                     <td>

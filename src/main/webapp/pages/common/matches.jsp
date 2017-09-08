@@ -27,6 +27,9 @@
         <c:when test="${role == 'BOOKMAKER'}">
             <script type="text/javascript" src="../../resources/js/bookmaker/matchSettingHelper.js"></script>
         </c:when>
+        <c:when test="${role == 'ADMIN'}">
+            <script type="text/javascript" src="../../resources/js/admin/matchHelper.js"></script>
+        </c:when>
         <c:otherwise>
             <script type="text/javascript" src="../../resources/js/matchHelper.js"></script>
         </c:otherwise>

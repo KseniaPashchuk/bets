@@ -56,6 +56,10 @@
                    <c:if test="${!btg:contains(errors,'existingEntityError' )}">style="display:none;"</c:if>>
                     <fmt:message key="admin.match.create_team.exists"/>
                 </p>
+                <p class="success-label"
+                   <c:if test="${success==null}">style="display:none;"</c:if>>
+                    <fmt:message key="admin.match.create_team.success"/>
+                </p>
                 <form class="create-team" method="POST" action="${pageContext.servletContext.contextPath}/controller"
                       onsubmit="return validateCreateTeamForm()">
                     <input type="hidden" name="command" value="add_team"/>

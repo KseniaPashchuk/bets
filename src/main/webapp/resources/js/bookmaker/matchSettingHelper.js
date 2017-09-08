@@ -1,5 +1,25 @@
 $(document).ready(function () {
-    var matchesTable = $('#games').DataTable();
+    var matchesTable = $('#games').DataTable(
+        {
+            "bSort": false,
+            "aoColumns": [ { bSearchable: false, bSortable: false },
+                { bSearchable: true, bSortable: false  },
+                { bSearchable: false, bSortable: false  },
+                { bSearchable: false, bSortable: false  },
+                { bSearchable: false, bSortable: false  },
+                { bSearchable: false, bSortable: false  },
+                { bSearchable: false, bSortable: false  },
+                { bSearchable: false, bSortable: false  },
+                { bSearchable: false, bSortable: false  },
+                { bSearchable: false, bSortable: false  },
+                { bSearchable: false, bSortable: false  },
+                { bSearchable: false, bSortable: false  },
+                { bSearchable: false, bSortable: false  }
+            ],
+            "info":           true,
+            "paging":         true
+        }
+    );
 
     $('#create-match-date').datetimepicker({
         format: 'DD/MM/YY HH:mm',
@@ -85,7 +105,7 @@ $(document).ready(function () {
         var id = $(elRow).eq(0).text();
         var date = $(elRow).eq(2).text();
         $("input[id=set-score-match-id]").val(id);
-        $("input[id=set-score-match-date]").val(moment(date).format('DD/MM/YY HH:mm'));
+        $("input[id=set-score-match-date]").val(date);
         var ev = $(elRow).eq(1).text();
         var firstTeam = ev.split('-')[0].trim();
         var secondTeam = ev.split('-')[1].trim();
@@ -175,15 +195,15 @@ $(document).ready(function () {
                             '<td>' + item.id + '</td>' +
                             '<td>' + item.firstTeam + ' - ' + item.secondTeam + '</td>' +
                             '<td>' + moment(date).format("DD/MM/YY HH:mm") + '</td>' +
-                            '<td class="active">' + item.matchCoefficients.coefficients['FW'] + '</td>' +
-                            '<td class="active">' + item.matchCoefficients.coefficients['SW'] + '</td>' +
-                            '<td class="active">' + item.matchCoefficients.coefficients['X'] + '</td>' +
-                            '<td class="active">' + item.matchCoefficients.coefficients['FWX'] + '</td>' +
-                            '<td class="active">' + item.matchCoefficients.coefficients['FS'] + '</td>' +
-                            '<td class="active">' + item.matchCoefficients.coefficients['XSW'] + '</td>' +
-                            '<td class="active">' + item.matchCoefficients.coefficients['TL'] + '</td>' +
+                            '<td>' + item.matchCoefficients.coefficients['FW'] + '</td>' +
+                            '<td>' + item.matchCoefficients.coefficients['SW'] + '</td>' +
+                            '<td>' + item.matchCoefficients.coefficients['X'] + '</td>' +
+                            '<td>' + item.matchCoefficients.coefficients['FWX'] + '</td>' +
+                            '<td>' + item.matchCoefficients.coefficients['FS'] + '</td>' +
+                            '<td>' + item.matchCoefficients.coefficients['XSW'] + '</td>' +
+                            '<td>' + item.matchCoefficients.coefficients['TL'] + '</td>' +
                             '<td>' + item.total + '</td>' +
-                            '<td class="active">' + item.matchCoefficients.coefficients['TM'] + '</td>' +
+                            '<td>' + item.matchCoefficients.coefficients['TM'] + '</td>' +
                             '<td class="hidden">' + item.maxBet + '</td>' +
                             '<td class="hidden">' + item.confederation + '</td>' +
                             '<td class="btn-ctrl"><button class="btn btn-primary btn-xs btn-edit-game">' +
@@ -303,15 +323,22 @@ function validateEditMatchForm() {
 }
 function validateSetScoreForm() {
 
+
+   var SCORE_REGEX = "^[0-9]{1,2}$";
     $("#invalid-score").hide();
     $("#first-team-score").css('border', 'transparent');
     $("#second-team-score").css('border', 'transparent');
 
+
+    var fts = $("#first-team-score").val();
     var isFormValid = true;
     if ($("#first-team-score").val() == null ||
         $("#second-team-score").val() == null ||
         parseInt($("#first-team-score").val()) < 0 ||
-        parseInt($("#second-team-score").val()) < 0) {
+        parseInt($("#second-team-score").val()) < 0 ||
+        !SCORE_REGEX.test($("#first-team-score").val())||
+        !SCORE_REGEX.test($("#second-team-score").val())
+    ) {
         isFormValid = false;
         $("#invalid-score").show();
         $("#first-team-score").css('border', 'solid 2px maroon');

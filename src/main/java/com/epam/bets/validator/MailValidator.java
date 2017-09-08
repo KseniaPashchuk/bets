@@ -26,7 +26,7 @@ public class MailValidator extends BaseValidator {
      */
     public boolean validateEmail(String email, List<String> errors) {
        boolean isValid = true;
-        if (!validateStringParamWithRegex(email,EMAIL_REGEX )) {
+        if (!validateStringParamWithRegex(email,EMAIL_REGEX) ) {
             isValid = false;
             errors.add(INVALID_EMAIL_ERROR);
         }
@@ -42,9 +42,11 @@ public class MailValidator extends BaseValidator {
      */
 
     public boolean validateMailText(String text, List<String> errors) {
+        boolean isValid = true;
         if (!validateStringParamWithLimit(text, MAX_MAIL_TEXT_LENGTH)) {
             errors.add(INVALID_MAIL_TEXT_ERROR);
+            isValid = false;
         }
-        return validateStringParam(text);
+        return isValid;
     }
 }

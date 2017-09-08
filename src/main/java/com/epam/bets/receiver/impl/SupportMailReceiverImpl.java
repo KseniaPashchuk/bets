@@ -122,11 +122,12 @@ public class SupportMailReceiverImpl implements SupportMailReceiver {
         try (DaoFactory factory = new DaoFactory()) {
             MailDAO mailDAO = factory.getMailDao();
             mail = mailDAO.findAllUserMail(email);
-            if (mail != null && !mail.isEmpty()) {
-                requestContent.insertRequestAttribute(PARAM_NAME_ALL_MAIL, mail);
-            } else {
+            if (mail == null ) {
                 errors.add(SHOW_SUPPORT_CHAT_ERROR);
                 requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
+
+            } else {
+                requestContent.insertRequestAttribute(PARAM_NAME_ALL_MAIL, mail);
             }
         } catch (DaoException e) {
             throw new ReceiverException(e);

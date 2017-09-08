@@ -28,6 +28,7 @@ import java.util.List;
 
 import static com.epam.bets.constant.ErrorConstant.CommonError.EXISTING_ENTITY;
 import static com.epam.bets.constant.ErrorConstant.ERROR_LIST_NAME;
+import static com.epam.bets.constant.ErrorConstant.SUCCESS;
 import static com.epam.bets.constant.ErrorConstant.UserError.*;
 import static com.epam.bets.constant.RequestParamConstant.CommonParam.DATE_PATTERN;
 import static com.epam.bets.constant.RequestParamConstant.MatchParam.PARAM_NAME_MATCH_ID;
@@ -140,9 +141,9 @@ public class UserReceiverImpl implements UserReceiver {
                 manager.close();
             }
 
-            if (!errors.isEmpty()) {
-                requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
-            }
+        }
+        if (!errors.isEmpty()) {
+            requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
         }
     }
 
@@ -179,14 +180,8 @@ public class UserReceiverImpl implements UserReceiver {
             CreditCardDAO cardDAO = factory.gerCreditCardDao();
             user = userDAO.findUserById(userId);
             if (user != null) {
-                requestContent.insertRequestAttribute(PARAM_NAME_LOGIN, user.getLogin());
-                requestContent.insertRequestAttribute(PARAM_NAME_FIRST_NAME, user.getFirstName());
-                requestContent.insertRequestAttribute(PARAM_NAME_LAST_NAME, user.getLastName());
-                requestContent.insertRequestAttribute(PARAM_NAME_CREDIT_CARDS, cardDAO.findCardsByUserId(user.getId()));
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
-                requestContent.insertRequestAttribute(PARAM_NAME_BIRTH_DATE, user.getBirthDate().format(formatter));
-                requestContent.insertRequestAttribute(PARAM_NAME_AVATAR_URL, user.getAvatarUrl());
-                requestContent.insertRequestAttribute(PARAM_NAME_BALANCE, user.getBalance());
+                user.setCreditCards(cardDAO.findCardsByUserId(user.getId()));
+                requestContent.insertRequestAttribute(PARAM_NAME_USER, user);
             } else {
                 errors.add(SHOW_PROFILE_ERROR);
             }
@@ -292,6 +287,8 @@ public class UserReceiverImpl implements UserReceiver {
         }
         if (!errors.isEmpty()) {
             requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
+        }else{
+            requestContent.insertRequestAttribute(SUCCESS, SUCCESS);
         }
     }
 
@@ -628,14 +625,9 @@ public class UserReceiverImpl implements UserReceiver {
                 CreditCardDAO cardDAO = factory.gerCreditCardDao();
                 user = userDAO.findUserByLogin(userLogin);
                 if (user != null) {
-                    requestContent.insertRequestAttribute(PARAM_NAME_LOGIN, user.getLogin());
-                    requestContent.insertRequestAttribute(PARAM_NAME_FIRST_NAME, user.getFirstName());
-                    requestContent.insertRequestAttribute(PARAM_NAME_LAST_NAME, user.getLastName());
-                    requestContent.insertRequestAttribute(PARAM_NAME_CREDIT_CARDS, cardDAO.findCardsByUserId(user.getId()));
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
-                    requestContent.insertRequestAttribute(PARAM_NAME_BIRTH_DATE, user.getBirthDate().format(formatter));
-                    requestContent.insertRequestAttribute(PARAM_NAME_AVATAR_URL, user.getAvatarUrl());
-                    requestContent.insertRequestAttribute(PARAM_NAME_BALANCE, user.getBalance());
+                    user.setCreditCards(cardDAO.findCardsByUserId(user.getId()));
+                    requestContent.insertRequestAttribute(PARAM_NAME_USER, user);
+
                 } else {
                     errors.add(NO_SUCH_USER_ERROR);
                 }

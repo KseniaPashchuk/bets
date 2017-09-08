@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import static com.epam.bets.constant.ErrorConstant.ERROR_LIST_NAME;
 import static com.epam.bets.constant.PageConstant.*;
 import static com.epam.bets.constant.RequestParamConstant.UserParam.PARAM_NAME_EMAIL;
+import static com.epam.bets.constant.RequestParamConstant.UserParam.PARAM_NAME_LOGIN;
 import static com.epam.bets.constant.RequestParamConstant.UserParam.PARAM_NAME_ROLE;
 
 /**
@@ -51,7 +52,7 @@ public class ShowSupportChatCommand implements AbstractCommand {
                         requestContent.findParameterValue(PARAM_NAME_EMAIL));
             } else {
                 requestContent.insertSessionAttribute(PREV_REQUEST, SHOW_SUPPORT_CHAT_PAGE +
-                        requestContent.findSessionAttribute(PARAM_NAME_ROLE));
+                        requestContent.findSessionAttribute(PARAM_NAME_LOGIN));
             }
         } catch (ReceiverException e) {
             LOGGER.log(Level.ERROR, e, e);

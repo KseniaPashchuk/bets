@@ -18,7 +18,17 @@
 <body>
 <div class="full-container">
 
-    <%@include file="../user/jspf/header.jsp" %>
+    <c:choose>
+        <c:when test="${role == 'ADMIN'}">
+            <%@include file="../admin/jspf/header.jspf" %>
+        </c:when>
+        <c:when test="${role == 'BOOKMAKER'}">
+            <%@include file="../bookmaker/jspf/header.jsp" %>
+        </c:when>
+        <c:otherwise>
+            <%@include file="../user/jspf/header.jsp" %>
+        </c:otherwise>
+    </c:choose>
 
     <section class="content clearfix">
         <div class="row user-profile">

@@ -8,6 +8,7 @@ package com.epam.bets.constant;
 public final class ErrorConstant {
 
     public static final String ERROR_LIST_NAME = "errors";
+    public static final String SUCCESS = "success";
 
     public final class CommonError {
         public static final String INVALID_CREATE_PARAMS = "invalidCreateParams";

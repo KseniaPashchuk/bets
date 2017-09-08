@@ -54,41 +54,54 @@
             <div class="found-user-wrap colored-block"
                     <c:if test="${(btg:contains(errors,'invalidLoginError'))||
                     (btg:contains(errors,'noSuchUserError'))||
-                    (requestScope.login==null)}">
+                    (requestScope.user.login==null)}">
                         style="display: none;"
                     </c:if>>
                 <div class="user-info">
                     <div class="user-avatar col-lg-4 col-md-4 col-sm-4">
                         <div class="avatar-wrap">
                             <img class="avatar-pic" id="avatar-pic"
-                                 src="${pageContext.request.contextPath}/image/user/${requestScope.avatarUrl}"
+                                 src="${pageContext.request.contextPath}/image/user/${requestScope.user.avatarUrl}"
                                  alt="<fmt:message key="common.profile.cant_find_avatar"/>">
                         </div>
                     </div>
                     <div class="user-meta col-lg-6 col-md-6 col-sm-6 cleafix">
-                            <div class="label-row col-lg-5">
-                                <div class="meta-label"><fmt:message key="common.login"/>(email)</div>
-                                <div class="meta-label"><fmt:message key="common.first_name"/></div>
-                                <div class="meta-label"><fmt:message key="common.last_name"/></div>
-                                <div class="meta-label"><fmt:message key="common.profile.birth_date"/></div>
+                        <div class="label-row col-lg-5">
+                            <div class="meta-label"><fmt:message key="common.login"/>(email)</div>
+                            <div class="meta-label"><fmt:message key="common.first_name"/></div>
+                            <div class="meta-label"><fmt:message key="common.last_name"/></div>
+                            <div class="meta-label"><fmt:message key="common.profile.birth_date"/></div>
+
+                            <c:if test="${(requestScope.user.role != 'ADMIN')&&(requestScope.user.role != 'BOOKMAKER')}">
                                 <div class="meta-label"><fmt:message key="common.profile.balance"/></div>
                                 <div class="meta-label"><fmt:message key="common.profile.credit_cards"/></div>
-                            </div>
-                            <div class="value-row col-lg-7">
-                                <div class="meta-value">${requestScope.login}</div>
-                                <div class="meta-value">${requestScope.name}</div>
-                                <div class="meta-value">${requestScope.surname}</div>
-                                <div class="meta-value">${requestScope.birthDate}</div>
-                                <div class="meta-value">${requestScope.balance}</div>
-                                <c:forEach var="item" items="${requestScope.creditCards.creditCardList}">
+                            </c:if>
+                        </div>
+                        <div class="value-row col-lg-7">
+                            <div class="meta-value">${requestScope.user.login}</div>
+                            <div class="meta-value">${requestScope.user.firstName}</div>
+                            <div class="meta-value">${requestScope.user.lastName}</div>
+                            <div class="meta-value">
+                                <fmt:parseDate value="${requestScope.user.birthDate}" pattern="yyyy-MM-dd"
+                                               var="parsedDate"
+                                               type="date"/>
+                                <fmt:formatDate value="${parsedDate}" type="date" var="formattedDate"
+                                                pattern="dd/MM/yy"/>
+                                ${formattedDate}</div>
+                            <c:if test="${(requestScope.user.role != 'ADMIN')&&(requestScope.user.role != 'BOOKMAKER')}">
+                                <div class="meta-value">${requestScope.user.balance}</div>
+                                <c:forEach var="item" items="${requestScope.user.creditCards.creditCardList}">
                                     <div class="meta-value">${item}</div>
                                 </c:forEach>
-                            </div>
+                            </c:if>
+                        </div>
 
                     </div>
-                    <div class="col-lg-2 col-md-2 col-sm-2 clearfix">
-                        <button class="user-bets-btn" id="show-user-bets">Bets</button>
-                    </div>
+                    <c:if test="${(requestScope.user.role != 'ADMIN')&&(requestScope.user.role != 'BOOKMAKER')}">
+                        <div class="col-lg-2 col-md-2 col-sm-2 clearfix">
+                            <button class="user-bets-btn" id="show-user-bets">Bets</button>
+                        </div>
+                    </c:if>
                 </div>
                 <div class="user-bets colored-block" style="display:none;">
                     <div class="user-menu-item dropdown">

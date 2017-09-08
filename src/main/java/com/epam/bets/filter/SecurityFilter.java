@@ -30,6 +30,7 @@ public class SecurityFilter implements Filter {
     private String indexPath;
     private static final String SIGN_IN = "sign_in";
     private static final String SIGN_UP = "sign_up";
+    private static final String CHANGE_LOCALE = "change_locale";
     private static final String PARAM_NAME_ROLE = "role";
     private static final String PARAM_NAME_COMMAND = "command";
 
@@ -50,7 +51,8 @@ public class SecurityFilter implements Filter {
         String command = httpRequest.getParameter(PARAM_NAME_COMMAND);
         if (!resourceRequest) {
             if (type == null) {
-                if (command == null || (!command.equalsIgnoreCase(SIGN_IN) && !command.equalsIgnoreCase(SIGN_UP))) {
+                if (command == null || (!command.equalsIgnoreCase(SIGN_IN) && !command.equalsIgnoreCase(SIGN_UP)
+                        && !command.equalsIgnoreCase(CHANGE_LOCALE))) {
                     RequestDispatcher dispatcher = servletRequest.getServletContext().getRequestDispatcher(indexPath);
                     dispatcher.forward(servletRequest, servletResponse);
                     return;

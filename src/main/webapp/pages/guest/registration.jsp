@@ -94,8 +94,9 @@
             <a class="btn-registration" href="javascript://" style="color: white"><fmt:message
                     key="common.registration.registration"/></a>
         </div>
-        <form class="registration" id="reg_form" onsubmit="return validateRegisterForm()" method="POST"
-              action="${pageContext.servletContext.contextPath}/controller">
+
+        <form class="registration" id="reg_form" method="POST"
+              action="${pageContext.servletContext.contextPath}/controller" onsubmit="return validateRegisterForm()">
             <input type="hidden" name="command" value="sign_up"/>
             <div class="about-registration">
                 <div class="head-enter-registration"><fmt:message key="common.registration.user_registration"/></div>

@@ -97,6 +97,7 @@ public class ConnectionPool {
 
     public void putConnection(ProxyConnection connection) {
         try {
+
             connections.put(connection);
         } catch (InterruptedException e) {
             LOGGER.log(Level.ERROR, e);

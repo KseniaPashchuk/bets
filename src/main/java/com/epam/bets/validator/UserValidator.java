@@ -3,6 +3,7 @@ package com.epam.bets.validator;
 import com.epam.bets.request.RequestContent;
 
 import java.math.BigDecimal;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -155,7 +156,12 @@ public class UserValidator extends BaseValidator {
 
         String[] creditCardArray = requestContent.findParameterValues(PARAM_NAME_CREDIT_CARD);
 
-        if (!validateBirthDate(LocalDate.parse(requestContent.findParameterValue(PARAM_NAME_BIRTH_DATE), formatter))) {
+        try {
+            if (!validateBirthDate(LocalDate.parse(requestContent.findParameterValue(PARAM_NAME_BIRTH_DATE), formatter))) {
+                isValid = false;
+                errors.add(INVALID_BIRTH_DATE_ERROR);
+            }
+        }catch (DateTimeException e){
             isValid = false;
             errors.add(INVALID_BIRTH_DATE_ERROR);
         }

@@ -338,6 +338,8 @@ public class MatchReceiverImpl implements MatchReceiver {
         }
         if (!errors.isEmpty()) {
             requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
+        }else{
+            requestContent.insertRequestAttribute(SUCCESS, SUCCESS);
         }
     }
 
@@ -374,6 +376,8 @@ public class MatchReceiverImpl implements MatchReceiver {
         }
         if (!errors.isEmpty()) {
             requestContent.insertRequestAttribute(ERROR_LIST_NAME, errors);
+        }else{
+            requestContent.insertRequestAttribute(SUCCESS, SUCCESS);
         }
     }
 

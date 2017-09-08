@@ -19,6 +19,7 @@ public final class RequestParamConstant {
 
 
     public final class UserParam {
+        public static final String PARAM_NAME_USER = "user";
         public static final String PARAM_NAME_USER_ID = "userId";
         public static final String PARAM_NAME_LOGIN = "login";
         public static final String PARAM_NAME_EMAIL = "email";
