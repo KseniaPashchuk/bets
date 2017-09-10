@@ -5,7 +5,10 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.Driver;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -33,7 +36,14 @@ public class ConnectionPool {
     private PoolManager manager;
 
     private ConnectionPool() {
-        init();
+        try {
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            init();
+        } catch (SQLException e) {
+            LOGGER.log(Level.FATAL, e + " DriverManager wasn't found.");
+            throw new RuntimeException(e);
+        }
+
     }
 
     private void init() {
@@ -63,7 +73,7 @@ public class ConnectionPool {
         sizeDiff = manager.poolSize - connections.size();
         if (sizeDiff > 0 && sizeDiff < manager.poolSize / 2) {
             LOGGER.log(Level.WARN, "Connection pool size is smaller than required; Attempt to continue working...");
-        } else if(sizeDiff > manager.poolSize / 2) {
+        } else if (sizeDiff > manager.poolSize / 2) {
             LOGGER.log(Level.FATAL, "Connection pool size is too small: size - " + connections.size());
             throw new RuntimeException("Connection pool size is too small: size - " + connections.size());
         }
@@ -109,9 +119,21 @@ public class ConnectionPool {
             for (int i = 0; i < connections.size(); i++) {
                 connections.take().realClose();
             }
-            manager.deregisterDrivers();
-        } catch (DBException | SQLException | InterruptedException e) {
+        } catch (SQLException | InterruptedException e) {
             LOGGER.log(Level.ERROR, "Can not close connection pool: " + e.getMessage());
+        }
+        try {
+            Enumeration<Driver> drivers = DriverManager.getDrivers();
+            while (drivers.hasMoreElements()) {
+                Driver driver = drivers.nextElement();
+                DriverManager.deregisterDriver(driver);
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.ERROR,"Can not deregister driver " + e.getMessage());
+        }
+        finally {
+            instance = null;
+            flag.set(false);
         }
     }
 }

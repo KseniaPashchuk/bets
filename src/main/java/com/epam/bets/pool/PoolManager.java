@@ -13,12 +13,20 @@ import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
+/**
+ * Class config and create {@link ProxyConnection}, uses database properties.
+ *
+ * @author Pashchuk Ksenia
+ */
 class PoolManager {
-    String url;
+    private String url;
     int poolSize;
-    Properties properties;
+    private Properties properties;
     private static final Logger LOGGER = LogManager.getLogger(PoolManager.class);
 
+    /**
+     * Config connection.
+     */
     PoolManager() {
         try {
             ResourceBundle resource = ResourceBundle.getBundle("database");
@@ -30,16 +38,19 @@ class PoolManager {
             properties.put("autoReconnect", "true");
             properties.put("characterEncoding", resource.getString("db.encoding"));
             properties.put("useUnicode", resource.getString("db.useUnicode"));
-            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+
         } catch (MissingResourceException e) {
             LOGGER.log(Level.FATAL, "Can not find properties file " + e.getMessage());
             throw new RuntimeException("Can not find properties file " + e.getMessage());
-        } catch (SQLException e) {
-            LOGGER.log(Level.FATAL, "Can not register driver" + e.getMessage());
-            throw new RuntimeException("Can not register driver " + e.getMessage());
         }
     }
 
+    /**
+     * Create connection.
+     *
+     * @return {@link ProxyConnection}
+     * @throws DBException if {@link SQLException} occurred while working with database
+     */
     ProxyConnection getConnection() throws DBException {
         ProxyConnection proxyConnection = null;
         try {
@@ -50,15 +61,4 @@ class PoolManager {
         return proxyConnection;
     }
 
-    void deregisterDrivers() throws DBException {
-        try {
-            Enumeration<Driver> drivers = DriverManager.getDrivers();
-            while (drivers.hasMoreElements()) {
-                Driver driver = drivers.nextElement();
-                DriverManager.deregisterDriver(driver);
-            }
-        } catch (SQLException e) {
-            throw new DBException("Can not deregister driver " + e.getMessage());
-        }
-    }
 }
